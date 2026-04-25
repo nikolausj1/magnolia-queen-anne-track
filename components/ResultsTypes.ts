@@ -3,8 +3,6 @@ import type { EventCategory } from "@/lib/events";
 export type RowLabel = {
   athleteId: string;
   display: string;
-  team?: "magnolia" | "queen-anne";
-  division?: string;
 };
 
 export type EventRow = RowLabel & {

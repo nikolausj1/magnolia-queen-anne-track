@@ -16,9 +16,7 @@ import {
 } from "@/lib/data";
 import { categorizeEvent } from "@/lib/events";
 import { compareMarks } from "@/lib/marks";
-import { buildDisplayMap, eventSortKey } from "@/lib/display";
-
-const TODAY = "2026-04-24";
+import { eventSortKey } from "@/lib/display";
 
 export const metadata: Metadata = {
   title: "Results",
@@ -28,22 +26,15 @@ export const metadata: Metadata = {
 };
 
 export default function ResultsPage() {
-  const meets = getMeets();
+  const allMeets = getMeets();
   const athletesById = getAthletesById();
 
-  // Collect every athlete that appears in any rendered result, so the
-  // collision map only disambiguates names that actually show up.
-  const visibleAthleteIds = new Set<string>();
-  const resultsByMeet: Record<string, Result[]> = {};
-  for (const meet of meets) {
-    const rs = getResultsByMeet(meet.id);
-    resultsByMeet[meet.id] = rs;
-    for (const r of rs) visibleAthleteIds.add(r.athleteId);
-  }
-  const visibleAthletes: Athlete[] = [...visibleAthleteIds]
-    .map((id) => athletesById[id])
-    .filter((a): a is Athlete => Boolean(a));
-  const displayMap = buildDisplayMap(visibleAthletes);
+  // Build per-meet results, then keep only meets with real data. Future
+  // meets and past-empty meets both fall away. They'll reappear once
+  // results land in data/results.json.
+  const meetsWithResults = allMeets
+    .map((meet) => ({ meet, results: getResultsByMeet(meet.id) }))
+    .filter(({ results }) => results.length > 0);
 
   return (
     <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
@@ -52,28 +43,27 @@ export default function ResultsPage() {
         Spring 2026 season · West Seattle Stadium
       </p>
 
-      <div className="flex flex-col gap-12 md:gap-16">
-        {meets.map((meet) => {
-          const rs = resultsByMeet[meet.id];
-          const isFuture = meet.date > TODAY;
-          const eventGroups = buildEventGroups(rs, athletesById, displayMap);
-          const athleteGroups = buildAthleteGroups(
-            rs,
-            athletesById,
-            displayMap,
-          );
-          return (
-            <MeetCard
-              key={meet.id}
-              meet={meet}
-              isFuture={isFuture}
-              formattedDate={formatMeetDate(meet.date)}
-              eventGroups={eventGroups}
-              athleteGroups={athleteGroups}
-            />
-          );
-        })}
-      </div>
+      {meetsWithResults.length === 0 ? (
+        <p className="text-base text-ink leading-relaxed">
+          Results will be posted here as the season unfolds.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-12 md:gap-16">
+          {meetsWithResults.map(({ meet, results }) => {
+            const eventGroups = buildEventGroups(results, athletesById);
+            const athleteGroups = buildAthleteGroups(results, athletesById);
+            return (
+              <MeetCard
+                key={meet.id}
+                meet={meet}
+                formattedDate={formatMeetDate(meet.date)}
+                eventGroups={eventGroups}
+                athleteGroups={athleteGroups}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -87,28 +77,29 @@ function formatMeetDate(iso: string): string {
   });
 }
 
+function displayName(a: Athlete | undefined, fallback: string): string {
+  if (!a) return fallback;
+  return a.lastInitial ? `${a.firstName} ${a.lastInitial}` : a.firstName;
+}
+
 function buildRowLabel(
   athleteId: string,
   athletesById: Record<string, Athlete>,
-  displayMap: Map<string, string>,
 ): RowLabel {
   const a = athletesById[athleteId];
   return {
     athleteId,
-    display: displayMap.get(athleteId) ?? a?.firstName ?? athleteId,
-    team: a?.team,
-    division: a?.division,
+    display: displayName(a, athleteId),
   };
 }
 
 function buildEventGroups(
   results: Result[],
   athletesById: Record<string, Athlete>,
-  displayMap: Map<string, string>,
 ): EventGroup[] {
   const byEvent = new Map<string, EventRow[]>();
   for (const r of results) {
-    const label = buildRowLabel(r.athleteId, athletesById, displayMap);
+    const label = buildRowLabel(r.athleteId, athletesById);
     const row: EventRow = {
       ...label,
       mark: r.mark,
@@ -144,7 +135,6 @@ function buildEventGroups(
 function buildAthleteGroups(
   results: Result[],
   athletesById: Record<string, Athlete>,
-  displayMap: Map<string, string>,
 ): AthleteGroup[] {
   const byAthlete = new Map<string, AthleteEventRow[]>();
   for (const r of results) {
@@ -162,7 +152,7 @@ function buildAthleteGroups(
 
   const groups: AthleteGroup[] = [];
   for (const [athleteId, rows] of byAthlete) {
-    const label = buildRowLabel(athleteId, athletesById, displayMap);
+    const label = buildRowLabel(athleteId, athletesById);
     rows.sort((a, b) => {
       const catOrder = { running: 0, jumping: 1, throwing: 2 };
       const ca = catOrder[a.category];

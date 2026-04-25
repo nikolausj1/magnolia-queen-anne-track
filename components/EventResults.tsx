@@ -1,4 +1,3 @@
-import { Badge } from "@/components/Badge";
 import { EventPill } from "@/components/EventPill";
 import type { EventGroup } from "@/components/ResultsTypes";
 
@@ -35,13 +34,6 @@ export function EventResults({ groups }: Props) {
                   <tr key={`${row.athleteId}-${row.mark}-${row.place ?? ""}`}>
                     <th scope="row" className="py-3 pr-3 align-top">
                       <div className="font-semibold text-ink">{row.display}</div>
-                      {(row.division || row.team) && (
-                        <div className="mt-1 flex items-center gap-2 text-[12px] text-muted">
-                          {row.division ? <span>{row.division}</span> : null}
-                          {row.division && row.team ? <span aria-hidden>·</span> : null}
-                          {row.team ? <Badge team={row.team} /> : null}
-                        </div>
-                      )}
                     </th>
                     <td className="py-3 px-3 text-center align-top text-ink tabular-nums">
                       {row.place ?? "—"}

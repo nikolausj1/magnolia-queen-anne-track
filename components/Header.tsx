@@ -51,7 +51,7 @@ export function Header() {
             className="h-9 md:h-11 w-auto object-contain"
             priority
           />
-          <div className="flex flex-col leading-none">
+          <div className="hidden md:flex flex-col leading-none">
             <span className="text-magnolia-navy text-sm md:text-base font-bold uppercase tracking-tight">
               Magnolia
             </span>
@@ -84,9 +84,9 @@ export function Header() {
         <Link
           href="/"
           aria-label="Queen Anne Quicksters"
-          className="hidden md:flex items-center gap-3"
+          className="flex items-center gap-3"
         >
-          <div className="flex flex-col leading-none text-right">
+          <div className="hidden md:flex flex-col leading-none text-right">
             <span className="text-queenAnne-red text-sm md:text-base font-bold uppercase tracking-tight">
               Queen Anne
             </span>

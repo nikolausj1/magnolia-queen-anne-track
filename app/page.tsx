@@ -89,7 +89,7 @@ function HeroAndTeamCards() {
 
       <div
         aria-labelledby="teams-heading"
-        className="relative z-10 -mt-24 md:-mt-32 lg:-mt-40"
+        className="relative z-10 -mt-16 md:-mt-12 lg:-mt-12"
       >
         <div className="mx-auto max-w-[1200px] px-6 pb-12 md:pb-20">
           <h2 id="teams-heading" className="sr-only">

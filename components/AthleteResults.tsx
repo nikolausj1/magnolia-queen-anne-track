@@ -1,4 +1,3 @@
-import { Badge } from "@/components/Badge";
 import { EventPill } from "@/components/EventPill";
 import type { AthleteGroup } from "@/components/ResultsTypes";
 
@@ -10,15 +9,9 @@ export function AthleteResults({ groups }: Props) {
       {groups.map((group) => (
         <section key={group.athleteId} className="flex flex-col gap-3">
           <header className="flex items-baseline justify-between gap-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <h3 className="text-[17px] font-medium text-ink">
-                {group.display}
-              </h3>
-              {group.division ? (
-                <span className="text-sm text-muted">{group.division}</span>
-              ) : null}
-              {group.team ? <Badge team={group.team} /> : null}
-            </div>
+            <h3 className="text-[17px] font-medium text-ink">
+              {group.display}
+            </h3>
             <span className="text-sm text-muted">
               {group.rows.length} {group.rows.length === 1 ? "event" : "events"}
             </span>

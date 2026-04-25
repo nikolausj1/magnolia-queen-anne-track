@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import { useId, useState } from "react";
-import { TrackLanes } from "@/components/TrackLanes";
 import { EventResults } from "@/components/EventResults";
 import { AthleteResults } from "@/components/AthleteResults";
 import type { Meet } from "@/lib/data";
@@ -11,7 +11,6 @@ type View = "event" | "athlete";
 
 type Props = {
   meet: Meet;
-  isFuture: boolean;
   formattedDate: string;
   eventGroups: EventGroup[];
   athleteGroups: AthleteGroup[];
@@ -19,7 +18,6 @@ type Props = {
 
 export function MeetCard({
   meet,
-  isFuture,
   formattedDate,
   eventGroups,
   athleteGroups,
@@ -31,12 +29,17 @@ export function MeetCard({
   const eventTabId = `${tablistId}-tab-event`;
   const athleteTabId = `${tablistId}-tab-athlete`;
 
-  const hasResults = eventGroups.length > 0;
-  const showPlaceholder = isFuture || !hasResults;
-
   return (
     <article className="rounded-lg border border-divider bg-white overflow-hidden">
-      <TrackLanes />
+      <div className="relative h-32 md:h-40">
+        <Image
+          src="/photos/west-seattle-stadium.webp"
+          alt="West Seattle Stadium track at sunset"
+          fill
+          sizes="(min-width: 768px) 1100px, 100vw"
+          className="object-cover"
+        />
+      </div>
 
       <div className="p-6 md:p-8 flex flex-col gap-6">
         <header className="flex items-start justify-between gap-4">
@@ -51,67 +54,59 @@ export function MeetCard({
           </div>
         </header>
 
-        {showPlaceholder ? (
-          <p className="text-center text-muted py-6">
-            Results will appear here after the meet.
-          </p>
-        ) : (
-          <>
-            <div
-              role="tablist"
-              aria-label="Results view"
-              className="inline-flex rounded-md border border-divider bg-surface p-1 self-start"
-            >
-              <button
-                type="button"
-                role="tab"
-                id={eventTabId}
-                aria-selected={view === "event"}
-                aria-controls={eventPanelId}
-                onClick={() => setView("event")}
-                className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                  view === "event"
-                    ? "bg-white text-magnolia-navy shadow-sm font-medium"
-                    : "text-muted hover:text-ink"
-                }`}
-              >
-                By event
-              </button>
-              <button
-                type="button"
-                role="tab"
-                id={athleteTabId}
-                aria-selected={view === "athlete"}
-                aria-controls={athletePanelId}
-                onClick={() => setView("athlete")}
-                className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                  view === "athlete"
-                    ? "bg-white text-magnolia-navy shadow-sm font-medium"
-                    : "text-muted hover:text-ink"
-                }`}
-              >
-                By athlete
-              </button>
-            </div>
+        <div
+          role="tablist"
+          aria-label="Results view"
+          className="inline-flex rounded-md border border-divider bg-surface p-1 self-start"
+        >
+          <button
+            type="button"
+            role="tab"
+            id={eventTabId}
+            aria-selected={view === "event"}
+            aria-controls={eventPanelId}
+            onClick={() => setView("event")}
+            className={`px-3 py-1.5 text-sm rounded transition-colors ${
+              view === "event"
+                ? "bg-white text-magnolia-navy shadow-sm font-medium"
+                : "text-muted hover:text-ink"
+            }`}
+          >
+            By event
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id={athleteTabId}
+            aria-selected={view === "athlete"}
+            aria-controls={athletePanelId}
+            onClick={() => setView("athlete")}
+            className={`px-3 py-1.5 text-sm rounded transition-colors ${
+              view === "athlete"
+                ? "bg-white text-magnolia-navy shadow-sm font-medium"
+                : "text-muted hover:text-ink"
+            }`}
+          >
+            By athlete
+          </button>
+        </div>
 
-            <div
-              role="tabpanel"
-              id={eventPanelId}
-              aria-labelledby={eventTabId}
-              hidden={view !== "event"}
-            >
-              <EventResults groups={eventGroups} />
-            </div>
-            <div
-              role="tabpanel"
-              id={athletePanelId}
-              aria-labelledby={athleteTabId}
-              hidden={view !== "athlete"}
-            >
-              <AthleteResults groups={athleteGroups} />
-            </div>
-          </>
-        )}
+        <div
+          role="tabpanel"
+          id={eventPanelId}
+          aria-labelledby={eventTabId}
+          hidden={view !== "event"}
+        >
+          <EventResults groups={eventGroups} />
+        </div>
+        <div
+          role="tabpanel"
+          id={athletePanelId}
+          aria-labelledby={athleteTabId}
+          hidden={view !== "athlete"}
+        >
+          <AthleteResults groups={athleteGroups} />
+        </div>
       </div>
     </article>
   );
