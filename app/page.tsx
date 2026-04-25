@@ -100,7 +100,7 @@ function HeroAndTeamCards() {
               team="magnolia"
               teamLabel="Magnolia CC"
               teamSubLabel="Youth Track & Field"
-              logoSrc="/logos/magnolia-cc.png"
+              logoSrc="/logos/magnolia-cc-no-bg.png"
               logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
               logoWidth={2138}
               logoHeight={1682}
@@ -109,6 +109,7 @@ function HeroAndTeamCards() {
               registerLabel="Register with Magnolia CC"
               registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
               communityCenterName="Magnolia Community Center"
+              surface="dark"
             />
             <TeamCard
               team="queen-anne"
@@ -123,6 +124,7 @@ function HeroAndTeamCards() {
               registerLabel="Register with Queen Anne CC"
               registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"
               communityCenterName="Queen Anne Community Center"
+              surface="dark"
             />
           </div>
         </div>

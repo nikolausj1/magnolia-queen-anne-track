@@ -14,6 +14,7 @@ type TeamCardProps = {
   registerAriaLabel: string;
   communityCenterName: string;
   variant?: "compact" | "large";
+  surface?: "light" | "dark";
 };
 
 export function TeamCard({
@@ -30,21 +31,48 @@ export function TeamCard({
   registerAriaLabel,
   communityCenterName,
   variant = "compact",
+  surface = "light",
 }: TeamCardProps) {
   const isMagnolia = team === "magnolia";
+  const isDark = surface === "dark";
 
-  const accent = isMagnolia ? "bg-magnolia-navy" : "bg-queenAnne-red";
-  const titleColor = isMagnolia ? "text-magnolia-navy" : "text-queenAnne-red";
-  const button = isMagnolia
-    ? "bg-magnolia-navy text-white hover:bg-magnolia-navy/90"
-    : "bg-queenAnne-red text-white hover:bg-queenAnne-red/90";
+  const cardBg = isDark
+    ? isMagnolia
+      ? "bg-magnolia-navy"
+      : "bg-black"
+    : "bg-white border border-divider";
+
+  const accent = isDark
+    ? isMagnolia
+      ? "bg-accent-gold"
+      : "bg-queenAnne-red"
+    : isMagnolia
+      ? "bg-magnolia-navy"
+      : "bg-queenAnne-red";
+
+  const titleColor = isDark
+    ? "text-white"
+    : isMagnolia
+      ? "text-magnolia-navy"
+      : "text-queenAnne-red";
+
+  const bodyColor = isDark ? "text-white/90" : "text-ink";
+  const footerColor = isDark ? "text-white/60" : "text-muted";
+
+  const button = isDark
+    ? isMagnolia
+      ? "bg-white text-magnolia-navy hover:bg-white/90"
+      : "bg-queenAnne-red text-white hover:bg-queenAnne-red/90"
+    : isMagnolia
+      ? "bg-magnolia-navy text-white hover:bg-magnolia-navy/90"
+      : "bg-queenAnne-red text-white hover:bg-queenAnne-red/90";
 
   const padding = variant === "large" ? "p-8 md:p-10" : "p-6 md:p-8";
   const logoSize = variant === "large" ? "h-28 md:h-32" : "h-20 md:h-24";
 
   return (
     <article
-      className={`${padding} rounded-lg border border-divider bg-white transition-shadow hover:shadow-md flex flex-col gap-5`}
+      className={`${padding} ${cardBg} rounded-lg transition-shadow hover:shadow-md flex flex-col gap-5`}
     >
       <div className="flex items-center gap-4">
         <Image
@@ -63,7 +91,7 @@ export function TeamCard({
             </span>
             {teamSubLabel ? (
               <span
-                className={`${titleColor} text-sm md:text-base font-semibold uppercase tracking-wide leading-tight`}
+                className={`${titleColor} text-sm md:text-base font-semibold uppercase tracking-wide leading-tight ${isDark ? "opacity-90" : ""}`}
               >
                 {teamSubLabel}
               </span>
@@ -73,7 +101,7 @@ export function TeamCard({
         </div>
       </div>
 
-      <p className="text-sm md:text-base text-ink leading-relaxed">
+      <p className={`text-sm md:text-base ${bodyColor} leading-relaxed`}>
         {description}
       </p>
 
@@ -88,7 +116,7 @@ export function TeamCard({
         <ExternalLinkIcon />
       </a>
 
-      <p className="text-xs text-muted leading-relaxed">
+      <p className={`text-xs ${footerColor} leading-relaxed`}>
         Registration, schedules, and program details are managed by{" "}
         {communityCenterName}.
       </p>
