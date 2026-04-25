@@ -87,28 +87,30 @@ public/
 
 All visual spec values live in `PRD.md` → Visual and Design Spec. Do not invent. See the `ui-design` skill for discipline around this.
 
-When applying team colors or badges, define the tokens in `tailwind.config.ts`:
+This project uses **Tailwind v4**. Tokens live in `@theme` in `app/globals.css`, not in a `tailwind.config.ts` file (Tailwind v4 moved config into CSS). The generated class names match the v3 pattern one-to-one: `bg-magnolia-navy`, `text-queenAnne-red`, `bg-badge-magnoliaBg`, `text-pill-runText`, `border-divider`, etc.
 
-```ts
-theme: {
-  extend: {
-    colors: {
-      magnolia: { navy: "#0B1F3A" },
-      queenAnne: { red: "#C8102E" },  // approximate; extract from logo
-      badge: {
-        magnoliaBg: "#E6F1FB",
-        magnoliaText: "#0C447C",
-        queenAnneBg: "#FCEBEB",
-        queenAnneText: "#791F1F",
-      },
-      pill: {
-        runBg: "#E1F5EE", runText: "#085041",
-        jumpBg: "#EEEDFE", jumpText: "#3C3489",
-        throwBg: "#FAECE7", throwText: "#712B13",
-      },
-    },
-  },
-},
+Current tokens (see `app/globals.css` for the source of truth):
+
+```css
+@theme {
+  --color-magnolia-navy: #0B1F3A;
+  --color-queenAnne-red: #C8102E;   /* approximate; extract from logo */
+  --color-queenAnne-black: #000000;
+
+  --color-ink: #111827;
+  --color-muted: #6B7280;
+  --color-surface: #F3F4F6;
+  --color-divider: #E5E7EB;
+
+  --color-badge-magnoliaBg: #E6F1FB;
+  --color-badge-magnoliaText: #0C447C;
+  --color-badge-queenAnneBg: #FCEBEB;
+  --color-badge-queenAnneText: #791F1F;
+
+  --color-pill-runBg: #E1F5EE;  --color-pill-runText: #085041;
+  --color-pill-jumpBg: #EEEDFE; --color-pill-jumpText: #3C3489;
+  --color-pill-throwBg: #FAECE7; --color-pill-throwText: #712B13;
+}
 ```
 
 ## Routing and linking
