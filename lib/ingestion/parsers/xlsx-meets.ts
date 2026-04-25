@@ -65,9 +65,25 @@ function formatExcelDate(d: Date): string {
   const h = d.getUTCHours();
   const m = d.getUTCMinutes();
   const s = d.getUTCSeconds();
-  // If hours > 0, Excel saw "M:SS" as "H:M" — recover by shifting.
-  const minutes = h > 0 ? h : m;
-  const seconds = h > 0 ? m : s;
-  if (minutes === 0) return `:${String(seconds).padStart(2, "0")}`;
-  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  const ms = d.getUTCMilliseconds();
+  // If hours > 0, Excel saw "M:SS" as "H:M" — recover by shifting. The
+  // shifted form has no sub-second component (the original cell was
+  // whole minutes:seconds), so ignore ms here.
+  let minutes = h > 0 ? h : m;
+  let seconds = h > 0 ? m : s;
+  // Hundredths of a second (the project's display precision). Round
+  // ms→hundredths and roll over into seconds/minutes if it lands at 100.
+  let hundredths = h > 0 ? 0 : Math.round(ms / 10);
+  if (hundredths === 100) {
+    hundredths = 0;
+    seconds += 1;
+    if (seconds === 60) {
+      seconds = 0;
+      minutes += 1;
+    }
+  }
+  const ss = String(seconds).padStart(2, "0");
+  const frac = hundredths > 0 ? `.${String(hundredths).padStart(2, "0")}` : "";
+  if (minutes === 0) return `:${ss}${frac}`;
+  return `${minutes}:${ss}${frac}`;
 }
