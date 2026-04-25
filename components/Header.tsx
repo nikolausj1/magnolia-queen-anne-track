@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/results", label: "Results" },
-  { href: "/join", label: "Join" },
+  { href: "/", label: "HOME" },
+  { href: "/results", label: "RESULTS" },
+  { href: "/join", label: "JOIN" },
   { href: "/faq", label: "FAQ" },
 ] as const;
 
@@ -36,33 +37,71 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-divider">
-      <div className="mx-auto max-w-[1100px] px-6 h-16 flex items-center justify-between">
+      <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-20 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="font-semibold text-magnolia-navy text-lg tracking-tight"
+          aria-label="Magnolia and Queen Anne home"
+          className="flex items-center gap-3 min-w-0"
         >
-          M · QA Track &amp; Field
+          <Image
+            src="/logos/magnolia-cc.png"
+            alt=""
+            width={2138}
+            height={1682}
+            className="h-9 md:h-11 w-auto object-contain"
+            priority
+          />
+          <div className="flex flex-col leading-none">
+            <span className="text-magnolia-navy text-sm md:text-base font-bold uppercase tracking-tight">
+              Magnolia
+            </span>
+            <span className="text-magnolia-navy text-[10px] md:text-xs font-semibold uppercase tracking-wide opacity-80">
+              Community Center
+            </span>
+          </div>
         </Link>
 
         <nav
           aria-label="Primary"
-          className="hidden md:flex items-center gap-8"
+          className="hidden md:flex items-center gap-7"
         >
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
-              className={`text-sm hover:text-magnolia-navy transition-colors ${
+              className={`text-xs uppercase tracking-wide transition-colors ${
                 isActive(item.href)
-                  ? "text-magnolia-navy font-medium"
-                  : "text-ink"
+                  ? "text-magnolia-navy font-semibold"
+                  : "text-ink hover:text-magnolia-navy"
               }`}
             >
               {item.label}
             </Link>
           ))}
         </nav>
+
+        <Link
+          href="/"
+          aria-label="Queen Anne Quicksters"
+          className="hidden md:flex items-center gap-3"
+        >
+          <div className="flex flex-col leading-none text-right">
+            <span className="text-queenAnne-red text-sm md:text-base font-bold uppercase tracking-tight">
+              Queen Anne
+            </span>
+            <span className="text-queenAnne-red text-[10px] md:text-xs font-semibold uppercase tracking-wide opacity-80">
+              Quicksters · Track &amp; Field
+            </span>
+          </div>
+          <Image
+            src="/logos/queen-anne-quicksters.png"
+            alt=""
+            width={1254}
+            height={1254}
+            className="h-9 md:h-11 w-auto object-contain"
+          />
+        </Link>
 
         <button
           ref={buttonRef}
@@ -107,7 +146,7 @@ export function Header() {
         >
           <nav
             aria-label="Primary mobile"
-            className="mx-auto max-w-[1100px] px-6 py-4 flex flex-col"
+            className="mx-auto max-w-[1200px] px-4 py-4 flex flex-col"
           >
             {NAV.map((item) => (
               <Link
@@ -115,9 +154,9 @@ export function Header() {
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className={`py-3 text-base border-b border-divider last:border-0 ${
+                className={`py-3 text-sm uppercase tracking-wide border-b border-divider last:border-0 ${
                   isActive(item.href)
-                    ? "text-magnolia-navy font-medium"
+                    ? "text-magnolia-navy font-semibold"
                     : "text-ink"
                 }`}
               >

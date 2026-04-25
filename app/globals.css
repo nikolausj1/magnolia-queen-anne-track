@@ -26,6 +26,8 @@
   --color-pill-throwBg: #FAECE7;
   --color-pill-throwText: #712B13;
 
+  --color-accent-gold: #E2B844;
+
   --container-content: 1100px;
 }
 
@@ -37,13 +39,15 @@ body {
   line-height: 1.5;
 }
 
-h1 { font-size: 28px; font-weight: 600; }
-h2 { font-size: 22px; font-weight: 600; }
-h3 { font-size: 18px; font-weight: 500; }
+@layer base {
+  h1 { font-size: 28px; font-weight: 600; }
+  h2 { font-size: 22px; font-weight: 600; }
+  h3 { font-size: 18px; font-weight: 500; }
 
-@media (min-width: 768px) {
-  h1 { font-size: 32px; }
-  h2 { font-size: 24px; }
+  @media (min-width: 768px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+  }
 }
 
 :focus-visible {

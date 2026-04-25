@@ -14,9 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// PRD says today is 2026-04-24 for "latest meet" logic. Anchored here so
-// the build is deterministic regardless of the build host's clock.
-const TODAY = "2026-04-24";
+const TODAY = "2026-04-25";
 
 // TODO(prd-open-items): registration URLs — see PRD.md Open Questions.
 const MAGNOLIA_REGISTER_URL = "#";
@@ -32,101 +30,154 @@ export default function HomePage() {
   const latestPastMeet = meets.find((m) => m.date <= TODAY);
 
   return (
-    <div className="flex flex-col">
-      <Hero />
-      <SharedProgram />
-      <WhatToExpect />
-      <TeamCards />
+    <>
+      <HeroAndTeamCards />
+      <SharedStrongerTogether />
       {COACHES.length > 0 ? <Coaches coaches={COACHES} /> : null}
-      {latestPastMeet ? <LatestResultsTeaser meetDate={latestPastMeet.date} /> : null}
+      {latestPastMeet ? (
+        <LatestResultsTeaser meetDate={latestPastMeet.date} />
+      ) : null}
+      <ReadyToJoin />
       <SecondaryCTA />
-    </div>
+    </>
   );
 }
 
-function Hero() {
+function HeroAndTeamCards() {
   return (
-    <section className="bg-magnolia-navy text-white">
-      <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-20 grid gap-10 md:grid-cols-2 md:items-center">
-        <div className="flex flex-col gap-5">
-          <h1 className="text-white">Two Teams, One Community</h1>
-          <p className="text-base md:text-lg text-white/85 max-w-md">
-            Youth track and field for ages 5–17 in Magnolia and Queen Anne, Seattle.
-            Two community centers register the kids; one program runs the practice.
+    <section className="relative bg-white overflow-hidden">
+      <div className="grid md:grid-cols-[1fr_1.4fr] gap-x-0 items-stretch relative">
+        <div className="flex flex-col gap-6 px-6 md:pl-[max(1.5rem,calc((100vw-1200px)/2+1.5rem))] pt-12 md:pt-20 lg:pt-28 md:pr-4 md:pb-24 lg:pb-32 relative z-10">
+          <h1 className="text-magnolia-navy text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.0] md:whitespace-nowrap">
+            Two Teams.
+            <br />
+            One Community.
+          </h1>
+          <span
+            className="block h-1 w-24 bg-accent-gold"
+            aria-hidden="true"
+          />
+          <p className="text-base md:text-lg text-ink leading-relaxed max-w-md">
+            Magnolia Community Center and Queen Anne Quicksters track and
+            field programs bring kids together to build speed, strength,
+            confidence, and friendships that last a lifetime.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-2">
-            <a
-              href={MAGNOLIA_REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Register with Magnolia CC Youth Track & Field — opens external registration"
-              className="inline-flex items-center justify-center rounded-md bg-white text-magnolia-navy px-5 py-3 text-sm font-medium hover:bg-white/90 transition-colors"
-            >
-              Register with Magnolia
-            </a>
-            <a
-              href={QUEEN_ANNE_REGISTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Register with Queen Anne Quicksters — opens external registration"
-              className="inline-flex items-center justify-center rounded-md bg-queenAnne-red text-white px-5 py-3 text-sm font-medium hover:bg-queenAnne-red/90 transition-colors"
-            >
-              Register with Queen Anne Quicksters
-            </a>
-          </div>
         </div>
 
-        <div className="relative aspect-[16/9] overflow-hidden rounded-lg ring-1 ring-white/10">
+        <div className="relative h-72 md:h-auto md:min-h-[28rem] lg:min-h-[34rem]">
           <Image
             src="/photos/home-hero-action.png"
-            alt="Magnolia and Queen Anne athletes at a meet"
+            alt="Magnolia and Queen Anne athletes at a meet, in Magnolia navy and Queen Anne red jerseys"
             fill
-            sizes="(min-width: 768px) 50vw, 100vw"
+            sizes="(min-width: 768px) 60vw, 100vw"
             className="object-cover"
+            style={{ objectPosition: "center 30%" }}
             priority
           />
+          {/* Left edge fade into the text column */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 w-1/3 md:w-1/4 bg-gradient-to-r from-white via-white/70 to-transparent"
+          />
+          {/* Bottom edge fade so the cards float over white */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white to-transparent"
+          />
+        </div>
+      </div>
+
+      <div
+        aria-labelledby="teams-heading"
+        className="relative z-10 -mt-24 md:-mt-32 lg:-mt-40"
+      >
+        <div className="mx-auto max-w-[1200px] px-6 pb-12 md:pb-20">
+          <h2 id="teams-heading" className="sr-only">
+            The two teams
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <TeamCard
+              team="magnolia"
+              teamLabel="Magnolia CC"
+              teamSubLabel="Youth Track & Field"
+              logoSrc="/logos/magnolia-cc.png"
+              logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
+              logoWidth={2138}
+              logoHeight={1682}
+              description="Representing the Magnolia community with heart and hustle. We practice with Queen Anne Quicksters under the same coaches and compete as one team."
+              registerUrl={MAGNOLIA_REGISTER_URL}
+              registerLabel="Register with Magnolia CC"
+              registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
+              communityCenterName="Magnolia Community Center"
+            />
+            <TeamCard
+              team="queen-anne"
+              teamLabel="Queen Anne Quicksters"
+              teamSubLabel="Track & Field"
+              logoSrc="/logos/queen-anne-quicksters.png"
+              logoAlt="Queen Anne Quicksters winged-shoe logo"
+              logoWidth={1254}
+              logoHeight={1254}
+              description="Representing the Queen Anne community with pride and passion. We practice with Magnolia under the same coaches and compete as one team."
+              registerUrl={QUEEN_ANNE_REGISTER_URL}
+              registerLabel="Register with Queen Anne CC"
+              registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"
+              communityCenterName="Queen Anne Community Center"
+            />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function SharedProgram() {
-  return (
-    <section className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
-      <p className="mx-auto max-w-2xl text-center text-base md:text-lg text-ink">
-        Magnolia and Queen Anne practice together, share coaches, and compete as one team.
-        Each side registers through its own community center.
-      </p>
-    </section>
-  );
-}
-
-function WhatToExpect() {
+function SharedStrongerTogether() {
   const items = [
     {
-      title: "Practice",
-      body: "Mondays and Wednesdays, 6:00–7:30 pm at Queen Anne Bowl Playfield.",
+      title: "Shared practices",
+      body: "Athletes from both teams practice together at QA Bowl Mondays and Wednesdays.",
+      icon: <PeopleIcon />,
     },
     {
-      title: "Meets",
-      body: "Saturday meets at West Seattle Stadium across the spring season.",
+      title: "Shared meets",
+      body: "We compete as one team at Saturday meets at West Seattle Stadium.",
+      icon: <TrophyIcon />,
     },
     {
-      title: "Open to all",
-      body: "Ages 5–17. All skill levels welcome — no tryouts, no cuts.",
+      title: "One community",
+      body: "Two neighborhoods. One track. Stronger together.",
+      icon: <HeartIcon />,
     },
   ];
 
   return (
     <section className="bg-surface">
-      <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
-        <h2 className="mb-8">What to expect</h2>
-        <div className="grid gap-6 md:grid-cols-3 md:gap-8">
+      <div className="mx-auto max-w-[1200px] px-6 py-14 md:py-20 flex flex-col items-center gap-10">
+        <div className="flex flex-col items-center gap-3">
+          <h2 className="text-ink text-2xl md:text-3xl font-bold uppercase tracking-wide text-center">
+            Shared. Stronger together.
+          </h2>
+          <span
+            className="block h-1 w-24 bg-accent-gold"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3 w-full">
           {items.map((item) => (
-            <div key={item.title} className="flex flex-col gap-2">
-              <h3>{item.title}</h3>
-              <p className="text-sm text-ink/80 leading-relaxed">{item.body}</p>
+            <div
+              key={item.title}
+              className="flex flex-col items-center text-center gap-3"
+            >
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white text-magnolia-navy">
+                {item.icon}
+              </div>
+              <h3 className="text-magnolia-navy text-sm font-semibold uppercase tracking-wide">
+                {item.title}
+              </h3>
+              <p className="text-sm text-ink leading-relaxed max-w-[16rem]">
+                {item.body}
+              </p>
             </div>
           ))}
         </div>
@@ -135,49 +186,12 @@ function WhatToExpect() {
   );
 }
 
-function TeamCards() {
-  return (
-    <section
-      aria-labelledby="teams-heading"
-      className="mx-auto max-w-[1100px] px-6 py-12 md:py-16"
-    >
-      <h2 id="teams-heading" className="sr-only">
-        The two teams
-      </h2>
-      <div className="grid gap-6 md:grid-cols-2">
-        <TeamCard
-          team="magnolia"
-          teamLabel="Magnolia"
-          logoSrc="/logos/magnolia-cc.png"
-          logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
-          logoWidth={2138}
-          logoHeight={1682}
-          description="Track and field for kids ages 5–17 in Magnolia. We practice with Queen Anne Quicksters under the same coaches and compete as one team. Registration runs through Magnolia Community Center."
-          registerUrl={MAGNOLIA_REGISTER_URL}
-          registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
-          communityCenterName="Magnolia Community Center"
-        />
-        <TeamCard
-          team="queen-anne"
-          teamLabel="Queen Anne Quicksters"
-          logoSrc="/logos/queen-anne-quicksters.png"
-          logoAlt="Queen Anne Quicksters winged-shoe logo"
-          logoWidth={1254}
-          logoHeight={1254}
-          description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete as one team. Registration runs through Queen Anne Community Center."
-          registerUrl={QUEEN_ANNE_REGISTER_URL}
-          registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"
-          communityCenterName="Queen Anne Community Center"
-        />
-      </div>
-    </section>
-  );
-}
-
 function Coaches({ coaches }: { coaches: Coach[] }) {
   return (
-    <section className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
-      <h2 className="mb-8">Coaches</h2>
+    <section className="mx-auto max-w-[1200px] px-6 py-14 md:py-16">
+      <h2 className="text-ink text-2xl font-bold uppercase tracking-wide mb-8">
+        Coaches
+      </h2>
       <div className="grid gap-6 md:grid-cols-3">
         {coaches.map((c) => (
           <div key={c.name} className="flex flex-col gap-2">
@@ -191,7 +205,7 @@ function Coaches({ coaches }: { coaches: Coach[] }) {
               />
             ) : null}
             <h3>{c.name}</h3>
-            <p className="text-sm text-ink/80 leading-relaxed">{c.bio}</p>
+            <p className="text-sm text-ink leading-relaxed">{c.bio}</p>
           </div>
         ))}
       </div>
@@ -206,17 +220,72 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
   );
 
   return (
+    <section className="mx-auto max-w-[1200px] px-6 py-8">
+      <p className="text-sm text-muted text-center">
+        Most recent meet: <span className="font-medium text-ink">{formatted}</span>.{" "}
+        <Link
+          href="/results"
+          className="text-magnolia-navy font-medium underline underline-offset-4 hover:opacity-80"
+        >
+          View all results →
+        </Link>
+      </p>
+    </section>
+  );
+}
+
+function ReadyToJoin() {
+  return (
     <section className="bg-surface">
-      <div className="mx-auto max-w-[1100px] px-6 py-10 md:py-12">
-        <p className="text-base text-ink">
-          Most recent meet: <span className="font-medium">{formatted}</span>.{" "}
-          <Link
-            href="/results"
-            className="text-magnolia-navy underline underline-offset-4 hover:opacity-80"
-          >
-            View all results →
-          </Link>
+      <div className="mx-auto max-w-[1200px] px-6 py-16 md:py-24 flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-3">
+          <h2 className="text-magnolia-navy text-3xl md:text-4xl font-bold uppercase tracking-wide text-center">
+            Ready to join?
+          </h2>
+          <span
+            className="block h-1 w-24 bg-accent-gold"
+            aria-hidden="true"
+          />
+        </div>
+        <p className="text-base text-ink text-center max-w-xl leading-relaxed">
+          Each team has a different registration through their local community
+          center. Click your team to get started.
         </p>
+
+        <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full sm:w-auto">
+          <a
+            href={MAGNOLIA_REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Register with Magnolia CC Youth Track & Field — opens external registration"
+            className="inline-flex items-center justify-center gap-3 rounded-md bg-magnolia-navy text-white px-6 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-magnolia-navy/90 transition-colors min-w-[18rem]"
+          >
+            <Image
+              src="/logos/magnolia-cc.png"
+              alt=""
+              width={2138}
+              height={1682}
+              className="h-7 w-auto object-contain"
+            />
+            Join Magnolia CC →
+          </a>
+          <a
+            href={QUEEN_ANNE_REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Register with Queen Anne Quicksters — opens external registration"
+            className="inline-flex items-center justify-center gap-3 rounded-md bg-queenAnne-red text-white px-6 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-queenAnne-red/90 transition-colors min-w-[18rem]"
+          >
+            <Image
+              src="/logos/queen-anne-quicksters.png"
+              alt=""
+              width={1254}
+              height={1254}
+              className="h-7 w-auto object-contain"
+            />
+            Join Queen Anne Quicksters →
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -224,16 +293,77 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
 
 function SecondaryCTA() {
   return (
-    <section className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
-      <p className="text-base text-ink">
+    <section className="mx-auto max-w-[1200px] px-6 py-10 md:py-12">
+      <p className="text-sm text-muted text-center">
         Have questions?{" "}
         <Link
           href="/faq"
-          className="text-magnolia-navy underline underline-offset-4 hover:opacity-80"
+          className="text-magnolia-navy font-medium underline underline-offset-4 hover:opacity-80"
         >
           Read the FAQ →
         </Link>
       </p>
     </section>
+  );
+}
+
+function PeopleIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+function TrophyIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 9H4a2 2 0 0 1-2-2V5h4" />
+      <path d="M18 9h2a2 2 0 0 0 2-2V5h-4" />
+      <path d="M6 5v6a6 6 0 0 0 12 0V5" />
+      <path d="M9 21h6" />
+      <path d="M12 17v4" />
+    </svg>
+  );
+}
+
+function HeartIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
   );
 }

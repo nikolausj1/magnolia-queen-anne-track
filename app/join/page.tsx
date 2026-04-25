@@ -60,13 +60,15 @@ export default function JoinPage() {
         <div className="grid gap-6 md:grid-cols-2">
           <TeamCard
             team="magnolia"
-            teamLabel="Magnolia"
+            teamLabel="Magnolia CC"
+            teamSubLabel="Youth Track & Field"
             logoSrc="/logos/magnolia-cc.png"
             logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
             logoWidth={2138}
             logoHeight={1682}
-            description="Track and field for kids ages 5–17 in Magnolia. We practice with Queen Anne Quicksters under the same coaches and compete as one team. Registration runs through Magnolia Community Center."
+            description="Track and field for kids ages 5–17 in Magnolia. We practice with Queen Anne Quicksters under the same coaches and compete as one team."
             registerUrl={MAGNOLIA_REGISTER_URL}
+            registerLabel="Register with Magnolia CC"
             registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
             communityCenterName="Magnolia Community Center"
             variant="large"
@@ -74,12 +76,14 @@ export default function JoinPage() {
           <TeamCard
             team="queen-anne"
             teamLabel="Queen Anne Quicksters"
+            teamSubLabel="Track & Field"
             logoSrc="/logos/queen-anne-quicksters.png"
             logoAlt="Queen Anne Quicksters winged-shoe logo"
             logoWidth={1254}
             logoHeight={1254}
-            description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete as one team. Registration runs through Queen Anne Community Center."
+            description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete as one team."
             registerUrl={QUEEN_ANNE_REGISTER_URL}
+            registerLabel="Register with Queen Anne CC"
             registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"
             communityCenterName="Queen Anne Community Center"
             variant="large"

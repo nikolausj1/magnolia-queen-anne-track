@@ -5,6 +5,7 @@ const NAV = [
   { href: "/results", label: "Results" },
   { href: "/join", label: "Join" },
   { href: "/faq", label: "FAQ" },
+  { href: "/privacy", label: "Privacy" },
 ];
 
 // TODO: replace with real Parks & Rec registration URLs (PRD Open Items).
@@ -16,47 +17,77 @@ const COMMUNITY_CENTERS = [
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-16 border-t border-divider bg-surface">
-      <div className="mx-auto max-w-[1100px] px-6 py-10 flex flex-col gap-6">
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm text-ink hover:text-magnolia-navy"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+    <footer className="mt-16 bg-magnolia-navy text-white">
+      <div className="mx-auto max-w-[1200px] px-6 py-12 md:py-14">
+        <div className="grid gap-10 md:grid-cols-3">
+          <div className="flex flex-col gap-3">
+            <p className="text-sm leading-relaxed text-white/85">
+              Magnolia Community Center and Queen Anne Quicksters track and
+              field programs serve youth ages 5–17 in Seattle.
+            </p>
+            <p className="text-sm leading-relaxed text-white/85">
+              All abilities. All are welcome.
+            </p>
+          </div>
 
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          {COMMUNITY_CENTERS.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-ink hover:text-magnolia-navy underline-offset-4 hover:underline"
-            >
-              {item.label}
-            </a>
-          ))}
+          <div className="flex flex-col gap-3">
+            <FooterColumnHeading>Quick Links</FooterColumnHeading>
+            <nav aria-label="Footer">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {NAV.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-white/85 hover:text-white"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <FooterColumnHeading>Register</FooterColumnHeading>
+            <ul className="flex flex-col gap-2">
+              {COMMUNITY_CENTERS.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/85 hover:text-white underline-offset-4 hover:underline"
+                  >
+                    {item.label} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-1 text-sm text-muted">
-          <p>Magnolia · Queen Anne · Seattle</p>
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-xs text-white/65">
           <p>
-            © {year} Magnolia &amp; Queen Anne Track &amp; Field ·{" "}
-            <Link
-              href="/privacy"
-              className="hover:text-magnolia-navy underline-offset-4 hover:underline"
-            >
-              Privacy
-            </Link>
+            © {year} Magnolia &amp; Queen Anne Track &amp; Field
           </p>
+          <p>Building kids. Building community. Building champions.</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumnHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-white">
+        {children}
+      </h2>
+      <span
+        className="block h-[2px] w-8 bg-accent-gold"
+        aria-hidden="true"
+      />
+    </div>
   );
 }
