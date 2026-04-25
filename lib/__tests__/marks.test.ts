@@ -43,6 +43,10 @@ describe("parseDistance", () => {
     expect(parseDistance("11\"")).toBe(11);
   });
 
+  it("accepts fractional inches", () => {
+    expect(parseDistance("30'2.5\"")).toBe(362.5);
+  });
+
   it("throws on unparseable input", () => {
     expect(() => parseDistance("nope")).toThrow();
     expect(() => parseDistance("")).toThrow();

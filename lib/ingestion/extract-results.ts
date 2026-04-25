@@ -20,6 +20,7 @@ const KNOWN_EVENTS = new Set([
 ]);
 
 const PLACE_SUFFIX = /\s+(\d+)(?:st|nd|rd|th)\b/i;
+const PLACE_ONLY = /^(\d+)(?:st|nd|rd|th)\s*place\s*$/i;
 const NOTE_PARENS = /\s*\(([^)]+)\)\s*$/;
 const SHEET_DATE = /MEET\s+([A-Z]+)\s+(\d+)/i;
 const BENCHMARK = /BENCHMARK/i;
@@ -177,6 +178,12 @@ function parseCell(raw: string): {
   let note: string | undefined;
   let place: number | undefined;
 
+  // Standalone place-only cell, e.g. "3RD PLACE", "2nd Place".
+  const placeOnlyMatch = PLACE_ONLY.exec(value);
+  if (placeOnlyMatch) {
+    return { mark: "", place: parseInt(placeOnlyMatch[1], 10), placeOnly: true };
+  }
+
   const noteMatch = NOTE_PARENS.exec(value);
   if (noteMatch) {
     note = noteMatch[1].trim();
@@ -189,7 +196,6 @@ function parseCell(raw: string): {
     value = value.slice(0, placeMatch.index).trim();
   }
 
-  // If only a place annotation remains (e.g. "3RD PLACE"), value will be empty.
   if (value === "" || /^place$/i.test(value)) {
     return { mark: "", placeOnly: true };
   }

@@ -18,7 +18,7 @@ export function parseTime(mark: string): number {
   return seconds;
 }
 
-const DISTANCE_RE = /^(?:(\d+)')?\s*(?:(\d+)")?$/;
+const DISTANCE_RE = /^(?:(\d+)')?\s*(?:(\d+(?:\.\d+)?)")?$/;
 
 export function parseDistance(mark: string): number {
   const trimmed = mark.trim();

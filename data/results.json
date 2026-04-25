@@ -28,7 +28,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "anthony-f",
     "event": "1500m",
-    "mark": "1899-12-30T06:41:00.000Z"
+    "mark": "6:41"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -58,7 +58,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "brendan-b",
     "event": "400m",
-    "mark": "1899-12-30T00:01:14.160Z"
+    "mark": "1:14"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -142,12 +142,6 @@
   {
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "coraline-g",
-    "event": "100m",
-    "mark": "3RD PLACE"
-  },
-  {
-    "meetId": "2026-04-18-west-seattle",
-    "athleteId": "coraline-g",
     "event": "Long Jump",
     "mark": "1'10\""
   },
@@ -167,7 +161,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "everett-c",
     "event": "400m",
-    "mark": "1899-12-30T00:01:14.190Z"
+    "mark": "1:14"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -185,7 +179,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "garrett-c",
     "event": "400m",
-    "mark": "1899-12-30T00:01:16.000Z"
+    "mark": "1:16"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -222,7 +216,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "gwen-h",
     "event": "400m",
-    "mark": "1899-12-30T00:01:31.560Z"
+    "mark": "1:31"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -240,7 +234,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "henry-b",
     "event": "400m",
-    "mark": "1899-12-30T00:01:19.470Z"
+    "mark": "1:19"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -258,7 +252,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "hudson-y",
     "event": "400m",
-    "mark": "1899-12-30T00:01:14.170Z"
+    "mark": "1:14"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -282,7 +276,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "jerome-b",
     "event": "400m",
-    "mark": "1899-12-30T00:01:30.470Z"
+    "mark": "1:30"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -343,7 +337,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "nori-b",
     "event": "400m",
-    "mark": "1899-12-30T00:01:21.000Z"
+    "mark": "1:21"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -361,7 +355,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "rhys-s",
     "event": "1500m",
-    "mark": "1899-12-30T06:26:00.000Z"
+    "mark": "6:26"
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -409,7 +403,7 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "sofia-s",
     "event": "800m",
-    "mark": "1899-12-30T00:03:38.620Z"
+    "mark": "3:38"
   },
   {
     "meetId": "2026-04-18-west-seattle",
