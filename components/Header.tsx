@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -40,25 +39,15 @@ export function Header() {
       <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-20 flex items-center justify-between gap-4">
         <Link
           href="/"
-          aria-label="Magnolia and Queen Anne home"
-          className="flex items-center gap-3 min-w-0"
+          aria-label="Magnolia and Queen Anne Track and Field home"
+          className="flex items-center min-w-0"
         >
-          <Image
-            src="/logos/magnolia-cc.png"
-            alt=""
-            width={2138}
-            height={1682}
-            className="h-9 md:h-11 w-auto object-contain"
-            priority
-          />
-          <div className="hidden md:flex flex-col leading-none">
-            <span className="text-magnolia-navy text-sm md:text-base font-bold uppercase tracking-tight">
-              Magnolia
-            </span>
-            <span className="text-magnolia-navy text-[10px] md:text-xs font-semibold uppercase tracking-wide opacity-80">
-              Community Center
-            </span>
-          </div>
+          <span className="text-base md:text-lg font-bold uppercase tracking-tight leading-tight">
+            <span className="text-magnolia-navy">Magnolia</span>
+            <span className="text-ink"> &amp; </span>
+            <span className="text-queenAnne-red">Queen Anne</span>
+            <span className="block text-ink">Track and Field</span>
+          </span>
         </Link>
 
         <nav
@@ -80,28 +69,6 @@ export function Header() {
             </Link>
           ))}
         </nav>
-
-        <Link
-          href="/"
-          aria-label="Queen Anne Quicksters"
-          className="flex items-center gap-3"
-        >
-          <div className="hidden md:flex flex-col leading-none text-right">
-            <span className="text-queenAnne-red text-sm md:text-base font-bold uppercase tracking-tight">
-              Queen Anne
-            </span>
-            <span className="text-queenAnne-red text-[10px] md:text-xs font-semibold uppercase tracking-wide opacity-80">
-              Quicksters · Track &amp; Field
-            </span>
-          </div>
-          <Image
-            src="/logos/queen-anne-quicksters.png"
-            alt=""
-            width={1254}
-            height={1254}
-            className="h-9 md:h-11 w-auto object-contain"
-          />
-        </Link>
 
         <button
           ref={buttonRef}
