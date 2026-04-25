@@ -8,7 +8,7 @@ export type Athlete = {
   id: string;
   firstName: string;
   lastInitial?: string;
-  team: Team;
+  team?: Team;
   division?: string;
 };
 

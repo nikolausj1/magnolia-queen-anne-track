@@ -1,1 +1,493 @@
-[]
+[
+  {
+    "id": "coraline-g",
+    "firstName": "Coraline",
+    "lastInitial": "G.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "waverly-h",
+    "firstName": "Waverly",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "krishin-j",
+    "firstName": "Krishin",
+    "lastInitial": "J.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "emmett-c",
+    "firstName": "Emmett",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "nico-c",
+    "firstName": "Nico",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "henry-w",
+    "firstName": "Henry",
+    "lastInitial": "W.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "elon-o",
+    "firstName": "Elon",
+    "lastInitial": "O.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "lennon-s",
+    "firstName": "Lennon",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "billie-a",
+    "firstName": "Billie",
+    "lastInitial": "A.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "niya-c",
+    "firstName": "Niya",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "london-f",
+    "firstName": "London",
+    "lastInitial": "F.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "camden-c",
+    "firstName": "Camden",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "liam-e",
+    "firstName": "Liam",
+    "lastInitial": "E.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "royce-g",
+    "firstName": "Royce",
+    "lastInitial": "G.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "valerie-e",
+    "firstName": "Valerie",
+    "lastInitial": "E.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "miriam-a",
+    "firstName": "Miriam",
+    "lastInitial": "A.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "rhys-s",
+    "firstName": "Rhys",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "gloria-h",
+    "firstName": "Gloria",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "diego-s",
+    "firstName": "Diego",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "dresden-h",
+    "firstName": "Dresden",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "gwen-h",
+    "firstName": "Gwen",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "jerome-b",
+    "firstName": "Jerome",
+    "lastInitial": "B.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "slater-c",
+    "firstName": "Slater",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "george-l",
+    "firstName": "George",
+    "lastInitial": "L.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "anika-u",
+    "firstName": "Anika",
+    "lastInitial": "U.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "oliver-h",
+    "firstName": "Oliver",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "ranveer-j",
+    "firstName": "Ranveer",
+    "lastInitial": "J.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "negaar-z",
+    "firstName": "Negaar",
+    "lastInitial": "Z.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "grace-p",
+    "firstName": "Grace",
+    "lastInitial": "P.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "soren-s",
+    "firstName": "Soren",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "liesel-c",
+    "firstName": "Liesel",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "anthony-f",
+    "firstName": "Anthony",
+    "lastInitial": "F.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "jeronimo-d",
+    "firstName": "Jeronimo",
+    "lastInitial": "D.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "tuva-c",
+    "firstName": "Tuva",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "leona-e",
+    "firstName": "Leona",
+    "lastInitial": "E.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "charlie-g",
+    "firstName": "Charlie",
+    "lastInitial": "G.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "samantha-f",
+    "firstName": "Samantha",
+    "lastInitial": "F.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "jiraiya-b",
+    "firstName": "Jiraiya",
+    "lastInitial": "B.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "caleb-r",
+    "firstName": "Caleb",
+    "lastInitial": "R.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "ada-f",
+    "firstName": "Ada",
+    "lastInitial": "F.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "gio-f",
+    "firstName": "Gio",
+    "lastInitial": "F.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "august-n",
+    "firstName": "August",
+    "lastInitial": "N.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "charlie-h",
+    "firstName": "Charlie",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "samantha-s",
+    "firstName": "Samantha",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "fenna-l",
+    "firstName": "Fenna",
+    "lastInitial": "L.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "naomi-h",
+    "firstName": "Naomi",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "grant-m",
+    "firstName": "Grant",
+    "lastInitial": "M.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "georgia-k",
+    "firstName": "Georgia",
+    "lastInitial": "K.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "ari-m",
+    "firstName": "Ari",
+    "lastInitial": "M.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "brandon-m",
+    "firstName": "Brandon",
+    "lastInitial": "M.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "murphy-c",
+    "firstName": "Murphy",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "sofia-s",
+    "firstName": "Sofia",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "griffin-w",
+    "firstName": "Griffin",
+    "lastInitial": "W.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "vansh-c",
+    "firstName": "Vansh",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "eloise-k",
+    "firstName": "Eloise",
+    "lastInitial": "K.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "kolin-c",
+    "firstName": "Kolin",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "violette-g",
+    "firstName": "Violette",
+    "lastInitial": "G.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "hudson-y",
+    "firstName": "Hudson",
+    "lastInitial": "Y.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "bartholomew-m",
+    "firstName": "Bartholomew",
+    "lastInitial": "M.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "elin-p",
+    "firstName": "Elin",
+    "lastInitial": "P.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "nori-b",
+    "firstName": "Nori",
+    "lastInitial": "B.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "frances-k",
+    "firstName": "Frances",
+    "lastInitial": "K.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "margaret-a",
+    "firstName": "Margaret",
+    "lastInitial": "A.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "guinevere-g",
+    "firstName": "Guinevere",
+    "lastInitial": "G.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "anna-b",
+    "firstName": "Anna",
+    "lastInitial": "B.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "eleanor-p",
+    "firstName": "Eleanor",
+    "lastInitial": "P.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "everett-c",
+    "firstName": "Everett",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "garrett-c",
+    "firstName": "Garrett",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "emmy-s",
+    "firstName": "Emmy",
+    "lastInitial": "S.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "emma-b",
+    "firstName": "Emma",
+    "lastInitial": "B.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "lia-c",
+    "firstName": "Lia",
+    "lastInitial": "C.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "jameson-w",
+    "firstName": "Jameson",
+    "lastInitial": "W.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "emerson-h",
+    "firstName": "Emerson",
+    "lastInitial": "H.",
+    "team": "queen-anne"
+  },
+  {
+    "id": "abigail",
+    "firstName": "Abigail"
+  },
+  {
+    "id": "brendan-b",
+    "firstName": "Brendan",
+    "lastInitial": "B."
+  },
+  {
+    "id": "brijai",
+    "firstName": "Brijai"
+  },
+  {
+    "id": "chase",
+    "firstName": "Chase"
+  },
+  {
+    "id": "henry-b",
+    "firstName": "Henry",
+    "lastInitial": "B."
+  },
+  {
+    "id": "jack-rees",
+    "firstName": "Jack Rees"
+  },
+  {
+    "id": "mehu",
+    "firstName": "Mehu"
+  },
+  {
+    "id": "molly",
+    "firstName": "Molly"
+  },
+  {
+    "id": "samantha",
+    "firstName": "Samantha"
+  },
+  {
+    "id": "serina",
+    "firstName": "Serina"
+  },
+  {
+    "id": "tor",
+    "firstName": "Tor",
+    "team": "magnolia"
+  },
+  {
+    "id": "violet-r",
+    "firstName": "Violet",
+    "lastInitial": "R.",
+    "team": "magnolia"
+  }
+]

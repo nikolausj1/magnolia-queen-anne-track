@@ -4,14 +4,24 @@
     "date": "2026-04-18",
     "startTime": "10:00 am",
     "location": "West Seattle Stadium",
-    "type": "Invitational"
+    "type": "Invitational",
+    "weather": {
+      "tempF": 51,
+      "conditions": "Partly cloudy",
+      "summary": "51°F · Partly cloudy"
+    }
   },
   {
     "id": "2026-04-25-west-seattle",
     "date": "2026-04-25",
     "startTime": "10:00 am",
     "location": "West Seattle Stadium",
-    "type": "Invitational"
+    "type": "Invitational",
+    "weather": {
+      "tempF": 53,
+      "conditions": "Clear",
+      "summary": "53°F · Clear"
+    }
   },
   {
     "id": "2026-05-02-west-seattle",

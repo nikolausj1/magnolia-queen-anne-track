@@ -55,9 +55,9 @@ The project ingests results, athletes, and meet data from files in `inbox/`. Sch
 No standalone Magnolia roster exists. Use this heuristic on athlete name merges:
 
 1. Athletes in the Queen Anne roster PDF → `team: "queen-anne"`.
-2. Athletes in the xlsx but not in the Queen Anne roster PDF → `team: "magnolia"`.
+2. Athletes in the xlsx but not in the Queen Anne roster PDF → `team` **left undefined** (unknown). Promote to `"magnolia"` (or back to `"queen-anne"`) per-athlete during Tier 2 flag review when Justin confirms the team.
 
-Apply the rule after merging the name sets from both sources.
+`Athlete.team` is optional in the schema for this reason; the UI shows a neutral / "Team TBD" treatment when it is undefined. (Earlier versions of this rule auto-defaulted to Magnolia; revised 2026-04-24 to stop guessing.)
 
 ### Extraction rules
 

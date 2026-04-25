@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ingest": "tsx lib/ingestion/run.ts",
+    "ingest:weather": "tsx lib/ingestion/enrich-weather.ts"
   },
   "dependencies": {
     "next": "16.2.4",
@@ -22,7 +24,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "exceljs": "^4.4.0",
+    "pdf-parse": "^2.4.5",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.1.5"
   }

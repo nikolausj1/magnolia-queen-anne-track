@@ -48,3 +48,6 @@ Thumbs.db
 
 # local-only source files (youth PII, never committed)
 inbox/
+
+# ingestion working dir
+lib/ingestion/.cache/
