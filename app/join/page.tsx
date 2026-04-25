@@ -68,7 +68,7 @@ export default function JoinPage() {
             logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
             logoWidth={2138}
             logoHeight={1682}
-            description="Track and field for kids ages 5–17 in Magnolia. We practice with Queen Anne Quicksters under the same coaches and compete as one team."
+            description="Track and field for kids ages 5–17 in Magnolia. We practice with Queen Anne Quicksters under the same coaches and compete together."
             registerUrl={MAGNOLIA_REGISTER_URL}
             registerLabel="Register with Magnolia CC"
             registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
@@ -83,7 +83,7 @@ export default function JoinPage() {
             logoAlt="Queen Anne Quicksters winged-shoe logo"
             logoWidth={1254}
             logoHeight={1254}
-            description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete as one team."
+            description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete together."
             registerUrl={QUEEN_ANNE_REGISTER_URL}
             registerLabel="Register with Queen Anne CC"
             registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"

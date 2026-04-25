@@ -106,7 +106,7 @@ function HeroAndTeamCards() {
               logoAlt="Magnolia CC Youth Track & Field winged-shoe logo"
               logoWidth={2138}
               logoHeight={1682}
-              description="Representing the Magnolia community with heart and hustle. We practice with Queen Anne Quicksters under the same coaches and compete as one team."
+              description="Representing the Magnolia community with heart and hustle. We practice with Queen Anne Quicksters under the same coaches and compete together."
               registerUrl={MAGNOLIA_REGISTER_URL}
               registerLabel="Register with Magnolia CC"
               registerAriaLabel="Register with Magnolia CC Youth Track & Field — opens external registration"
@@ -121,7 +121,7 @@ function HeroAndTeamCards() {
               logoAlt="Queen Anne Quicksters winged-shoe logo"
               logoWidth={1254}
               logoHeight={1254}
-              description="Representing the Queen Anne community with pride and passion. We practice with Magnolia under the same coaches and compete as one team."
+              description="Representing the Queen Anne community with pride and passion. We practice with Magnolia under the same coaches and compete together."
               registerUrl={QUEEN_ANNE_REGISTER_URL}
               registerLabel="Register with Queen Anne CC"
               registerAriaLabel="Register with Queen Anne Quicksters — opens external registration"
