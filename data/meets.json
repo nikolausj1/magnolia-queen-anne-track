@@ -1,0 +1,44 @@
+[
+  {
+    "id": "2026-04-18-west-seattle",
+    "date": "2026-04-18",
+    "startTime": "10:00 am",
+    "location": "West Seattle Stadium",
+    "type": "Invitational"
+  },
+  {
+    "id": "2026-04-25-west-seattle",
+    "date": "2026-04-25",
+    "startTime": "10:00 am",
+    "location": "West Seattle Stadium",
+    "type": "Invitational"
+  },
+  {
+    "id": "2026-05-02-west-seattle",
+    "date": "2026-05-02",
+    "startTime": "1:30 pm",
+    "location": "West Seattle Stadium",
+    "type": "Invitational"
+  },
+  {
+    "id": "2026-05-09-west-seattle",
+    "date": "2026-05-09",
+    "startTime": "1:30 pm",
+    "location": "West Seattle Stadium",
+    "type": "Invitational"
+  },
+  {
+    "id": "2026-05-16-west-seattle",
+    "date": "2026-05-16",
+    "startTime": "10:00 am",
+    "location": "West Seattle Stadium",
+    "type": "Invitational"
+  },
+  {
+    "id": "2026-05-23-west-seattle",
+    "date": "2026-05-23",
+    "startTime": "10:00 am",
+    "location": "West Seattle Stadium",
+    "type": "Championships"
+  }
+]

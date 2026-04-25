@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Prompts · Magnolia / Queen Anne Track & Field</title>
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --surface-2: #F3F4F6;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --text: #111827;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --accent: #0B1F3A;
+    --accent-soft: #E6F1FB;
+    --accent-text: #0C447C;
+    --status-not-started: #9CA3AF;
+    --status-copied: #2563EB;
+    --status-copied-bg: #DBEAFE;
+    --status-done: #059669;
+    --status-done-bg: #D1FAE5;
+    --shadow: 0 1px 2px rgba(17,24,39,0.04);
+    --shadow-hover: 0 4px 12px rgba(17,24,39,0.08);
+    --shadow-focus: 0 0 0 3px rgba(11,31,58,0.15);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  body.dark {
+    --bg: #0B1220;
+    --surface: #111A2E;
+    --surface-2: #172340;
+    --border: #1F2A44;
+    --border-strong: #2A3859;
+    --text: #F3F4F6;
+    --text-secondary: #94A3B8;
+    --text-tertiary: #64748B;
+    --accent: #93C5FD;
+    --accent-soft: #1E3A8A;
+    --accent-text: #BFDBFE;
+    --status-not-started: #64748B;
+    --status-copied: #60A5FA;
+    --status-copied-bg: #1E3A8A;
+    --status-done: #34D399;
+    --status-done-bg: #065F46;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.5);
+    --shadow-focus: 0 0 0 3px rgba(147,197,253,0.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+  }
+
+  .app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* Page header */
+  .page-header {
+    padding: 40px 0 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .page-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .page-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .icon-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+
+  .icon-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+
+  .icon-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  .icon-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Sticky progress bar */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    margin: 0 -24px 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1052px;
+    margin: 0 auto;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar-copied,
+  .progress-bar-done {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+
+  .progress-bar-copied {
+    background: var(--status-copied);
+    opacity: 0.4;
+  }
+
+  .progress-bar-done {
+    background: var(--status-done);
+  }
+
+  .progress-counts {
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .progress-counts strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .jump-next-btn {
+    background: var(--accent);
+    color: var(--surface);
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  body.dark .jump-next-btn {
+    color: var(--bg);
+  }
+
+  .jump-next-btn:hover { opacity: 0.9; }
+
+  .jump-next-btn:disabled {
+    background: var(--surface-2);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .jump-next-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  /* Mini-TOC */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    max-width: 1052px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .toc-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+
+  .toc-item:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+
+  .toc-item-count {
+    font-variant-numeric: tabular-nums;
+    color: var(--text-tertiary);
+    font-size: 11px;
+  }
+
+  /* Sections */
+  .section {
+    margin-top: 40px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .section-header .section-count {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Prompt card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: all 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card[data-status="copied"] {
+    border-color: var(--status-copied);
+    box-shadow: 0 0 0 1px var(--status-copied);
+  }
+
+  .card[data-status="done"] {
+    border-color: var(--status-done);
+    box-shadow: 0 0 0 1px var(--status-done);
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .card-title-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .card-meta {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    background: var(--surface-2);
+    color: var(--status-not-started);
+  }
+
+  .card[data-status="copied"] .status-badge {
+    background: var(--status-copied-bg);
+    color: var(--status-copied);
+  }
+
+  .card[data-status="done"] .status-badge {
+    background: var(--status-done-bg);
+    color: var(--status-done);
+  }
+
+  body.dark .card[data-status="copied"] .status-badge { color: #BFDBFE; }
+  body.dark .card[data-status="done"] .status-badge { color: #A7F3D0; }
+
+  .kebab-wrap {
+    position: relative;
+  }
+
+  .kebab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+
+  .kebab-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .kebab-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  .kebab-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-hover);
+    min-width: 180px;
+    padding: 4px;
+    z-index: 20;
+    display: none;
+  }
+
+  .kebab-menu.open {
+    display: block;
+  }
+
+  .kebab-menu-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+  }
+
+  .kebab-menu-item:hover {
+    background: var(--surface-2);
+  }
+
+  /* Prompt body (click to copy) */
+  .card-body {
+    padding: 0;
+    cursor: copy;
+    position: relative;
+  }
+
+  .card-body:hover {
+    background: var(--surface-2);
+  }
+
+  .card-body:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--accent);
+  }
+
+  .card-body-inner {
+    padding: 18px 20px;
+  }
+
+  .card-body pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 540px;
+    overflow-y: auto;
+  }
+
+  .card-body-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    gap: 12px;
+  }
+
+  .copy-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .copy-hint svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .mark-done-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+
+  .mark-done-btn:hover {
+    background: var(--status-done-bg);
+    border-color: var(--status-done);
+    color: var(--status-done);
+  }
+
+  body.dark .mark-done-btn:hover { color: #A7F3D0; }
+
+  .mark-done-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  .card[data-status="not-started"] .mark-done-btn {
+    display: none;
+  }
+
+  .card[data-status="done"] .mark-done-btn {
+    background: var(--status-done-bg);
+    border-color: var(--status-done);
+    color: var(--status-done);
+  }
+
+  body.dark .card[data-status="done"] .mark-done-btn { color: #A7F3D0; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Confirm dialog */
+  .dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17,24,39,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  body.dark .dialog-overlay {
+    background: rgba(0,0,0,0.6);
+  }
+
+  .dialog-overlay.open {
+    display: flex;
+  }
+
+  .dialog {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    max-width: 420px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+  }
+
+  .dialog h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .dialog p {
+    margin: 0 0 18px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .dialog-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .btn-danger {
+    background: #DC2626;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .btn-danger:hover { background: #B91C1C; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .app { padding: 0 16px 64px; }
+    .sticky-header { margin: 0 -16px 20px; padding-left: 16px; padding-right: 16px; }
+    .page-header { padding: 24px 0 16px; flex-direction: column; }
+    .page-header h1 { font-size: 24px; }
+    .progress-row { flex-wrap: wrap; }
+    .jump-next-btn { flex: 1; }
+    .card-body pre { font-size: 12px; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* Focus styles for card */
+  .card-body:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="page-header">
+    <div>
+      <h1>Magnolia / Queen Anne Track &amp; Field</h1>
+      <p class="subtitle">Build prompts, ordered. Click any prompt to copy. Mark as done when Claude Code finishes.</p>
+    </div>
+    <div class="page-header-actions">
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a8 8 0 108 8 6 6 0 01-8-8z"/></svg>
+        <span id="theme-toggle-label">Dark</span>
+      </button>
+      <button class="icon-btn" id="reset-all" aria-label="Reset all progress">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10a7 7 0 1114 0 7 7 0 01-14 0z"/><path d="M3 4v4h4"/><path d="M3 8a7 7 0 0112-3"/></svg>
+        Reset all
+      </button>
+    </div>
+  </header>
+
+  <div class="sticky-header">
+    <div class="progress-row">
+      <div class="progress-bar-wrap" role="progressbar" aria-label="Overall progress">
+        <div class="progress-bar-copied" id="progress-copied" style="width: 0%"></div>
+        <div class="progress-bar-done" id="progress-done" style="width: 0%"></div>
+      </div>
+      <div class="progress-counts">
+        <strong id="count-copied">0</strong> copied · <strong id="count-done">0</strong> done of <strong id="count-total">0</strong>
+      </div>
+      <button class="jump-next-btn" id="jump-next">Jump to next</button>
+    </div>
+    <nav class="toc" id="toc" aria-label="Sections"></nav>
+  </div>
+
+  <main id="sections"></main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="dialog-overlay" id="dialog-overlay">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+    <h3 id="dialog-title">Reset all progress?</h3>
+    <p>This clears copied and done states for every prompt. The prompts themselves are not affected.</p>
+    <div class="dialog-actions">
+      <button class="btn-secondary" id="dialog-cancel">Cancel</button>
+      <button class="btn-danger" id="dialog-confirm">Reset all</button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="prompt-data">
+[
+  {
+    "id": "00-project-setup",
+    "section": "Setup",
+    "number": "00",
+    "title": "Project setup",
+    "body": "# 00 · Project setup\n\n**Section:** Setup\n\n## Context\n\nFresh project folder. `PRD.md`, `CLAUDE.md`, and `Web Deployment Guide.md` are all here. No code yet. The build uses Next.js App Router + TypeScript + Tailwind, deployed to Vercel from `main`, with the domain `magnoliaqueenannetrackandfield.com` via Porkbun.\n\n## Goal\n\nScaffold a working Next.js + TypeScript + Tailwind project in this folder, initialize git, create the GitHub repo, and connect Vercel. At the end of this prompt, `npm run dev` should serve the Next.js default \"hello world\" page at `localhost:3000`, and a push to `main` should deploy to Vercel.\n\n## Testable success criteria\n\n- `npm run dev` serves the app at `localhost:3000` with no type or lint errors.\n- `npm run build` completes successfully.\n- GitHub repo `nikolausj1/magnolia-queen-anne-track` exists and `main` tracks this folder.\n- Vercel project is connected to the repo and has deployed at least the scaffolded default page.\n- `.gitignore` covers `node_modules`, `.next`, `.vercel`, `.env`, `.DS_Store`.\n\n## Verification steps\n\n1. Run `npm run dev`. Open `localhost:3000`. Confirm the Next.js default page renders.\n2. Run `npm run typecheck` and `npm run lint`. No errors.\n3. Run `git log` to confirm a clean initial commit.\n4. Confirm the Vercel dashboard shows the deployed URL.\n\n## References\n\n- `Web Deployment Guide.md` for the exact `gh repo create` command and Vercel import steps.\n- `CLAUDE.md` → Commands for `npm run` scripts.\n\n## Plan mode\n\n**Enable plan mode.** This prompt touches many files and external services (git, GitHub, Vercel)."
+  },
+  {
+    "id": "01-shared-layout-and-tailwind-tokens",
+    "section": "Setup",
+    "number": "01",
+    "title": "Shared layout and Tailwind tokens",
+    "body": "# 01 · Shared layout and Tailwind tokens\n\n**Section:** Setup\n\n## Context\n\nScaffold exists from prompt 00. Every page shares a sticky header and a footer. The visual spec in `PRD.md` defines the palette, typography, and spacing tokens. We set those up once, in the root layout and `tailwind.config.ts`, so every subsequent page prompt can rely on them.\n\n## Goal\n\nBuild `app/layout.tsx` with a sticky `<Header>` (site lockup + top nav Home / Results / Join / FAQ, hamburger on mobile) and a `<Footer>` (small nav, community center links, Privacy link, tagline \"Magnolia - Queen Anne - Seattle,\" copyright). Set up `tailwind.config.ts` with palette tokens. Define system font stack and typography defaults in `globals.css`.\n\nPlaceholder header lockup is acceptable for v1 (wordmark or \"M · QA Track & Field\" text). Real lockup treatment is pending per Open Items.\n\n## Testable success criteria\n\n- `<Header>` renders on every page, sticks on scroll, collapses to hamburger under `md`.\n- `<Footer>` renders on every page with the nav links, community center links (placeholder URLs with TODO), Privacy link, tagline, year.\n- Tailwind config exposes `magnolia.navy`, `queenAnne.red`, `badge.*`, `pill.*` tokens that match `PRD.md`.\n- Body font is system stack, line-height 1.5; H1 / H2 / H3 sizes match spec.\n- Lighthouse accessibility ≥ 95.\n\n## Verification steps\n\n1. Resize from 1280px to 375px. Header collapses to hamburger.\n2. Tab through the page: focus visible on every interactive element.\n3. `npm run typecheck` and `npm run lint` clean.\n4. `<header>`, `<main>`, `<footer>` are semantic elements.\n\n## References\n\n- `PRD.md` → Functional requirements → Header / Footer.\n- `PRD.md` → Visual and design spec.\n- `.claude/skills/ui-design/SKILL.md`.\n- `.claude/skills/nextjs-tailwind/SKILL.md`.\n\n## Plan mode\n\n**Enable plan mode.** Layout and tailwind config changes touch files every other prompt depends on."
+  },
+  {
+    "id": "02-data-model-parsers-and-loaders",
+    "section": "Data",
+    "number": "02",
+    "title": "Data model, parsers, and loaders",
+    "body": "# 02 · Data model, parsers, and loaders\n\n**Section:** Data\n\n## Context\n\nThe site displays meet results read from `data/*.json`. Schemas are defined in `PRD.md` → Data Model. The mark format is string-native (`\":18.78\"`, `\"6'4\\\"\"`, `\"1:19\"`) but the Results page sorts numerically, so parsers are needed.\n\n## Goal\n\nCreate three TypeScript modules in `lib/`:\n\n1. **`lib/data.ts`** — load the three JSON files. Export typed `Athlete`, `Meet`, `Result` and helper functions: `getMeets()` (newest first), `getAthletesById()`, `getResultsByMeet(meetId)`, `getResultsByAthlete(athleteId, meetId?)`.\n\n2. **`lib/marks.ts`** — parse mark strings. `parseTime(mark)` → total seconds. `parseDistance(mark)` → total inches. Export `compareMarks(a, b, unit)`.\n\n3. **`lib/events.ts`** — `categorizeEvent(eventName)` returns `\"running\" | \"jumping\" | \"throwing\"`.\n\n## Testable success criteria\n\n- All three modules compile strict.\n- `parseTime(\":18.78\")` → `18.78`. `parseTime(\"1:19\")` → `79`.\n- `parseDistance(\"6'4\\\"\")` → `76`.\n- `compareMarks` sorts time ascending, distance descending.\n- `categorizeEvent(\"Long jump\")` → `\"jumping\"`. `categorizeEvent(\"Shot put\")` → `\"throwing\"`.\n- Unit tests under `lib/__tests__/` cover every function.\n\n## Verification steps\n\n1. Run the unit tests. All pass.\n2. `npm run typecheck` clean.\n3. `npm run build` succeeds with empty data arrays.\n\n## References\n\n- `PRD.md` → Data Model.\n- `PRD.md` → Event categorization rules.\n- `CLAUDE.md` → Mark parsers.\n\n## Plan mode\n\n**Enable plan mode.** Three modules plus tests; confirm the test framework (Vitest recommended)."
+  },
+  {
+    "id": "03-ingestion-run",
+    "section": "Data",
+    "number": "03",
+    "title": "Ingestion run (athletes, meets, results, weather)",
+    "body": "# 03 · Ingestion run (athletes, meets, results, weather)\n\n**Section:** Data\n\n## Context\n\nCanonical sources in `inbox/`: Queen Anne roster PDF, results xlsx, schedule docx (already seeded), events docx. The `data-ingestion-quality` skill governs the auto-fix / flag / block policy. `CLAUDE.md` has the team inference rule, extraction rules, and weather details.\n\n## Goal\n\nBuild the ingestion pipeline in `lib/ingestion/` and run it once to populate `athletes.json` and `results.json` and enrich `meets.json` with weather. The pipeline must be re-runnable (extracts from scratch every time).\n\nModules:\n\n1. `extract-athletes.ts` — parse PDF plus xlsx names, apply team inference rule, emit registry.\n2. `extract-results.ts` — pivot each meet sheet wide-to-long, split place annotations and notes, skip relays, reference `athleteId`.\n3. `enrich-weather.ts` — Open-Meteo Archive lookup per meet, cache in `meets.json`, graceful degradation.\n4. `run.ts` — orchestrate, print summary, walk flags, show diff, commit on go-ahead.\n\n## Testable success criteria\n\n- `athletes.json` covers every athlete in the PDF plus every unique xlsx name, team assignment correct per inference rule.\n- `results.json` has a row per populated non-relay cell in `1ST MEET APRIL 18`, each with a valid `athleteId`.\n- `meets.json` has `weather` on April 18; other meets left undefined.\n- No result row references an absent `athleteId`.\n- First-name collisions resolve to `Sam L.` / `Sam R.` automatically.\n- Dry run mode (`npm run ingest -- --dry-run`) prints the diff without writing.\n\n## Verification steps\n\n1. Run `npm run ingest`. Summary reports sane counts.\n2. Walk Tier-2 flags. Don't auto-accept.\n3. Review the final diff before committing.\n4. Spot check: three random athletes, results correct.\n5. April 18 meet has `weather.summary`.\n\n## References\n\n- `CLAUDE.md` → Data ingestion operations.\n- `.claude/skills/data-ingestion-quality/SKILL.md`.\n- `inbox/` source files.\n\n## Plan mode\n\n**Enable plan mode.** Ingestion touches three data files and commits. Propose parsing libraries (`xlsx` for workbook, `pdf-parse` for PDF) before starting."
+  },
+  {
+    "id": "04-home-page",
+    "section": "Pages",
+    "number": "04",
+    "title": "Home page",
+    "body": "# 04 · Home page\n\n**Section:** Pages\n\n## Context\n\nShared layout renders header and footer. Data loaders and populated data are ready. Home sets the tone for \"Two Teams, One Community.\"\n\n## Goal\n\nBuild `app/page.tsx` per the Home spec in `PRD.md`. Sections:\n\n1. **Hero.** Headline conveying \"Two Teams, One Community,\" subhead, hero image (`/photos/home-hero-action.png`, priority), two CTAs: Register with Magnolia, Register with Queen Anne Quicksters (placeholder URLs + TODO).\n2. **Shared program block.** Short paragraph.\n3. **What to Expect.** Practice, meets, all skill levels, ages.\n4. **Team identity cards.** Side-by-side desktop, stacked mobile. Magnolia navy/white, Queen Anne red/black, logos, descriptions, Register buttons.\n5. **Coaches section.** Scaffolded but hidden; TODO comment.\n6. **Latest results teaser.** Most recent meet, linking to `/results`.\n7. **Secondary CTA.** Link to `/faq`.\n\n## Testable success criteria\n\n- Home renders at 375px, 768px, 1280px.\n- Hero image uses `<Image>` priority with descriptive alt.\n- Team cards side-by-side ≥ 768px, stacked below.\n- Latest results teaser pulls the newest meet dynamically.\n- Coaches section not rendered when empty; no empty header.\n- Register CTAs have `aria-label`.\n- Lighthouse perf ≥ 90 mobile, a11y ≥ 95.\n\n## Verification steps\n\n1. Visit `/`. All seven sections render.\n2. Resize to 375px.\n3. Tab through; focus visible.\n4. Lighthouse mobile audit.\n5. `<h1>` exists; no duplicate.\n\n## References\n\n- `PRD.md` → Home.\n- `PRD.md` → Visual and design spec.\n- `.claude/skills/ui-design/SKILL.md` (must read).\n- `.claude/skills/nextjs-tailwind/SKILL.md`.\n\n## Plan mode\n\n**Enable plan mode.** Seven sections, two pending CTAs. Propose component breakdown (likely `TeamCard` reused on Join) before writing."
+  },
+  {
+    "id": "05-results-page",
+    "section": "Pages",
+    "number": "05",
+    "title": "Results page (meet cards, By event, By athlete)",
+    "body": "# 05 · Results page (meet cards, By event, By athlete)\n\n**Section:** Pages\n\n## Context\n\nResults is the most complex page. Each meet renders as a card with a toggle between \"By event\" and \"By athlete.\" Athlinks is the visual reference (screenshot in `inbox/`).\n\n## Goal\n\nBuild `app/results/page.tsx` and components:\n\n1. **`<MeetCard>`** — per meet from `getMeets()`. SVG track-lanes hero, meet header (date h2, location right, optional weather), segmented toggle (By event default), results body.\n2. **`<EventResults>`** — grouped per event. Section header with event name, category pill, count. Columns: Athlete (bold first name, division+badge secondary), Place (center, em-hyphen if missing), Mark (22px tabular right).\n3. **`<AthleteResults>`** — grouped per athlete. Section header with name, division, badge. Columns: Event, Place, Mark.\n4. **`<Badge>`** and **`<EventPill>`** — reusable with tokens from `tailwind.config.ts`.\n\n## Testable success criteria\n\n- `/results` renders a card per meet, newest first.\n- Future meets render with a placeholder body.\n- April 18 shows all results; By athlete re-renders grouped correctly.\n- Weather line only when `weather` present; absent does not error.\n- Pills and badges use spec hex colors.\n- First-name collisions resolved.\n- `:11.9` sorts above `:12.3`. `6'4\"` sorts above `5'10\"`.\n- Em-hyphen when place missing.\n- Tabular numerics.\n- Toggle state per-card.\n- Mobile 375px readable.\n\n## Verification steps\n\n1. Visit `/results`. Match visual to spec and Athlinks screenshot.\n2. Toggle both views on multiple cards; state independent.\n3. Resize to 375px.\n4. Weather summary renders on April 18.\n5. Build, typecheck, lint clean.\n6. Tab through segmented controls.\n\n## References\n\n- `PRD.md` → Results.\n- `PRD.md` → Visual and design spec.\n- `inbox/Inspiration Meet Reults Screenshot 2026-04-23 at 3.11.32 PM.png`.\n- `.claude/skills/ui-design/SKILL.md`.\n- `.claude/skills/nextjs-tailwind/SKILL.md`.\n\n## Plan mode\n\n**Enable plan mode.** Multi-component page with per-card state. Propose SVG track-lanes illustration and component breakdown before committing."
+  },
+  {
+    "id": "06-join-page",
+    "section": "Pages",
+    "number": "06",
+    "title": "Join page",
+    "body": "# 06 · Join page\n\n**Section:** Pages\n\n## Context\n\nRegistration-focused page. Reuses `TeamCard` from Home at a larger size.\n\n## Goal\n\nBuild `app/join/page.tsx`. Sections:\n\n1. **Opening line.** \"Ready to join? Each team registers through its own community center.\"\n2. **Two prominent registration cards** — larger than Home's versions.\n3. **Quick-reference block.** Ages, division table (7 divisions, 2026 birth years), season (vague), practice, meets, what is included.\n4. **Questions block.** Link to `/faq`. No `mailto`.\n\n## Testable success criteria\n\n- `/join` renders all four sections in order.\n- Registration cards visibly larger than Home via size prop on `TeamCard`.\n- Division table shows all seven divisions.\n- No `mailto` link on this page.\n- Lighthouse a11y ≥ 95.\n\n## Verification steps\n\n1. Visit `/join`. All sections render.\n2. Register buttons link to placeholder URLs.\n3. Tab through.\n4. 375px mobile stacks cleanly.\n\n## References\n\n- `PRD.md` → Join.\n- `content/faq.md` → division table data.\n- `.claude/skills/ui-design/SKILL.md`.\n\n## Plan mode\n\nOptional. Single page, reuses components."
+  },
+  {
+    "id": "07-faq-page",
+    "section": "Pages",
+    "number": "07",
+    "title": "FAQ page",
+    "body": "# 07 · FAQ page\n\n**Section:** Pages\n\n## Context\n\nFAQ content lives in `content/faq.md` (populated). The page renders that file.\n\n## Goal\n\nBuild `app/faq/page.tsx` that reads `content/faq.md` and renders it. Use MDX or `react-markdown` + `remark-gfm`. Structure:\n\n1. Page title (h1).\n2. Each h2 in `faq.md` becomes a question section; paragraphs are the answer.\n3. Optional closing line \"Still have questions?\" — no link in v1.\n\n## Testable success criteria\n\n- `/faq` renders all nine questions and full answers.\n- h2 for questions; lists render correctly.\n- Edits to `content/faq.md` reflected after rebuild.\n- Anchor links per question work (stable slugs).\n- Lighthouse a11y ≥ 95.\n\n## Verification steps\n\n1. Visit `/faq`. All nine render with full text.\n2. Anchor-jump to a question.\n3. Edit `content/faq.md`, rebuild, confirm change.\n4. Semantic heading hierarchy.\n\n## References\n\n- `content/faq.md`.\n- `PRD.md` → FAQ.\n- `.claude/skills/nextjs-tailwind/SKILL.md`.\n\n## Plan mode\n\nSkip unless choosing between MDX and react-markdown needs discussion."
+  },
+  {
+    "id": "08-privacy-page",
+    "section": "Pages",
+    "number": "08",
+    "title": "Privacy page",
+    "body": "# 08 · Privacy page\n\n**Section:** Pages\n\n## Context\n\nLinked only from footer, small text. Only place `info@magnoliaqueenannetrackandfield.com` appears.\n\n## Goal\n\nBuild `app/privacy/page.tsx`. Sections:\n\n- What we collect: nothing directly. Vercel Web Analytics, aggregate, no cookies, no personal data.\n- Photos: family consent; contact `info@` to request removal.\n- Contact: `info@` as `mailto:` (exception to no-mailto rule).\n- Last updated date.\n\n## Testable success criteria\n\n- `/privacy` renders all four sections.\n- `info@` appears as `mailto:` twice only (removal paragraph, contact paragraph).\n- Address does not appear anywhere else (verified via grep across `app/` and `components/`).\n- Footer shows small Privacy link; header does not.\n\n## Verification steps\n\n1. Visit `/privacy`. All four sections.\n2. Click `mailto:`; default mail client opens.\n3. `grep -r \"info@magnoliaqueenannetrackandfield\" app/ components/` returns only Privacy.\n4. Footer Privacy link works from every page.\n\n## References\n\n- `PRD.md` → Privacy.\n\n## Plan mode\n\nSkip. Small static page."
+  },
+  {
+    "id": "09-seo-favicon-og",
+    "section": "Polish",
+    "number": "09",
+    "title": "SEO, favicon, OG image",
+    "body": "# 09 · SEO, favicon, OG image\n\n**Section:** Polish\n\n## Context\n\nAll five pages work. Make the site discoverable and link-previewable.\n\n## Goal\n\n1. **Root `metadata`** in `app/layout.tsx`: title template, description, OG defaults, Twitter card, canonical URL.\n2. **Per-page `metadata`** on each `page.tsx`.\n3. **Favicon.** Simplified Magnolia winged-shoe mark. Generate `favicon.ico`, `icon.png` in `app/`.\n4. **OG image.** Generated tile with both team names on a dark background, 1200×630, at `public/og-image.png`.\n5. **`sitemap.xml` and `robots.txt`** via `app/sitemap.ts` and `app/robots.ts`.\n\n## Testable success criteria\n\n- Each page has unique title and description.\n- Titles include both team names, \"Seattle,\" \"youth track and field\" where relevant.\n- `/sitemap.xml` lists all public pages.\n- `/robots.txt` allows crawling.\n- `/favicon.ico` returns valid icon.\n- OG image renders in link previews.\n- Lighthouse SEO ≥ 95.\n\n## Verification steps\n\n1. Inspect each page's `<head>`.\n2. Visit `/sitemap.xml`, `/robots.txt`.\n3. Confirm favicon in browser tab.\n4. Preview URL in link-preview tool.\n5. Lighthouse SEO.\n\n## References\n\n- `PRD.md` → SEO.\n- `.claude/skills/nextjs-tailwind/SKILL.md` → Metadata.\n\n## Plan mode\n\nOptional. Confirm OG image treatment (text-only vs with logos) before generating."
+  },
+  {
+    "id": "10-accessibility-and-build-check",
+    "section": "Polish",
+    "number": "10",
+    "title": "Accessibility pass and build check",
+    "body": "# 10 · Accessibility pass and build check\n\n**Section:** Polish\n\n## Context\n\nSite is feature-complete. Accessibility audit and clean build before deploying.\n\n## Goal\n\nRun a full a11y pass, fix issues, confirm production build is clean.\n\n## Testable success criteria\n\n- Every page Lighthouse a11y ≥ 95 mobile and desktop.\n- Every image has descriptive `alt` (not \"image,\" not filename, not empty).\n- Every interactive element keyboard reachable; focus visible.\n- Heading structure sequential, one h1 per page.\n- WCAG AA contrast for both team palettes (especially Queen Anne red on black; may need hex adjustment).\n- Results tables semantic (`<table>`, `<thead>`, `<tbody>`, `<th>`, `<td>`).\n- `npm run build` no warnings.\n- `npm run typecheck` and `npm run lint` clean.\n- No console errors during `npm run dev`.\n\n## Verification steps\n\n1. Lighthouse on all five pages, mobile and desktop.\n2. Keyboard-only nav through each page.\n3. VoiceOver spot check on Home and Results.\n4. axe DevTools; address critical and serious.\n5. Build with no warnings.\n\n## References\n\n- `PRD.md` → Accessibility.\n- `.claude/skills/ui-design/SKILL.md` → Accessibility checks.\n\n## Plan mode\n\nEnable if three or more issues need deeper changes."
+  },
+  {
+    "id": "11-deploy-dns-and-launch",
+    "section": "Deploy",
+    "number": "11",
+    "title": "Deploy, DNS, and launch",
+    "body": "# 11 · Deploy, DNS, and launch\n\n**Section:** Deploy\n\n## Context\n\nBuild-clean and a11y-clean. Vercel is connected. Domain `magnoliaqueenannetrackandfield.com` registered via Porkbun 2026-04-23. Wire the domain and ship.\n\nPorkbun API key and secret are in Justin's 1Password; prompt for them at runtime. Do not commit.\n\n## Goal\n\n1. **Set Porkbun DNS via the API** (not the dashboard):\n   - A, root → `76.76.21.21`\n   - CNAME, `www` → `cname.vercel-dns.com`\n2. **Add the domain in Vercel project settings.** SSL auto-issues.\n3. **Confirm live.** Both `https://magnoliaqueenannetrackandfield.com` and `https://www.magnoliaqueenannetrackandfield.com` resolve; SSL valid.\n4. **Final deploy check.** Push pending changes. Vercel deploy matches latest `main`.\n5. **Update the PRD.** Move resolved Open Items. Tag Launch Plan with actual launch date.\n\n## Testable success criteria\n\n- `dig magnoliaqueenannetrackandfield.com A` → `76.76.21.21`.\n- `dig www.magnoliaqueenannetrackandfield.com CNAME` → Vercel CNAME.\n- `https://magnoliaqueenannetrackandfield.com` serves site with valid SSL.\n- `https://www.magnoliaqueenannetrackandfield.com` redirects or resolves.\n- Vercel shows domain attached, SSL valid.\n- Push to `main` triggers deploy; change reflected live.\n\n## Verification steps\n\n1. Porkbun API call, verify response.\n2. `dig` commands confirm records.\n3. Browser both URLs; SSL locked, no mixed content.\n4. Share URL with someone on a different network.\n5. Link preview in Discord/Slack.\n\n## References\n\n- `Web Deployment Guide.md` → Porkbun API.\n- `PRD.md` → Technical constraints → Domain.\n- `PRD.md` → Launch Plan.\n\n## Plan mode\n\n**Enable plan mode.** DNS changes are hard to reverse quickly. Walk through the full sequence before any API call."
+  }
+]
+</script>
+
+<script>
+(function() {
+  "use strict";
+
+  const STORAGE_KEY = "pa-mqa-track-v1";
+  const prompts = JSON.parse(document.getElementById("prompt-data").textContent);
+  const sectionOrder = ["Setup", "Data", "Pages", "Polish", "Deploy"];
+
+  let state = loadState();
+  applyTheme();
+
+  renderApp();
+  bindGlobalHandlers();
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return { theme: "light", progress: {} };
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function applyTheme() {
+    document.body.classList.toggle("dark", state.theme === "dark");
+    const label = document.getElementById("theme-toggle-label");
+    if (label) label.textContent = state.theme === "dark" ? "Light" : "Dark";
+  }
+
+  function getStatus(id) {
+    const p = state.progress[id];
+    if (!p) return "not-started";
+    if (p.done) return "done";
+    if (p.copied) return "copied";
+    return "not-started";
+  }
+
+  function formatTime(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    return hh + ":" + mm;
+  }
+
+  function renderApp() {
+    renderTOC();
+    renderSections();
+    updateProgressBar();
+  }
+
+  function renderTOC() {
+    const toc = document.getElementById("toc");
+    toc.innerHTML = "";
+    sectionOrder.forEach(function(section) {
+      const items = prompts.filter(function(p) { return p.section === section; });
+      if (items.length === 0) return;
+      const done = items.filter(function(p) { return getStatus(p.id) === "done"; }).length;
+      const a = document.createElement("a");
+      a.className = "toc-item";
+      a.href = "#section-" + section.toLowerCase();
+      a.innerHTML = section + "<span class=\"toc-item-count\">" + done + "/" + items.length + "</span>";
+      toc.appendChild(a);
+    });
+  }
+
+  function renderSections() {
+    const container = document.getElementById("sections");
+    container.innerHTML = "";
+    sectionOrder.forEach(function(section) {
+      const items = prompts.filter(function(p) { return p.section === section; });
+      if (items.length === 0) return;
+      const done = items.filter(function(p) { return getStatus(p.id) === "done"; }).length;
+
+      const sectionEl = document.createElement("section");
+      sectionEl.className = "section";
+      sectionEl.id = "section-" + section.toLowerCase();
+
+      const header = document.createElement("div");
+      header.className = "section-header";
+      header.innerHTML = "<h2>" + section + "</h2><span class=\"section-count\">" + done + " of " + items.length + " done</span>";
+      sectionEl.appendChild(header);
+
+      items.forEach(function(p) { sectionEl.appendChild(renderCard(p)); });
+      container.appendChild(sectionEl);
+    });
+  }
+
+  function renderCard(p) {
+    const status = getStatus(p.id);
+    const entry = state.progress[p.id] || {};
+
+    const card = document.createElement("article");
+    card.className = "card";
+    card.dataset.status = status;
+    card.dataset.id = p.id;
+    card.id = "card-" + p.id;
+
+    // Head
+    const head = document.createElement("div");
+    head.className = "card-head";
+
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "card-title-wrap";
+    const title = document.createElement("h3");
+    title.className = "card-title";
+    title.textContent = p.number + " · " + p.title;
+    titleWrap.appendChild(title);
+
+    const metaParts = [];
+    if (entry.copied) metaParts.push("Copied " + formatTime(entry.copied));
+    if (entry.done) metaParts.push("Done " + formatTime(entry.done));
+    if (metaParts.length) {
+      const meta = document.createElement("div");
+      meta.className = "card-meta";
+      meta.textContent = metaParts.join(" · ");
+      titleWrap.appendChild(meta);
+    }
+    head.appendChild(titleWrap);
+
+    const badge = document.createElement("span");
+    badge.className = "status-badge";
+    badge.textContent = status === "done" ? "Done" : status === "copied" ? "Copied" : "Not started";
+    head.appendChild(badge);
+
+    // Kebab menu
+    const kebabWrap = document.createElement("div");
+    kebabWrap.className = "kebab-wrap";
+    const kebabBtn = document.createElement("button");
+    kebabBtn.className = "kebab-btn";
+    kebabBtn.setAttribute("aria-label", "More options for " + p.title);
+    kebabBtn.setAttribute("aria-haspopup", "menu");
+    kebabBtn.setAttribute("aria-expanded", "false");
+    kebabBtn.innerHTML = "<svg viewBox=\"0 0 20 20\" fill=\"currentColor\" aria-hidden=\"true\" width=\"16\" height=\"16\"><circle cx=\"10\" cy=\"4\" r=\"1.5\"/><circle cx=\"10\" cy=\"10\" r=\"1.5\"/><circle cx=\"10\" cy=\"16\" r=\"1.5\"/></svg>";
+    const menu = document.createElement("div");
+    menu.className = "kebab-menu";
+    menu.setAttribute("role", "menu");
+
+    const resetItem = document.createElement("button");
+    resetItem.className = "kebab-menu-item";
+    resetItem.setAttribute("role", "menuitem");
+    resetItem.textContent = "Reset this prompt";
+    resetItem.addEventListener("click", function(e) {
+      e.stopPropagation();
+      resetPrompt(p.id);
+      closeAllMenus();
+    });
+    menu.appendChild(resetItem);
+
+    kebabBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      const open = menu.classList.contains("open");
+      closeAllMenus();
+      if (!open) {
+        menu.classList.add("open");
+        kebabBtn.setAttribute("aria-expanded", "true");
+      }
+    });
+    kebabWrap.appendChild(kebabBtn);
+    kebabWrap.appendChild(menu);
+    head.appendChild(kebabWrap);
+
+    card.appendChild(head);
+
+    // Body (click to copy)
+    const body = document.createElement("div");
+    body.className = "card-body";
+    body.setAttribute("tabindex", "0");
+    body.setAttribute("role", "button");
+    body.setAttribute("aria-label", "Copy prompt " + p.number + " to clipboard");
+
+    const bodyInner = document.createElement("div");
+    bodyInner.className = "card-body-inner";
+    const pre = document.createElement("pre");
+    pre.textContent = p.body;
+    bodyInner.appendChild(pre);
+    body.appendChild(bodyInner);
+
+    body.addEventListener("click", function() { copyPrompt(p); });
+    body.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        copyPrompt(p);
+      }
+    });
+
+    card.appendChild(body);
+
+    // Footer
+    const footer = document.createElement("div");
+    footer.className = "card-body-footer";
+
+    const hint = document.createElement("div");
+    hint.className = "copy-hint";
+    hint.innerHTML = "<svg viewBox=\"0 0 20 20\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M7 3a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V5a2 2 0 00-2-2H7zM3 7a2 2 0 012-2v10a2 2 0 002 2h6a2 2 0 01-2 2H5a2 2 0 01-2-2V7z\"/></svg>Click anywhere on the prompt to copy";
+    footer.appendChild(hint);
+
+    const markDoneBtn = document.createElement("button");
+    markDoneBtn.className = "mark-done-btn";
+    markDoneBtn.textContent = status === "done" ? "Unmark done" : "Mark done";
+    markDoneBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      toggleDone(p.id);
+    });
+    footer.appendChild(markDoneBtn);
+
+    card.appendChild(footer);
+    return card;
+  }
+
+  function copyPrompt(p) {
+    const text = p.body;
+    navigator.clipboard.writeText(text).then(function() {
+      const now = new Date().toISOString();
+      const existing = state.progress[p.id] || {};
+      state.progress[p.id] = Object.assign({}, existing, { copied: now });
+      saveState();
+      showToast("Copied");
+      renderApp();
+      // Preserve scroll
+    }).catch(function() {
+      showToast("Copy failed");
+    });
+  }
+
+  function toggleDone(id) {
+    const now = new Date().toISOString();
+    const entry = state.progress[id] || {};
+    if (entry.done) {
+      delete entry.done;
+    } else {
+      entry.done = now;
+      if (!entry.copied) entry.copied = now;
+    }
+    state.progress[id] = entry;
+    saveState();
+    showToast(entry.done ? "Marked done" : "Unmarked");
+    renderApp();
+  }
+
+  function resetPrompt(id) {
+    delete state.progress[id];
+    saveState();
+    showToast("Prompt reset");
+    renderApp();
+  }
+
+  function resetAll() {
+    state.progress = {};
+    saveState();
+    showToast("All progress reset");
+    renderApp();
+  }
+
+  function updateProgressBar() {
+    const total = prompts.length;
+    const copied = prompts.filter(function(p) { return getStatus(p.id) !== "not-started"; }).length;
+    const done = prompts.filter(function(p) { return getStatus(p.id) === "done"; }).length;
+    document.getElementById("count-copied").textContent = copied;
+    document.getElementById("count-done").textContent = done;
+    document.getElementById("count-total").textContent = total;
+    document.getElementById("progress-copied").style.width = (copied / total * 100) + "%";
+    document.getElementById("progress-done").style.width = (done / total * 100) + "%";
+    const jumpBtn = document.getElementById("jump-next");
+    const next = prompts.find(function(p) { return getStatus(p.id) !== "done"; });
+    jumpBtn.disabled = !next;
+    jumpBtn.textContent = next ? "Jump to next" : "All done";
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("visible");
+    clearTimeout(t._hideTimer);
+    t._hideTimer = setTimeout(function() { t.classList.remove("visible"); }, 1500);
+  }
+
+  function closeAllMenus() {
+    document.querySelectorAll(".kebab-menu.open").forEach(function(m) {
+      m.classList.remove("open");
+      const btn = m.parentElement.querySelector(".kebab-btn");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function bindGlobalHandlers() {
+    document.getElementById("theme-toggle").addEventListener("click", function() {
+      state.theme = state.theme === "dark" ? "light" : "dark";
+      saveState();
+      applyTheme();
+    });
+
+    document.getElementById("reset-all").addEventListener("click", function() {
+      document.getElementById("dialog-overlay").classList.add("open");
+      document.getElementById("dialog-cancel").focus();
+    });
+    document.getElementById("dialog-cancel").addEventListener("click", function() {
+      document.getElementById("dialog-overlay").classList.remove("open");
+    });
+    document.getElementById("dialog-confirm").addEventListener("click", function() {
+      resetAll();
+      document.getElementById("dialog-overlay").classList.remove("open");
+    });
+    document.getElementById("dialog-overlay").addEventListener("click", function(e) {
+      if (e.target.id === "dialog-overlay") {
+        e.currentTarget.classList.remove("open");
+      }
+    });
+
+    document.getElementById("jump-next").addEventListener("click", function() {
+      const next = prompts.find(function(p) { return getStatus(p.id) !== "done"; });
+      if (!next) return;
+      const el = document.getElementById("card-" + next.id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        const body = el.querySelector(".card-body");
+        if (body) body.focus();
+      }
+    });
+
+    document.addEventListener("click", closeAllMenus);
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        closeAllMenus();
+        document.getElementById("dialog-overlay").classList.remove("open");
+      }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
