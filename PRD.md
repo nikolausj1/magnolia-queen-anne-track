@@ -223,6 +223,14 @@ Deployment, stack, and operational conventions follow `Web Deployment Guide.md` 
 
 Operational details (data extraction from `inbox/`, data ingestion quality rules, the auto-fix / flag / block taxonomy, the canonical athlete registry pattern, weekly ingestion run flow) live in `CLAUDE.md`. This PRD references that file rather than restating.
 
+## Launch
+
+- **Launched 2026-04-25** to <https://magnoliaqueenannetrackandfield.com>.
+- DNS via Porkbun API: A root → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com`. Porkbun email forwarding (MX `fwd1`/`fwd2.porkbun.com` + SPF) preserved so `info@…` continues to work for the Privacy page contact.
+- SSL via Let's Encrypt, auto-renewed by Vercel.
+- Both apex and `www` serve the site directly. If a single canonical is preferred later, flip via the Vercel dashboard.
+- Auto-deploy from `main` on push (Vercel ↔ GitHub integration).
+
 ## Rationale and alternatives
 
 Design decisions whose reasoning is non-obvious.
@@ -246,7 +254,6 @@ Design decisions whose reasoning is non-obvious.
 ## Open questions (v1 placeholders, not blocking)
 
 - [ ] Magnolia team name/mascot beyond "Magnolia CC Youth Track & Field." "Magnolia Mustangs" under consideration.
-- [ ] Header branding treatment: dual-logo lockup, combined wordmark, or alternating.
 - [ ] Registration URLs for both community centers.
 - [ ] Queen Anne exact red/black hex values (extract from logo during build).
 - [ ] Neutral/shared color palette final values for unified sections.
@@ -256,6 +263,8 @@ Design decisions whose reasoning is non-obvious.
 - [ ] Season start/end dates (FAQ #4 intentionally vague; revisit if parents ask for specifics).
 - [x] Domain registered via Porkbun (2026-04-23).
 - [x] Queen Anne Quicksters logo (resolved 2026-04-24: logo now available at `public/logos/queen-anne-quicksters.*`).
+- [x] Header branding treatment (resolved 2026-04-25: dual-logo lockup — Magnolia + Queen Anne Quicksters with stacked uppercase wordmarks).
+- [x] Site launched (resolved 2026-04-25: <https://magnoliaqueenannetrackandfield.com>).
 
 ## References
 
