@@ -17,8 +17,10 @@ export const metadata: Metadata = {
 const TODAY = "2026-04-25";
 
 // TODO(prd-open-items): registration URLs — see PRD.md Open Questions.
-const MAGNOLIA_REGISTER_URL = "#";
-const QUEEN_ANNE_REGISTER_URL = "#";
+const MAGNOLIA_REGISTER_URL =
+  "https://anc.apm.activecommunities.com/seattle/activity/search?onlineSiteId=0&site_ids=317&activity_keyword=track&viewMode=list";
+const QUEEN_ANNE_REGISTER_URL =
+  "https://anc.apm.activecommunities.com/seattle/activity/search?onlineSiteId=0&site_ids=30&activity_keyword=track&viewMode=list";
 
 type Coach = { name: string; bio: string; photoSrc?: string };
 

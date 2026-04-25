@@ -10,8 +10,10 @@ export const metadata: Metadata = {
 };
 
 // TODO(prd-open-items): registration URLs — see PRD.md Open Questions.
-const MAGNOLIA_REGISTER_URL = "#";
-const QUEEN_ANNE_REGISTER_URL = "#";
+const MAGNOLIA_REGISTER_URL =
+  "https://anc.apm.activecommunities.com/seattle/activity/search?onlineSiteId=0&site_ids=317&activity_keyword=track&viewMode=list";
+const QUEEN_ANNE_REGISTER_URL =
+  "https://anc.apm.activecommunities.com/seattle/activity/search?onlineSiteId=0&site_ids=30&activity_keyword=track&viewMode=list";
 
 const DIVISIONS: Array<{ name: string; birthYears: string }> = [
   { name: "Flea", birthYears: "2020–2021" },
