@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "Privacy practices for the Magnolia / Queen Anne youth track and field site.",
+    "Privacy practices for the Magnolia / Queen Anne youth track and field site. No personal data collected; aggregate page views only.",
+  alternates: { canonical: "/privacy" },
+  robots: { index: false, follow: true },
 };
 
 const CONTACT_EMAIL = "info@magnoliaqueenannetrackandfield.com";

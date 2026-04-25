@@ -23,7 +23,8 @@ const TODAY = "2026-04-24";
 export const metadata: Metadata = {
   title: "Results",
   description:
-    "Meet results for Magnolia CC Youth Track & Field and Queen Anne Quicksters, spring 2026 season.",
+    "Meet results for Magnolia CC Youth Track & Field and Queen Anne Quicksters, spring 2026 season at West Seattle Stadium.",
+  alternates: { canonical: "/results" },
 };
 
 export default function ResultsPage() {

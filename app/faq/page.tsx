@@ -8,7 +8,8 @@ import rehypeSlug from "rehype-slug";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Common questions about Magnolia CC Youth Track & Field and Queen Anne Quicksters: divisions, practice, meets, what to bring.",
+    "Common questions about Magnolia CC Youth Track & Field and Queen Anne Quicksters in Seattle: divisions, practice, meets, what to bring.",
+  alternates: { canonical: "/faq" },
 };
 
 function loadFaqContent(): string {

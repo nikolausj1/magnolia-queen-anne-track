@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { TeamCard } from "@/components/TeamCard";
 import { getMeets } from "@/lib/data";
+
+export const metadata: Metadata = {
+  title: {
+    absolute:
+      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+  },
+  description:
+    "Two Seattle youth track and field teams, one program. Ages 5–17, practicing at Queen Anne Bowl, competing weekend Saturdays at West Seattle Stadium.",
+  alternates: { canonical: "/" },
+};
 
 // PRD says today is 2026-04-24 for "latest meet" logic. Anchored here so
 // the build is deterministic regardless of the build host's clock.

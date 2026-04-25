@@ -3,14 +3,35 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
+const SITE_URL = "https://magnoliaqueenannetrackandfield.com";
+const SITE_DESCRIPTION =
+  "Youth track and field in Magnolia and Queen Anne, Seattle. Two teams, one program. Ages 5–17.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
       "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
     template: "%s · Magnolia & Queen Anne Track",
   },
-  description:
-    "Youth track and field in Magnolia and Queen Anne, Seattle. Two teams, one program. Ages 5–17.",
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Magnolia & Queen Anne Track & Field",
+    title:
+      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+    description: SITE_DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

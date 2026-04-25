@@ -5,7 +5,8 @@ import { TeamCard } from "@/components/TeamCard";
 export const metadata: Metadata = {
   title: "Join",
   description:
-    "Register your athlete for Magnolia CC Youth Track & Field or Queen Anne Quicksters. Ages 5–17.",
+    "Register your athlete for Magnolia CC Youth Track & Field or Queen Anne Quicksters in Seattle. Ages 5–17, no tryouts, all skill levels welcome.",
+  alternates: { canonical: "/join" },
 };
 
 // TODO(prd-open-items): registration URLs — see PRD.md Open Questions.
