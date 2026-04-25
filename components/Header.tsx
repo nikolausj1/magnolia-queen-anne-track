@@ -46,7 +46,7 @@ export function Header() {
             <span className="text-magnolia-navy">Magnolia</span>
             <span className="text-ink"> &amp; </span>
             <span className="text-queenAnne-red">Queen Anne</span>
-            <span className="block text-ink">Track and Field</span>
+            <span className="block text-gray-400">Track and Field</span>
           </span>
         </Link>
 

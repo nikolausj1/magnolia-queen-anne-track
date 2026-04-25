@@ -222,16 +222,60 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
   );
 
   return (
-    <section className="mx-auto max-w-[1200px] px-6 py-8">
-      <p className="text-sm text-muted text-center">
-        Most recent meet: <span className="font-medium text-ink">{formatted}</span>.{" "}
-        <Link
-          href="/results"
-          className="text-magnolia-navy font-medium underline underline-offset-4 hover:opacity-80"
-        >
-          View all results →
-        </Link>
-      </p>
+    <section className="mx-auto max-w-[1200px] px-6 py-10 md:py-12 flex flex-col gap-8">
+      <div className="flex flex-col items-center gap-3">
+        <h2 className="text-magnolia-navy text-3xl md:text-4xl font-bold uppercase tracking-wide text-center">
+          Latest Results
+        </h2>
+        <span
+          className="block h-1 w-24 bg-accent-gold"
+          aria-hidden="true"
+        />
+      </div>
+      <Link
+        href="/results"
+        aria-label={`View all results — most recent meet: ${formatted}`}
+        className="group block relative h-44 md:h-56 rounded-lg overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magnolia-navy"
+      >
+        <Image
+          src="/photos/west-seattle-stadium.webp"
+          alt=""
+          fill
+          sizes="(min-width: 1200px) 1200px, 100vw"
+          className="object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(11,31,58,0.85), rgba(11,31,58,0.35))",
+          }}
+        />
+        <div className="relative h-full px-6 md:px-10 flex flex-col justify-center gap-2">
+          <p className="text-xs uppercase tracking-wide text-white/80 font-semibold">
+            Most recent meet
+          </p>
+          <h3 className="text-white text-3xl md:text-4xl font-bold uppercase tracking-tight leading-tight">
+            {formatted}
+          </h3>
+          <span className="mt-2 inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide self-start group-hover:gap-3 transition-all">
+            View all results
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </Link>
     </section>
   );
 }
@@ -262,13 +306,6 @@ function ReadyToJoin() {
             aria-label="Register with Magnolia CC Youth Track & Field — opens external registration"
             className="inline-flex items-center justify-center gap-3 rounded-md bg-magnolia-navy text-white px-6 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-magnolia-navy/90 transition-colors min-w-[18rem]"
           >
-            <Image
-              src="/logos/magnolia-cc.png"
-              alt=""
-              width={2138}
-              height={1682}
-              className="h-7 w-auto object-contain"
-            />
             Join Magnolia CC →
           </a>
           <a
@@ -278,13 +315,6 @@ function ReadyToJoin() {
             aria-label="Register with Queen Anne Quicksters — opens external registration"
             className="inline-flex items-center justify-center gap-3 rounded-md bg-queenAnne-red text-white px-6 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-queenAnne-red/90 transition-colors min-w-[18rem]"
           >
-            <Image
-              src="/logos/queen-anne-quicksters.png"
-              alt=""
-              width={1254}
-              height={1254}
-              className="h-7 w-auto object-contain"
-            />
             Join Queen Anne Quicksters →
           </a>
         </div>
