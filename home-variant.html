@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home variant — dark team cards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .navy { color: #0B1F3A; }
+    .navy-bg { background: #0B1F3A; }
+    .qa-red { color: #C8102E; }
+    .qa-red-bg { background: #C8102E; }
+    .qa-black-bg { background: #000000; }
+    .gold-bg { background: #E2B844; }
+    .ink { color: #111827; }
+    .muted { color: #6B7280; }
+    .muted-light { color: #B7BCC4; }
+    .divider { border-color: #E5E7EB; }
+    .surface { background: #F3F4F6; }
+  </style>
+</head>
+<body class="bg-white">
+
+<!-- ============================================== -->
+<!-- HEADER (matches the live site's text wordmark) -->
+<!-- ============================================== -->
+<header class="sticky top-0 z-40 bg-white/95 border-b" style="border-color: #E5E7EB;">
+  <div class="mx-auto max-w-[1200px] px-4 md:px-6 h-20 flex md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-between gap-4">
+    <a href="#" class="flex items-center min-w-0 md:justify-self-start">
+      <span class="text-base md:text-lg font-bold uppercase tracking-tight leading-tight">
+        <span class="navy">Magnolia</span>
+        <span class="ink"> &amp; </span>
+        <span class="qa-red">Queen Anne</span>
+        <span class="block ink">Track and Field</span>
+      </span>
+    </a>
+    <nav class="hidden md:flex items-center justify-self-center gap-8">
+      <a class="text-sm uppercase tracking-wide navy font-semibold">Home</a>
+      <a class="text-sm uppercase tracking-wide ink hover:navy">Results</a>
+      <a class="text-sm uppercase tracking-wide ink hover:navy">Join</a>
+      <a class="text-sm uppercase tracking-wide ink hover:navy">FAQ</a>
+    </nav>
+    <button class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md ink">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================== -->
+<!-- HERO + TEAM CARDS -->
+<!-- ============================================== -->
+<section class="relative bg-white overflow-hidden">
+  <div class="grid md:grid-cols-[1fr_1.4fr] gap-x-0 items-stretch relative">
+    <div class="flex flex-col gap-6 px-6 md:pl-[max(1.5rem,calc((100vw-1200px)/2+1.5rem))] pt-12 md:pt-20 lg:pt-28 md:pr-4 md:pb-24 lg:pb-32 relative z-10">
+      <h1 class="navy text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.0] md:whitespace-nowrap">
+        Two Teams.<br />One Community.
+      </h1>
+      <span class="block h-1 w-24 gold-bg" aria-hidden="true"></span>
+      <p class="text-base md:text-lg ink leading-relaxed max-w-md">
+        Magnolia Community Center and Queen Anne Quicksters track and field programs bring kids together to build speed, strength, confidence, and friendships that last a lifetime.
+      </p>
+    </div>
+
+    <div class="relative h-72 md:h-auto md:min-h-[28rem] lg:min-h-[34rem]">
+      <img src="public/photos/home-hero-action.png" alt="" class="absolute inset-0 w-full h-full object-cover" style="object-position: center 30%;" />
+      <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 w-1/3 md:w-1/4" style="background: linear-gradient(to right, white, rgba(255,255,255,0.7), transparent);"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-1/3" style="background: linear-gradient(to top, white, transparent);"></div>
+    </div>
+  </div>
+
+  <!-- Team cards (the variant) -->
+  <div class="relative z-10 -mt-16 md:-mt-12 lg:-mt-12">
+    <div class="mx-auto max-w-[1200px] px-6 pb-12 md:pb-20">
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <!-- ===== Magnolia card — NAVY background ===== -->
+        <article class="navy-bg p-6 md:p-8 rounded-lg transition-shadow hover:shadow-lg flex flex-col gap-5">
+          <div class="flex items-center gap-4">
+            <img src="public/logos/magnolia-cc-no-bg.png" alt="Magnolia CC Youth Track &amp; Field" class="h-20 md:h-24 w-auto object-contain" />
+            <div class="flex flex-col gap-2 min-w-0">
+              <div class="flex flex-col">
+                <span class="text-white text-xl md:text-2xl font-bold uppercase tracking-tight leading-tight">Magnolia CC</span>
+                <span class="text-white text-sm md:text-base font-semibold uppercase tracking-wide leading-tight opacity-90">Youth Track &amp; Field</span>
+              </div>
+              <span class="gold-bg h-[3px] w-12" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <p class="text-sm md:text-base text-white/90 leading-relaxed">
+            Representing the Magnolia community with heart and hustle. We practice with Queen Anne Quicksters under the same coaches and compete as one team.
+          </p>
+
+          <a href="#" class="bg-white navy hover:bg-white/90 inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold uppercase tracking-wide transition-colors">
+            Register with Magnolia CC
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6" /><path d="M10 14L21 3" /><path d="M21 14v7H3V3h7" />
+            </svg>
+          </a>
+
+          <p class="text-xs muted-light leading-relaxed">
+            Registration, schedules, and program details are managed by Magnolia Community Center.
+          </p>
+        </article>
+
+        <!-- ===== Queen Anne card — BLACK background ===== -->
+        <article class="qa-black-bg p-6 md:p-8 rounded-lg transition-shadow hover:shadow-lg flex flex-col gap-5">
+          <div class="flex items-center gap-4">
+            <img src="public/logos/queen-anne-quicksters.png" alt="Queen Anne Quicksters" class="h-20 md:h-24 w-auto object-contain" />
+            <div class="flex flex-col gap-2 min-w-0">
+              <div class="flex flex-col">
+                <span class="text-white text-xl md:text-2xl font-bold uppercase tracking-tight leading-tight">Queen Anne Quicksters</span>
+                <span class="text-white text-sm md:text-base font-semibold uppercase tracking-wide leading-tight opacity-90">Track &amp; Field</span>
+              </div>
+              <span class="qa-red-bg h-[3px] w-12" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <p class="text-sm md:text-base text-white/90 leading-relaxed">
+            Representing the Queen Anne community with pride and passion. We practice with Magnolia under the same coaches and compete as one team.
+          </p>
+
+          <a href="#" class="qa-red-bg text-white hover:opacity-90 inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold uppercase tracking-wide transition-colors">
+            Register with Queen Anne CC
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6" /><path d="M10 14L21 3" /><path d="M21 14v7H3V3h7" />
+            </svg>
+          </a>
+
+          <p class="text-xs muted-light leading-relaxed">
+            Registration, schedules, and program details are managed by Queen Anne Community Center.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sentinel: rest of the page would continue here (Shared Stronger Together, Ready to Join, etc.) — unchanged from live site -->
+<section class="surface">
+  <div class="mx-auto max-w-[1200px] px-6 py-14 md:py-20 text-center muted text-sm italic">
+    (Rest of home page unchanged — Shared. Stronger together. / Latest results / Ready to join / FAQ link)
+  </div>
+</section>
+
+</body>
+</html>
