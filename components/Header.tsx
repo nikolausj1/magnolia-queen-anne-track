@@ -36,11 +36,11 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-divider">
-      <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-20 flex md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1200px] px-4 md:px-6 h-20 flex items-center justify-between gap-4">
         <Link
           href="/"
           aria-label="Magnolia and Queen Anne Track and Field home"
-          className="flex items-center min-w-0 md:justify-self-start"
+          className="flex items-center min-w-0"
         >
           <span className="text-base md:text-lg font-bold uppercase tracking-tight leading-tight">
             <span className="text-magnolia-navy">Magnolia</span>
@@ -52,7 +52,7 @@ export function Header() {
 
         <nav
           aria-label="Primary"
-          className="hidden md:flex items-center justify-self-center gap-8"
+          className="hidden md:flex items-center gap-8"
         >
           {NAV.map((item) => (
             <Link

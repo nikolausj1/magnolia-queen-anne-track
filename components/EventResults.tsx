@@ -56,7 +56,7 @@ export function EventResults({ groups }: Props) {
             </header>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left table-fixed">
                 <thead>
                   <tr className="text-[12px] uppercase tracking-wide text-muted">
                     <th scope="col" className="py-2 pl-5 pr-3 font-medium">
@@ -64,13 +64,13 @@ export function EventResults({ groups }: Props) {
                     </th>
                     <th
                       scope="col"
-                      className="py-2 px-3 text-center font-medium"
+                      className="py-2 px-3 text-center font-medium w-20"
                     >
                       Place
                     </th>
                     <th
                       scope="col"
-                      className="py-2 pl-3 pr-5 text-right font-medium"
+                      className="py-2 pl-3 pr-5 text-right font-medium w-32"
                     >
                       Mark
                     </th>

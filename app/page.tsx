@@ -142,7 +142,7 @@ function SharedStrongerTogether() {
     },
     {
       title: "Shared meets",
-      body: "We compete as one team at Saturday meets at West Seattle Stadium.",
+      body: "We compete together at Saturday meets at West Seattle Stadium.",
       icon: <TrophyIcon />,
     },
     {
@@ -224,7 +224,7 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
   return (
     <section className="mx-auto max-w-[1200px] px-6 py-10 md:py-12 flex flex-col gap-8">
       <div className="flex flex-col items-center gap-3">
-        <h2 className="text-magnolia-navy text-3xl md:text-4xl font-bold uppercase tracking-wide text-center">
+        <h2 className="text-magnolia-navy text-2xl md:text-3xl font-bold uppercase tracking-wide text-center">
           Latest Results
         </h2>
         <span
@@ -285,7 +285,7 @@ function ReadyToJoin() {
     <section className="bg-surface">
       <div className="mx-auto max-w-[1200px] px-6 py-16 md:py-24 flex flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <h2 className="text-magnolia-navy text-3xl md:text-4xl font-bold uppercase tracking-wide text-center">
+          <h2 className="text-magnolia-navy text-2xl md:text-3xl font-bold uppercase tracking-wide text-center">
             Ready to join?
           </h2>
           <span
