@@ -18,18 +18,18 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: "Magnolia & Queen Anne Track & Field",
-    title:
-      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+    siteName: "Magnolia & Queen Anne Youth Track and Field",
+    title: "Magnolia and Queen Anne Youth Track and Field",
     description: SITE_DESCRIPTION,
     locale: "en_US",
     url: SITE_URL,
+    // og image picked up automatically from app/opengraph-image.png
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+    title: "Magnolia and Queen Anne Youth Track and Field",
     description: SITE_DESCRIPTION,
+    // twitter image picked up automatically from app/twitter-image.png
   },
   robots: { index: true, follow: true },
 };
