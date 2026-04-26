@@ -442,17 +442,24 @@
     "firstName": "Abigail"
   },
   {
-    "id": "brendan-b",
-    "firstName": "Brendan",
-    "lastInitial": "B."
-  },
-  {
     "id": "brijai",
     "firstName": "Brijai"
   },
   {
     "id": "chase",
     "firstName": "Chase"
+  },
+  {
+    "id": "cora",
+    "firstName": "Cora"
+  },
+  {
+    "id": "genevieve",
+    "firstName": "Genevieve"
+  },
+  {
+    "id": "guin",
+    "firstName": "Guin"
   },
   {
     "id": "henry-b",
@@ -464,12 +471,24 @@
     "firstName": "Jack Rees"
   },
   {
+    "id": "leo",
+    "firstName": "Leo"
+  },
+  {
     "id": "mehu",
     "firstName": "Mehu"
   },
   {
+    "id": "mimi",
+    "firstName": "Mimi"
+  },
+  {
     "id": "molly",
     "firstName": "Molly"
+  },
+  {
+    "id": "sam",
+    "firstName": "Sam"
   },
   {
     "id": "samantha",
@@ -478,16 +497,5 @@
   {
     "id": "serina",
     "firstName": "Serina"
-  },
-  {
-    "id": "tor",
-    "firstName": "Tor",
-    "team": "magnolia"
-  },
-  {
-    "id": "violet-r",
-    "firstName": "Violet",
-    "lastInitial": "R.",
-    "team": "magnolia"
   }
 ]
