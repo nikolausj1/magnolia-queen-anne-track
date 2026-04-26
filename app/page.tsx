@@ -143,54 +143,50 @@ function SharedStrongerTogether() {
     {
       title: "Shared practices",
       body: "Athletes from both teams practice together at QA Bowl Mondays and Wednesdays.",
+      icon: <PeopleIcon />,
     },
     {
       title: "Shared meets",
       body: "We compete together at Saturday meets at West Seattle Stadium.",
+      icon: <TrophyIcon />,
     },
     {
       title: "One community",
       body: "Two neighborhoods. One track. Stronger together.",
+      icon: <HeartIcon />,
     },
   ];
 
   return (
     <section className="bg-surface">
-      <div className="mx-auto max-w-[1200px] px-6 py-14 md:py-20">
-        <div className="bg-white rounded-lg border border-divider overflow-hidden">
-          <div className="grid md:grid-cols-[1.2fr_1fr] items-stretch">
-            <div className="relative min-h-[320px] md:min-h-[440px]">
-              <Image
-                src="/photos/home-huddle.png"
-                alt="Magnolia and Queen Anne athletes huddled together in team jerseys"
-                fill
-                sizes="(min-width: 768px) 660px, 100vw"
-                className="object-cover"
-                style={{ objectPosition: "center 35%" }}
-              />
+      <div className="mx-auto max-w-[1200px] px-6 py-14 md:py-20 flex flex-col items-center gap-10">
+        <div className="flex flex-col items-center gap-3">
+          <h2 className="text-ink text-2xl md:text-3xl font-bold uppercase tracking-wide text-center">
+            Shared. Stronger together.
+          </h2>
+          <span
+            className="block h-1 w-24 bg-accent-gold"
+            aria-hidden="true"
+          />
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3 w-full">
+          {items.map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col items-center text-center gap-3"
+            >
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white text-magnolia-navy">
+                {item.icon}
+              </div>
+              <h3 className="text-magnolia-navy text-sm font-semibold uppercase tracking-wide">
+                {item.title}
+              </h3>
+              <p className="text-sm text-ink leading-relaxed max-w-[16rem]">
+                {item.body}
+              </p>
             </div>
-            <div className="p-8 md:p-10 flex flex-col gap-5 justify-center">
-              <h2 className="text-ink text-2xl md:text-3xl font-bold uppercase tracking-tight leading-tight">
-                Shared. Stronger together.
-              </h2>
-              <span
-                className="block h-1 w-16 bg-accent-gold"
-                aria-hidden="true"
-              />
-              <ul className="flex flex-col gap-4">
-                {items.map((item) => (
-                  <li key={item.title} className="flex flex-col gap-1">
-                    <span className="text-magnolia-navy text-xs font-semibold uppercase tracking-wide">
-                      {item.title}
-                    </span>
-                    <span className="text-sm text-ink leading-relaxed">
-                      {item.body}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -348,3 +344,63 @@ function SecondaryCTA() {
   );
 }
 
+function PeopleIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+function TrophyIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 9H4a2 2 0 0 1-2-2V5h4" />
+      <path d="M18 9h2a2 2 0 0 0 2-2V5h-4" />
+      <path d="M6 5v6a6 6 0 0 0 12 0V5" />
+      <path d="M9 21h6" />
+      <path d="M12 17v4" />
+    </svg>
+  );
+}
+
+function HeartIcon() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+}

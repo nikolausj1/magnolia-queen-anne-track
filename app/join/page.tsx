@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { TeamCard } from "@/components/TeamCard";
@@ -54,6 +55,18 @@ export default function JoinPage() {
           Ready to join? Each team registers through its own community center.
         </p>
       </header>
+
+      <div className="relative rounded-lg overflow-hidden h-56 md:h-72 lg:h-80">
+        <Image
+          src="/photos/home-huddle.png"
+          alt="Magnolia and Queen Anne athletes huddled together in team jerseys"
+          fill
+          sizes="(min-width: 1100px) 1100px, 100vw"
+          className="object-cover"
+          style={{ objectPosition: "center 35%" }}
+          priority
+        />
+      </div>
 
       <section aria-labelledby="register-heading" className="flex flex-col gap-6">
         <h2 id="register-heading" className="sr-only">
