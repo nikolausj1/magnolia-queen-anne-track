@@ -26,6 +26,11 @@ export type Meet = {
   location: string;
   type: string;
   weather?: Weather;
+  /**
+   * Optional venue photo filename inside `public/photos/`. Defaults to
+   * the West Seattle Stadium hero when undefined.
+   */
+  photo?: string;
 };
 
 export type Result = {

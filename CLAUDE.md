@@ -61,8 +61,8 @@ No standalone Magnolia roster exists. Use this heuristic on athlete name merges:
 
 ### Extraction rules
 
-- Skip the `BENCHMARK APRIL 8` sheet in the xlsx. Pre-season time trials, not meet results.
-- Extract from meet sheets: `1ST MEET APRIL 18`, `2ND MEET APRIL 25`, and subsequent meet sheets. Sheet titles encode the meet date.
+- BENCHMARK sheets (e.g. `BENCHMARK APRIL 8`) are real meets — Apr 8 was held at Queen Anne Bowl Playfield as the season's first event. The sheet-name → meet-id resolver (`lib/ingestion/extract-results.ts`) accepts either `MEET` or `BENCHMARK` as the prefix; the date encoded in the sheet name has to match a record in `data/meets.json`.
+- Extract from meet sheets: `BENCHMARK APRIL 8`, `1ST MEET APRIL 18`, `2ND MEET APRIL 25`, and subsequent meet sheets. Sheet titles encode the meet date.
 - Pivot each row from wide format (one row per athlete, one column per event) to long format (one row per result). Skip blank cells.
 - Cell may contain a mark only (`:18.78`), a mark plus a place annotation (`:08 1st`), or a mark plus a parenthetical note (`:22 (fell)`). Split into `mark`, `place`, `note` fields.
 - Omit relay columns (4X100, 4X400) for v1.

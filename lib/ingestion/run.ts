@@ -35,9 +35,10 @@ async function main() {
   console.error(`  ${sheets.length} sheet(s)`);
 
   // Collect raw xlsx names from any sheet that looks like a meet sheet.
+  // BENCHMARK sheets count as real meets — Apr 8 was the first event of the
+  // season, held at Queen Anne Bowl Playfield.
   const rawNames = new Set<string>();
   for (const sheet of sheets) {
-    if (/BENCHMARK/i.test(sheet.sheetName)) continue;
     const headers = sheet.headers.map((h) => (h ?? "").trim().toUpperCase());
     const nameCol = headers.findIndex((h) => h === "NAME" || h === "ATHLETE");
     if (nameCol === -1) continue;

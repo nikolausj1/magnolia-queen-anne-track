@@ -49,8 +49,8 @@ export function MeetCard({
         className="group relative block w-full min-h-44 md:min-h-56 text-left overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
       >
         <Image
-          src="/photos/west-seattle-stadium.webp"
-          alt="West Seattle Stadium track at sunset"
+          src={meet.photo ? `/photos/${meet.photo}` : "/photos/west-seattle-stadium.webp"}
+          alt={meet.photo ? `${meet.location} venue photo` : "West Seattle Stadium track at sunset"}
           fill
           sizes="(min-width: 1200px) 1100px, 100vw"
           className="object-cover"

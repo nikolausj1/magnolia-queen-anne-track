@@ -22,8 +22,9 @@ const KNOWN_EVENTS = new Set([
 const PLACE_SUFFIX = /\s+(\d+)(?:st|nd|rd|th)\b/i;
 const PLACE_ONLY = /^(\d+)(?:st|nd|rd|th)\s*place\s*$/i;
 const NOTE_PARENS = /\s*\(([^)]+)\)\s*$/;
-const SHEET_DATE = /MEET\s+([A-Z]+)\s+(\d+)/i;
-const BENCHMARK = /BENCHMARK/i;
+// Match either "MEET" or "BENCHMARK" sheet prefixes, e.g. "1ST MEET APRIL 18"
+// or "BENCHMARK APRIL 8". Both are real meets and resolve to a meet record.
+const SHEET_DATE = /(?:MEET|BENCHMARK)\s+([A-Z]+)\s+(\d+)/i;
 
 const MONTH_BY_NAME: Record<string, string> = {
   JANUARY: "01",
@@ -61,7 +62,6 @@ export function extractResults(
   const meetSheets: Array<{ sheetName: string; meetId: string | null }> = [];
 
   for (const sheet of sheets) {
-    if (BENCHMARK.test(sheet.sheetName)) continue;
     const meetId = resolveMeetId(sheet.sheetName, meets);
 
     if (!meetId) {
