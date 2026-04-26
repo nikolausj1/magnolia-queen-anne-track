@@ -46,7 +46,7 @@ export function MeetCard({
         aria-expanded={expanded}
         aria-controls={bodyId}
         aria-labelledby={headerLabelId}
-        className="group relative block w-full h-44 md:h-56 text-left overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
+        className="group relative block w-full min-h-44 md:min-h-56 text-left overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
       >
         <Image
           src="/photos/west-seattle-stadium.webp"
@@ -59,37 +59,36 @@ export function MeetCard({
           className="absolute inset-0 transition-opacity group-hover:opacity-90"
           style={{
             background:
-              "linear-gradient(to right, rgba(11,31,58,0.85), rgba(11,31,58,0.35))",
+              "linear-gradient(to right, rgba(11,31,58,0.85) 0%, rgba(11,31,58,0.45) 50%, rgba(11,31,58,0.8) 100%)",
           }}
           aria-hidden="true"
         />
-        <div className="relative h-full px-6 md:px-10 py-5 md:py-6 flex flex-col justify-between">
-          <div className="flex flex-col gap-1.5">
-            {isMostRecent ? (
+        <div className="relative min-h-44 md:min-h-56 px-6 md:px-10 py-5 md:py-6 flex flex-col gap-4 justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <div className="flex flex-col gap-1.5 min-w-0">
               <p className="text-xs uppercase tracking-wide text-white/80 font-semibold">
-                Most recent meet
+                {isMostRecent ? "Most recent meet" : "Previous meet"}
               </p>
-            ) : (
-              <p className="text-xs uppercase tracking-wide text-white/70 font-semibold">
-                Previous meet
+              <h2
+                id={headerLabelId}
+                className="text-white text-2xl md:text-3xl font-bold uppercase tracking-tight leading-tight"
+              >
+                {formattedDate}
+              </h2>
+            </div>
+            <div className="flex flex-col gap-0.5 sm:text-right shrink-0">
+              <p className="text-sm md:text-base font-semibold text-white whitespace-nowrap">
+                {meet.location}
               </p>
-            )}
-            <h2
-              id={headerLabelId}
-              className="text-white text-2xl md:text-3xl font-bold uppercase tracking-tight leading-tight"
-            >
-              {formattedDate}
-            </h2>
-            <p className="text-sm text-white/85">
-              <span>{meet.location}</span>
               {meet.weather ? (
-                <span> · {meet.weather.summary}</span>
+                <p className="text-xs md:text-sm text-white/85 whitespace-nowrap">
+                  {meet.weather.summary}
+                </p>
               ) : null}
-              <span>
-                {" · "}
+              <p className="text-xs md:text-sm text-white/85 whitespace-nowrap tabular-nums">
                 {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
-              </span>
-            </p>
+              </p>
+            </div>
           </div>
           <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide self-start">
             {expanded ? "Hide results" : "View all results"}
