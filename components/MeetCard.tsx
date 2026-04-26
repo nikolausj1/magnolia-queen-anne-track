@@ -101,8 +101,20 @@ export function MeetCard({
                 <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
               </svg>
             </span>
-            <p className="text-xs md:text-sm text-white/85 whitespace-nowrap tabular-nums">
-              {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
+            <p className="inline-flex items-center gap-1.5 text-xs md:text-sm text-white/85 whitespace-nowrap">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 17a7 7 0 1114 0H3z" />
+              </svg>
+              <span className="tabular-nums">
+                {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
+              </span>
             </p>
           </div>
         </div>
