@@ -133,7 +133,7 @@ export function Header() {
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  className={`py-3 text-sm uppercase tracking-wide border-b border-divider last:border-0 ${
+                  className={`py-3 text-sm uppercase tracking-wide border-b border-divider last:border-0 outline-none focus-visible:ring-2 focus-visible:ring-magnolia-navy focus-visible:ring-inset rounded-sm ${
                     isActive(item.href)
                       ? "text-magnolia-navy font-semibold"
                       : "text-ink"
