@@ -6,8 +6,7 @@ import { getMeets, getResultsByMeet } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: {
-    absolute:
-      "Magnolia CC Youth Track & Field · Queen Anne Quicksters · Seattle",
+    absolute: "Magnolia and Queen Anne Track and Field",
   },
   description:
     "Two Seattle youth track and field teams, one program. Ages 5–17, practicing at Queen Anne Bowl, competing weekend Saturdays at West Seattle Stadium.",
