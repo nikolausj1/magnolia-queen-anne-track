@@ -34,7 +34,9 @@ export default function ResultsPage() {
   // results land in data/results.json.
   const meetsWithResults = allMeets
     .map((meet) => ({ meet, results: getResultsByMeet(meet.id) }))
-    .filter(({ results }) => results.length > 0);
+    .filter(({ results }) => results.length > 0)
+    // Newest meet first so the most recent expands by default.
+    .sort((a, b) => b.meet.date.localeCompare(a.meet.date));
 
   return (
     <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
@@ -48,10 +50,11 @@ export default function ResultsPage() {
           Results will be posted here as the season unfolds.
         </p>
       ) : (
-        <div className="flex flex-col gap-12 md:gap-16">
-          {meetsWithResults.map(({ meet, results }) => {
+        <div className="flex flex-col gap-6 md:gap-8">
+          {meetsWithResults.map(({ meet, results }, index) => {
             const eventGroups = buildEventGroups(results, athletesById);
             const athleteGroups = buildAthleteGroups(results, athletesById);
+            const athleteCount = new Set(results.map((r) => r.athleteId)).size;
             return (
               <MeetCard
                 key={meet.id}
@@ -59,6 +62,9 @@ export default function ResultsPage() {
                 formattedDate={formatMeetDate(meet.date)}
                 eventGroups={eventGroups}
                 athleteGroups={athleteGroups}
+                athleteCount={athleteCount}
+                initiallyExpanded={index === 0}
+                isMostRecent={index === 0}
               />
             );
           })}
