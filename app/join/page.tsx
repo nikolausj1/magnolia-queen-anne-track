@@ -92,9 +92,9 @@ export default function JoinPage() {
             team="queen-anne"
             teamLabel="Queen Anne Quicksters"
             teamSubLabel="Track & Field"
-            logoSrc="/logos/queen-anne-quicksters.png"
+            logoSrc="/logos/queen-anne-quicksters-wide.png"
             logoAlt="Queen Anne Quicksters winged-shoe logo"
-            logoWidth={1254}
+            logoWidth={1594}
             logoHeight={1254}
             description="Track and field for kids ages 5–17 in Queen Anne. We practice with Magnolia under the same coaches and compete together."
             registerUrl={QUEEN_ANNE_REGISTER_URL}
