@@ -63,7 +63,7 @@ export default function ResultsPage() {
                 eventGroups={eventGroups}
                 athleteGroups={athleteGroups}
                 athleteCount={athleteCount}
-                initiallyExpanded={index === 0}
+                initiallyExpanded={false}
                 isMostRecent={index === 0}
               />
             );
