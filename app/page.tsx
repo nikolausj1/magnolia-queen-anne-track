@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { TeamCard } from "@/components/TeamCard";
-import { getMeets } from "@/lib/data";
+import { getMeets, getResultsByMeet } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: {
@@ -29,7 +29,11 @@ const COACHES: Coach[] = [];
 
 export default function HomePage() {
   const meets = getMeets();
-  const latestPastMeet = meets.find((m) => m.date <= TODAY);
+  // Only point at meets that actually have results published — otherwise the
+  // teaser links to a date that produces nothing on /results.
+  const latestPastMeet = meets.find(
+    (m) => m.date <= TODAY && getResultsByMeet(m.id).length > 0,
+  );
 
   return (
     <>
