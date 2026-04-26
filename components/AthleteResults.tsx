@@ -28,9 +28,6 @@ export function AthleteResults({ groups }: Props) {
                   <th scope="col" className="py-2 pl-5 pr-3 font-medium">
                     Event
                   </th>
-                  <th scope="col" className="py-2 px-3 text-center font-medium">
-                    Place
-                  </th>
                   <th
                     scope="col"
                     className="py-2 pl-3 pr-5 text-right font-medium"
@@ -40,8 +37,8 @@ export function AthleteResults({ groups }: Props) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-divider">
-                {group.rows.map((row) => (
-                  <tr key={`${row.event}-${row.mark}-${row.place ?? ""}`}>
+                {group.rows.map((row, idx) => (
+                  <tr key={`${row.event}-${row.mark}-${idx}`}>
                     <th scope="row" className="py-3 pl-5 pr-3 align-top">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-medium text-ink">
@@ -50,9 +47,6 @@ export function AthleteResults({ groups }: Props) {
                         <EventPill category={row.category} />
                       </div>
                     </th>
-                    <td className="py-3 px-3 text-center align-top text-ink tabular-nums">
-                      {row.place ?? "—"}
-                    </td>
                     <td className="py-3 pl-3 pr-5 text-right align-top">
                       <span className="text-[22px] font-medium tabular-nums text-ink">
                         {row.mark}

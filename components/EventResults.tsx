@@ -64,12 +64,6 @@ export function EventResults({ groups }: Props) {
                     </th>
                     <th
                       scope="col"
-                      className="py-2 px-3 text-center font-medium w-20"
-                    >
-                      Place
-                    </th>
-                    <th
-                      scope="col"
                       className="py-2 pl-3 pr-5 text-right font-medium w-32"
                     >
                       Mark
@@ -77,18 +71,13 @@ export function EventResults({ groups }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-divider">
-                  {group.rows.map((row) => (
-                    <tr
-                      key={`${row.athleteId}-${row.mark}-${row.place ?? ""}`}
-                    >
+                  {group.rows.map((row, idx) => (
+                    <tr key={`${row.athleteId}-${row.mark}-${idx}`}>
                       <th scope="row" className="py-3 pl-5 pr-3 align-top">
                         <div className="font-semibold text-ink">
                           {row.display}
                         </div>
                       </th>
-                      <td className="py-3 px-3 text-center align-top text-ink tabular-nums">
-                        {row.place ?? "—"}
-                      </td>
                       <td className="py-3 pl-3 pr-5 text-right align-top">
                         <span className="text-[22px] font-medium tabular-nums text-ink">
                           {row.mark}
