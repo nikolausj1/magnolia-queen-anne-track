@@ -52,7 +52,7 @@ function HeroAndTeamCards() {
   return (
     <section className="relative bg-white overflow-hidden">
       <div className="grid md:grid-cols-[1fr_1.4fr] gap-x-0 items-stretch relative">
-        <div className="flex flex-col gap-6 px-6 md:pl-[max(1.5rem,calc((100vw-1200px)/2+1.5rem))] pt-12 md:pt-20 lg:pt-28 md:pr-4 md:pb-24 lg:pb-32 relative z-10">
+        <div className="flex flex-col gap-6 px-6 md:pl-[max(1.5rem,calc((100vw-1200px)/2+1.5rem))] pt-12 md:pt-20 lg:pt-28 md:pr-4 pb-8 md:pb-24 lg:pb-32 relative z-10">
           <h1 className="text-magnolia-navy text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.0] md:whitespace-nowrap">
             Two Teams.
             <br />
@@ -94,7 +94,7 @@ function HeroAndTeamCards() {
 
       <div
         aria-labelledby="teams-heading"
-        className="relative z-10 -mt-16 md:-mt-12 lg:-mt-12"
+        className="relative z-10 mt-8 md:-mt-12 lg:-mt-12"
       >
         <div className="mx-auto max-w-[1200px] px-6 pb-12 md:pb-20">
           <h2 id="teams-heading" className="sr-only">
