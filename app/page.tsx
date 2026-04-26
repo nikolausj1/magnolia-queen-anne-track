@@ -240,7 +240,7 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
       </div>
       <Link
         href="/results"
-        aria-label={`View all results — most recent meet: ${formatted}`}
+        aria-label={`View results — most recent meet: ${formatted}`}
         className="group block relative h-44 md:h-56 rounded-lg overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magnolia-navy"
       >
         <Image
@@ -266,7 +266,7 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
             {formatted}
           </h3>
           <span className="mt-2 inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide self-start group-hover:gap-3 transition-all">
-            View all results
+            View results
             <svg
               width="14"
               height="14"

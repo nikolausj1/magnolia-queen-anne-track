@@ -5,7 +5,12 @@
     "startTime": "10:00 am",
     "location": "Queen Anne Bowl Playfield",
     "type": "Benchmark",
-    "photo": "queen-anne-bowl.jpg"
+    "photo": "queen-anne-bowl.jpg",
+    "weather": {
+      "tempF": 47,
+      "conditions": "Partly cloudy",
+      "summary": "47°F · Partly cloudy · 5 mph wind"
+    }
   },
   {
     "id": "2026-04-18-west-seattle",

@@ -67,7 +67,7 @@ export function MeetCard({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div className="flex flex-col gap-1.5 min-w-0">
               <p className="text-xs uppercase tracking-wide text-white/80 font-semibold">
-                {isMostRecent ? "Most recent meet" : "Previous meet"}
+                {isMostRecent ? "Most recent meet" : meet.type}
               </p>
               <h2
                 id={headerLabelId}
@@ -89,7 +89,7 @@ export function MeetCard({
           </div>
           <div className="flex items-end justify-between gap-4">
             <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide">
-              {expanded ? "Hide results" : "View all results"}
+              {expanded ? "Hide results" : "View results"}
               <svg
                 className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
                 width="14"

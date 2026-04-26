@@ -42,7 +42,7 @@ export default function ResultsPage() {
     <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
       <h1 className="mb-2">Results</h1>
       <p className="text-muted mb-10">
-        Spring 2026 season · West Seattle Stadium
+        Spring 2026 season
       </p>
 
       {meetsWithResults.length === 0 ? (
