@@ -85,24 +85,26 @@ export function MeetCard({
                   {meet.weather.summary}
                 </p>
               ) : null}
-              <p className="text-xs md:text-sm text-white/85 whitespace-nowrap tabular-nums">
-                {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
-              </p>
             </div>
           </div>
-          <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide self-start">
-            {expanded ? "Hide results" : "View all results"}
-            <svg
-              className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
-              width="14"
-              height="14"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
-            </svg>
-          </span>
+          <div className="flex items-end justify-between gap-4">
+            <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide">
+              {expanded ? "Hide results" : "View all results"}
+              <svg
+                className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                width="14"
+                height="14"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+              </svg>
+            </span>
+            <p className="text-xs md:text-sm text-white/85 whitespace-nowrap tabular-nums">
+              {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
+            </p>
+          </div>
         </div>
       </button>
 
