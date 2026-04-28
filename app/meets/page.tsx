@@ -29,8 +29,9 @@ export const metadata: Metadata = {
 };
 
 // 6-hour ISR matches the forecast cache so the upcoming weather and the
-// page itself stay roughly in sync.
-export const revalidate = 60 * 60 * 6;
+// page itself stay roughly in sync. Next.js 16 requires this export to be a
+// literal — don't replace with `60 * 60 * 6`.
+export const revalidate = 21600;
 
 const SECTION_HEADING_CLASS =
   "text-[28px] md:text-[32px] font-semibold tracking-tight";
