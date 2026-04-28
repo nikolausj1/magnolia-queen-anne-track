@@ -23,7 +23,7 @@ export function AthleteHistory({ events, history }: Props) {
     return null;
   }
   return (
-    <section className="border border-divider rounded-md overflow-hidden">
+    <section className="-mx-6 sm:mx-0 border-y border-divider sm:border-x sm:rounded-md sm:overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>

@@ -37,7 +37,7 @@ export default async function AthletePage({ params }: Props) {
         <BackToMeetsLink />
       </div>
 
-      <header className="flex flex-col sm:flex-row sm:items-center gap-5 mb-10">
+      <header className="flex flex-row items-center gap-4 sm:gap-5 mb-10">
         <AthleteAvatar
           firstName={detail.athlete.firstName}
           lastInitial={detail.athlete.lastInitial}
