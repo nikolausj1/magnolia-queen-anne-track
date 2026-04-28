@@ -17,6 +17,13 @@ type Props = {
   athleteCount: number;
   initiallyExpanded?: boolean;
   isMostRecent?: boolean;
+  /**
+   * When true, the card renders the photo header but disables the
+   * expand/collapse interaction and replaces the View Results CTA with a
+   * muted "Results pending" pill. Used for past meets whose results
+   * haven't been ingested yet.
+   */
+  pending?: boolean;
 };
 
 export function MeetCard({
@@ -27,6 +34,7 @@ export function MeetCard({
   athleteCount,
   initiallyExpanded = false,
   isMostRecent = false,
+  pending = false,
 }: Props) {
   const [view, setView] = useState<View>("event");
   const [expanded, setExpanded] = useState<boolean>(initiallyExpanded);
@@ -42,11 +50,16 @@ export function MeetCard({
     <article className="rounded-lg border border-divider bg-white overflow-hidden">
       <button
         type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        aria-controls={bodyId}
+        onClick={pending ? undefined : () => setExpanded((v) => !v)}
+        disabled={pending}
+        aria-expanded={pending ? undefined : expanded}
+        aria-controls={pending ? undefined : bodyId}
         aria-labelledby={headerLabelId}
-        className="group relative block w-full min-h-44 md:min-h-56 text-left overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
+        className={`group relative block w-full min-h-44 md:min-h-56 text-left overflow-hidden ${
+          pending
+            ? "cursor-default"
+            : "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
+        }`}
       >
         <Image
           src={meet.photo ? `/photos/${meet.photo}` : "/photos/west-seattle-stadium.webp"}
@@ -67,7 +80,11 @@ export function MeetCard({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div className="flex flex-col gap-1.5 min-w-0">
               <p className="text-xs uppercase tracking-wide text-white/80 font-semibold">
-                {isMostRecent ? "Most recent meet" : meet.type}
+                {isMostRecent
+                  ? "Most recent meet"
+                  : meet.type === "Invitational"
+                    ? "Meet"
+                    : meet.type}
               </p>
               <h2
                 id={headerLabelId}
@@ -88,39 +105,49 @@ export function MeetCard({
             </div>
           </div>
           <div className="flex items-end justify-between gap-4">
-            <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide">
-              {expanded ? "Hide results" : "View results"}
-              <svg
-                className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
-                width="14"
-                height="14"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
-              </svg>
-            </span>
-            <p className="inline-flex items-center gap-1.5 text-xs md:text-sm text-white/85 whitespace-nowrap">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-                className="shrink-0"
-              >
-                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 17a7 7 0 1114 0H3z" />
-              </svg>
-              <span className="tabular-nums">
-                {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
+            {pending ? (
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/90">
+                Results pending
               </span>
-            </p>
+            ) : (
+              <span className="inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide">
+                {expanded ? "Hide results" : "View results"}
+                <svg
+                  className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                  width="14"
+                  height="14"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+                </svg>
+              </span>
+            )}
+            {pending ? (
+              <span aria-hidden="true" />
+            ) : (
+              <p className="inline-flex items-center gap-1.5 text-xs md:text-sm text-white/85 whitespace-nowrap">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="shrink-0"
+                >
+                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 17a7 7 0 1114 0H3z" />
+                </svg>
+                <span className="tabular-nums">
+                  {athleteCount} {athleteCount === 1 ? "athlete" : "athletes"}
+                </span>
+              </p>
+            )}
           </div>
         </div>
       </button>
 
-      <div id={bodyId} hidden={!expanded}>
+      <div id={bodyId} hidden={pending || !expanded}>
         <div className="p-6 md:p-8 flex flex-col gap-6">
           <div
             role="tablist"

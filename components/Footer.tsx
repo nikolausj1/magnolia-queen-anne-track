@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/results", label: "Results" },
+  { href: "/meets", label: "Meets" },
   { href: "/join", label: "Join" },
   { href: "/faq", label: "FAQ" },
   { href: "/privacy", label: "Privacy" },

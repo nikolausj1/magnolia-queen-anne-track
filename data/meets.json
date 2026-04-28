@@ -30,6 +30,7 @@
     "startTime": "10:00 am",
     "location": "West Seattle Stadium",
     "type": "Invitational",
+    "photo": "westSeattleStadium02.jpg",
     "weather": {
       "tempF": 53,
       "conditions": "Clear",

@@ -238,7 +238,7 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
         />
       </div>
       <Link
-        href="/results"
+        href="/meets#results"
         aria-label={`View results — most recent meet: ${formatted}`}
         className="group block relative h-44 md:h-56 rounded-lg overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magnolia-navy"
       >
