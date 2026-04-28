@@ -21,7 +21,7 @@ export function BackToMeetsLink() {
           router.back();
         }
       }}
-      className="inline-flex items-center gap-2 text-base md:text-lg font-semibold text-magnolia-navy hover:underline underline-offset-2 decoration-2"
+      className="inline-flex items-center gap-2 rounded-md border border-magnolia-navy bg-white px-4 py-2 text-sm md:text-base font-semibold uppercase tracking-wide text-magnolia-navy transition-colors hover:bg-magnolia-navy/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-magnolia-navy focus-visible:ring-offset-2"
     >
       <span aria-hidden="true">←</span> Back to Meets
     </Link>

@@ -34,21 +34,15 @@ export function AthleteHistory({ events, history }: Props) {
               >
                 Date
               </th>
-              {events.map((e) => (
+              {events.map((e, idx) => (
                 <th
                   key={e.event}
                   scope="col"
-                  className={`py-2 px-3 font-semibold whitespace-nowrap text-right ${HEADER_TINT[e.category]}`}
+                  className={`py-2 px-3 font-semibold whitespace-nowrap text-right ${HEADER_TINT[e.category]} ${idx === events.length - 1 ? "pr-5" : ""}`}
                 >
                   {e.event}
                 </th>
               ))}
-              <th
-                scope="col"
-                className="py-2 pl-3 pr-5 font-medium whitespace-nowrap"
-              >
-                Meet
-              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-divider">
@@ -57,29 +51,26 @@ export function AthleteHistory({ events, history }: Props) {
               const dateStr = FORMAT_DATE.format(dt);
               return (
                 <tr key={row.meetId}>
-                  <td className="py-3 pl-5 pr-3 align-middle text-ink whitespace-nowrap tabular-nums font-medium">
+                  <td className="py-4 pl-5 pr-3 align-middle text-ink whitespace-nowrap tabular-nums text-base font-semibold">
                     {dateStr}
                   </td>
-                  {events.map((e) => {
+                  {events.map((e, idx) => {
                     const value = row.marksByEvent[e.event];
                     return (
                       <td
                         key={e.event}
-                        className="py-3 px-3 align-middle text-right tabular-nums whitespace-nowrap"
+                        className={`py-4 px-3 align-middle text-right tabular-nums whitespace-nowrap ${idx === events.length - 1 ? "pr-5" : ""}`}
                       >
                         {value ? (
-                          <span className="text-base font-medium text-ink">
+                          <span className="text-[22px] font-medium text-ink">
                             {value}
                           </span>
                         ) : (
-                          <span className="text-muted">—</span>
+                          <span className="text-muted text-lg">—</span>
                         )}
                       </td>
                     );
                   })}
-                  <td className="py-3 pl-3 pr-5 align-middle text-muted whitespace-nowrap">
-                    {row.meetLocation}
-                  </td>
                 </tr>
               );
             })}
