@@ -34,8 +34,8 @@ const MEETS: Meet[] = [
 ];
 
 const ATHLETES: Athlete[] = [
-  { id: "sam-l", firstName: "Sam", lastInitial: "L.", team: "magnolia" },
-  { id: "addie", firstName: "Addie", team: "queen-anne" },
+  { id: "sam-l", firstName: "Sam", lastInitial: "L." },
+  { id: "addie", firstName: "Addie" },
 ];
 
 const RESULTS: Result[] = [
@@ -86,7 +86,7 @@ describe("indexAthletesById", () => {
   it("indexes athletes by id", () => {
     const dict = indexAthletesById(ATHLETES);
     expect(dict["sam-l"].firstName).toBe("Sam");
-    expect(dict.addie.team).toBe("queen-anne");
+    expect(dict.addie.firstName).toBe("Addie");
   });
 
   it("handles empty input", () => {

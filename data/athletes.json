@@ -1,11 +1,5 @@
 [
   {
-    "id": "coraline-g",
-    "firstName": "Coraline",
-    "lastInitial": "G.",
-    "team": "queen-anne"
-  },
-  {
     "id": "waverly-h",
     "firstName": "Waverly",
     "lastInitial": "H.",
@@ -18,21 +12,9 @@
     "team": "queen-anne"
   },
   {
-    "id": "emmett-c",
-    "firstName": "Emmett",
-    "lastInitial": "C.",
-    "team": "queen-anne"
-  },
-  {
     "id": "nico-c",
     "firstName": "Nico",
     "lastInitial": "C.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "henry-w",
-    "firstName": "Henry",
-    "lastInitial": "W.",
     "team": "queen-anne"
   },
   {
@@ -48,12 +30,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "billie-a",
-    "firstName": "Billie",
-    "lastInitial": "A.",
-    "team": "queen-anne"
-  },
-  {
     "id": "niya-c",
     "firstName": "Niya",
     "lastInitial": "C.",
@@ -63,12 +39,6 @@
     "id": "london-f",
     "firstName": "London",
     "lastInitial": "F.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "camden-c",
-    "firstName": "Camden",
-    "lastInitial": "C.",
     "team": "queen-anne"
   },
   {
@@ -90,12 +60,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "miriam-a",
-    "firstName": "Miriam",
-    "lastInitial": "A.",
-    "team": "queen-anne"
-  },
-  {
     "id": "rhys-s",
     "firstName": "Rhys",
     "lastInitial": "S.",
@@ -111,12 +75,6 @@
     "id": "diego-s",
     "firstName": "Diego",
     "lastInitial": "S.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "dresden-h",
-    "firstName": "Dresden",
-    "lastInitial": "H.",
     "team": "queen-anne"
   },
   {
@@ -162,12 +120,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "negaar-z",
-    "firstName": "Negaar",
-    "lastInitial": "Z.",
-    "team": "queen-anne"
-  },
-  {
     "id": "grace-p",
     "firstName": "Grace",
     "lastInitial": "P.",
@@ -198,12 +150,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "tuva-c",
-    "firstName": "Tuva",
-    "lastInitial": "C.",
-    "team": "queen-anne"
-  },
-  {
     "id": "leona-e",
     "firstName": "Leona",
     "lastInitial": "E.",
@@ -219,12 +165,6 @@
     "id": "samantha-f",
     "firstName": "Samantha",
     "lastInitial": "F.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "jiraiya-b",
-    "firstName": "Jiraiya",
-    "lastInitial": "B.",
     "team": "queen-anne"
   },
   {
@@ -258,12 +198,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "samantha-s",
-    "firstName": "Samantha",
-    "lastInitial": "S.",
-    "team": "queen-anne"
-  },
-  {
     "id": "fenna-l",
     "firstName": "Fenna",
     "lastInitial": "L.",
@@ -273,12 +207,6 @@
     "id": "naomi-h",
     "firstName": "Naomi",
     "lastInitial": "H.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "grant-m",
-    "firstName": "Grant",
-    "lastInitial": "M.",
     "team": "queen-anne"
   },
   {
@@ -303,12 +231,6 @@
     "id": "murphy-c",
     "firstName": "Murphy",
     "lastInitial": "C.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "sofia-s",
-    "firstName": "Sofia",
-    "lastInitial": "S.",
     "team": "queen-anne"
   },
   {
@@ -348,12 +270,6 @@
     "team": "queen-anne"
   },
   {
-    "id": "bartholomew-m",
-    "firstName": "Bartholomew",
-    "lastInitial": "M.",
-    "team": "queen-anne"
-  },
-  {
     "id": "elin-p",
     "firstName": "Elin",
     "lastInitial": "P.",
@@ -372,21 +288,9 @@
     "team": "queen-anne"
   },
   {
-    "id": "margaret-a",
-    "firstName": "Margaret",
-    "lastInitial": "A.",
-    "team": "queen-anne"
-  },
-  {
     "id": "guinevere-g",
     "firstName": "Guinevere",
     "lastInitial": "G.",
-    "team": "queen-anne"
-  },
-  {
-    "id": "anna-b",
-    "firstName": "Anna",
-    "lastInitial": "B.",
     "team": "queen-anne"
   },
   {
@@ -420,46 +324,40 @@
     "team": "queen-anne"
   },
   {
-    "id": "lia-c",
-    "firstName": "Lia",
-    "lastInitial": "C.",
-    "team": "queen-anne"
-  },
-  {
     "id": "jameson-w",
     "firstName": "Jameson",
     "lastInitial": "W.",
     "team": "queen-anne"
   },
   {
-    "id": "emerson-h",
-    "firstName": "Emerson",
-    "lastInitial": "H.",
-    "team": "queen-anne"
-  },
-  {
     "id": "abigail",
-    "firstName": "Abigail"
+    "firstName": "Abigail",
+    "lastInitial": "W."
   },
   {
     "id": "brijai",
-    "firstName": "Brijai"
+    "firstName": "Brijai",
+    "lastInitial": "H."
   },
   {
     "id": "chase",
-    "firstName": "Chase"
+    "firstName": "Chase",
+    "lastInitial": "N."
   },
   {
     "id": "cora",
-    "firstName": "Cora"
+    "firstName": "Cora",
+    "lastInitial": "G."
   },
   {
     "id": "genevieve",
-    "firstName": "Genevieve"
+    "firstName": "Genevieve",
+    "lastInitial": "M."
   },
   {
     "id": "guin",
-    "firstName": "Guin"
+    "firstName": "Guin",
+    "lastInitial": "G."
   },
   {
     "id": "henry-b",
@@ -467,12 +365,9 @@
     "lastInitial": "B."
   },
   {
-    "id": "jack-rees",
-    "firstName": "Jack Rees"
-  },
-  {
     "id": "leo",
-    "firstName": "Leo"
+    "firstName": "Leo",
+    "lastInitial": "D."
   },
   {
     "id": "mehu",
@@ -480,22 +375,75 @@
   },
   {
     "id": "mimi",
-    "firstName": "Mimi"
+    "firstName": "Mimi",
+    "lastInitial": "A."
   },
   {
     "id": "molly",
-    "firstName": "Molly"
+    "firstName": "Molly",
+    "lastInitial": "A."
   },
   {
     "id": "sam",
-    "firstName": "Sam"
-  },
-  {
-    "id": "samantha",
-    "firstName": "Samantha"
+    "firstName": "Sam",
+    "lastInitial": "R."
   },
   {
     "id": "serina",
     "firstName": "Serina"
+  },
+  {
+    "id": "anna-laura-b",
+    "firstName": "Anna Laura",
+    "lastInitial": "B."
+  },
+  {
+    "id": "bo-m",
+    "firstName": "Bo",
+    "lastInitial": "M."
+  },
+  {
+    "id": "brendan-b",
+    "firstName": "Brendan",
+    "lastInitial": "B."
+  },
+  {
+    "id": "jack-r",
+    "firstName": "Jack",
+    "lastInitial": "R."
+  },
+  {
+    "id": "jiraya-b",
+    "firstName": "Jiraya",
+    "lastInitial": "B."
+  },
+  {
+    "id": "madeline-w",
+    "firstName": "Madeline",
+    "lastInitial": "W."
+  },
+  {
+    "id": "sammy-s",
+    "firstName": "Sammy",
+    "lastInitial": "S."
+  },
+  {
+    "id": "sarina-s",
+    "firstName": "Sarina",
+    "lastInitial": "S."
+  },
+  {
+    "id": "sophia-s",
+    "firstName": "Sophia",
+    "lastInitial": "S."
+  },
+  {
+    "id": "violet-r",
+    "firstName": "Violet",
+    "lastInitial": "R."
+  },
+  {
+    "id": "tor",
+    "firstName": "Tor"
   }
 ]

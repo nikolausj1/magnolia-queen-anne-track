@@ -47,17 +47,10 @@ The project ingests results, athletes, and meet data from files in `inbox/`. Sch
 
 - `inbox/2026 Track and Field Schedule.docx` — seeds `data/meets.json`.
 - `inbox/Track Roster As of 4-9-26.pdf` — Queen Anne athlete roster.
-- `inbox/2026 TRACK TIMES & DISTANCES.xlsx` — canonical results source; also contributes to athlete roster (see team inference rule).
+- `inbox/2026 TRACK TIMES & DISTANCES.xlsx` — **single source of truth** for athletes and results.
 - `inbox/2026 T&F order of events.docx` — event/division reference used for FAQ answers.
 
-### Team inference rule
-
-No standalone Magnolia roster exists. Use this heuristic on athlete name merges:
-
-1. Athletes in the Queen Anne roster PDF → `team: "queen-anne"`.
-2. Athletes in the xlsx but not in the Queen Anne roster PDF → `team` **left undefined** (unknown). Promote to `"magnolia"` (or back to `"queen-anne"`) per-athlete during Tier 2 flag review when Justin confirms the team.
-
-`Athlete.team` is optional in the schema for this reason; the UI shows a neutral / "Team TBD" treatment when it is undefined. (Earlier versions of this rule auto-defaulted to Magnolia; revised 2026-04-24 to stop guessing.)
+The QA roster PDF that lived in `inbox/` is no longer used; it's archived in `inbox/z_archived/` for reference. Team data (Magnolia vs. Queen Anne) is no longer tracked per athlete — the names "Magnolia" and "Queen Anne" only appear at the program level (header wordmark, footer registration links, FAQ Q1).
 
 ### Extraction rules
 
@@ -73,17 +66,17 @@ No standalone Magnolia roster exists. Use this heuristic on athlete name merges:
 Time formats: `:18`, `:18.78`, `11.9`, `1:19` (min:sec). Parse to total seconds for sort.
 Distance formats: `6'4"`, `33'8"`, `13'00"`. Parse to total inches for sort.
 
-### Ingestion quality policy
+### Ingestion run flow
 
-See the `data-ingestion-quality` skill in `.claude/skills/` for the full auto-fix / flag / block taxonomy and canonical run flow. Apply that policy on every ingestion run.
+The xlsx is trusted upstream — the coach maintains consistent name spellings week-to-week. Replaces the old 3-tier flag-walk with a strict + log model:
 
-Short version:
+1. **Tier 1 silent fixes** — whitespace, casing, last-initial trailing punctuation (period or comma → period). See `lib/ingestion/normalize.ts`.
+2. **Strict matching pass 1** (names with last initial): exact match by `firstName + lastInitial`. On miss, **promote** an existing bare-firstname record (add the lastInitial, keep the id) so prior results don't orphan. Otherwise create new.
+3. **Strict matching pass 2** (names without last initial): match if exactly one existing athlete shares that firstName. Multiple candidates → skip the row + emit warning.
+4. **Ghost filter** — at the end, drop any athlete in `data/athletes.json` who is not referenced by the current xlsx. Per the "xlsx is the only source" rule, legacy entries with no current xlsx row are stale.
+5. **Tier 3 blockers** — broken xlsx structure, missing NAME column → exit 2.
 
-- **Auto-fix silently:** whitespace, case, period on last initials.
-- **Flag for review:** fuzzy name match, new first name, new event name, outlier mark, ambiguous team assignment, disambiguation drift.
-- **Block (hard error):** required field missing, unparseable mark after cleanup, xlsx structure changed.
-
-Every run: summary → walk flags one at a time with Justin → diff → commit on go-ahead.
+Default is dry-run; `--apply` writes data files. Every run prints a one-screen summary (matched / new / promoted / dropped / warnings) — Justin scans it in 30 seconds; if a "new" count is unexpectedly high or a row is dropped because the bare name is ambiguous, that's the signal to either fix the xlsx upstream or do a one-line manual fix in `data/athletes.json`.
 
 ### Weather enrichment
 
@@ -107,16 +100,18 @@ After meets are updated in `data/meets.json`, fetch historical weather from Open
 
 ### Canonical athlete registry
 
-`data/athletes.json` is the source of truth for athlete identity. Every `Result` references `athleteId`, never a raw name. Match incoming names in this order:
+`data/athletes.json` is rebuilt from the xlsx on every ingest. The schema is intentionally minimal:
 
-1. Exact match on first name (plus last initial if present) → use existing `athleteId`.
-2. Fuzzy match above a similarity threshold → flag for confirmation.
-3. No match → flag as potentially new; on confirmation, add with inferred team and division.
+```ts
+type Athlete = { id: string; firstName: string; lastInitial?: string };
+```
+
+No team, no division, no extra metadata — what's not in the xlsx isn't tracked. The id is a slug derived from `firstName + lastInitial` (e.g. `anika-u`, `bo-m`); single-name athletes get just the first name (`abigail`). Collisions on the same slug get a numeric suffix (`sam-l-2`).
 
 ## Claude Code patterns
 
 - **Plan mode** triggers on any prompt that touches more than one file, any ingestion run, any DNS or Vercel operation, and any change to `athletes.json` (canonical identity).
-- **Skills to invoke:** `data-ingestion-quality` on every ingestion run. `ui-design` on every visual component task. `stop-and-ask` is always on; do not make unilateral decisions on ambiguous spec points.
+- **Skills to invoke:** `ui-design` on every visual component task. `stop-and-ask` is always on; do not make unilateral decisions on ambiguous spec points.
 - **Slash commands:** `/clear` between unrelated tasks to keep context clean.
 
 ## Git workflow
@@ -138,8 +133,8 @@ Per `Web Deployment Guide.md`. Short form:
 ## Known gotchas
 
 - The xlsx has sheets named with varying conventions. Match on a date pattern, not a static list.
-- "SAM" versus "SAM R" ambiguity happens across weeks; always flag, never auto-merge.
-- Parks and Rec may quietly add or remove an athlete; that's why ingestion re-extracts from scratch every run.
+- A bare first name (e.g. `SAM`) matches an existing record automatically only if exactly one athlete has that firstName. With both `SAM L.` and `SAM R.` in the registry, a bare `SAM` row is dropped with a warning — fix in the xlsx (add the last initial) and re-run.
+- Parks and Rec may quietly add or remove an athlete; that's why ingestion re-extracts from scratch every run, and the ghost filter prunes athletes who no longer appear in the xlsx.
 - Image files in `public/` must be referenced by absolute path in JSX (`/logos/magnolia-cc.png`, not relative).
 - The Open-Meteo archive API has a ~5-day lag for recent dates; if a same-day lookup returns nothing, try again tomorrow rather than blocking.
 

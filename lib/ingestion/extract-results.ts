@@ -1,5 +1,20 @@
+// Result extraction. The xlsx is wide (one row per athlete, one column
+// per event); we pivot to long (one Result per non-empty cell). Sheet
+// names encode the meet date — we resolve sheet → meet by month/day
+// suffix on the meet's ISO date. Both "MEET" and "BENCHMARK" prefixes
+// count.
+//
+// Tier 1: silent fixes (whitespace cleanup on cells).
+// Tier 3: structural failures (no NAME column, etc.) — return as
+//   blocking errors and the runner exits non-zero.
+//
+// No Tier 2 flag system anymore — the simplified pipeline doesn't have a
+// flag-walk loop. Anything that would have been a flag (unknown event
+// header, place-only cell with no mark) is logged as a warning to stderr
+// and otherwise skipped.
+
 import type { Meet, Result } from "@/lib/data";
-import type { Tier1Fix, Tier2Flag, Tier3Error } from "./flags";
+import type { Tier1Fix } from "./extract-athletes";
 import type { ParsedSheet } from "./parsers/xlsx-meets";
 
 const RELAY_EVENTS = new Set(["4X100", "4X400", "4X100M", "4X400M"]);
@@ -22,8 +37,6 @@ const KNOWN_EVENTS = new Set([
 const PLACE_SUFFIX = /\s+(\d+)(?:st|nd|rd|th)\b/i;
 const PLACE_ONLY = /^(\d+)(?:st|nd|rd|th)\s*place\s*$/i;
 const NOTE_PARENS = /\s*\(([^)]+)\)\s*$/;
-// Match either "MEET" or "BENCHMARK" sheet prefixes, e.g. "1ST MEET APRIL 18"
-// or "BENCHMARK APRIL 8". Both are real meets and resolve to a meet record.
 const SHEET_DATE = /(?:MEET|BENCHMARK)\s+([A-Z]+)\s+(\d+)/i;
 
 const MONTH_BY_NAME: Record<string, string> = {
@@ -41,12 +54,26 @@ const MONTH_BY_NAME: Record<string, string> = {
   DECEMBER: "12",
 };
 
+export type Tier3Error = {
+  kind:
+    | "missing-name"
+    | "missing-event"
+    | "structure-changed"
+    | "unparseable-mark";
+  message: string;
+  context: string;
+};
+
+export type Warning = {
+  kind: "unknown-event" | "place-only" | "unresolved-sheet";
+  message: string;
+};
+
 export type ExtractedResults = {
   results: Result[];
   fixes: Tier1Fix[];
-  flags: Tier2Flag[];
+  warnings: Warning[];
   errors: Tier3Error[];
-  // Sheets recognized as meets and the meetId they resolved to (or null)
   meetSheets: Array<{ sheetName: string; meetId: string | null }>;
 };
 
@@ -57,7 +84,7 @@ export function extractResults(
 ): ExtractedResults {
   const results: Result[] = [];
   const fixes: Tier1Fix[] = [];
-  const flags: Tier2Flag[] = [];
+  const warnings: Warning[] = [];
   const errors: Tier3Error[] = [];
   const meetSheets: Array<{ sheetName: string; meetId: string | null }> = [];
 
@@ -65,12 +92,10 @@ export function extractResults(
     const meetId = resolveMeetId(sheet.sheetName, meets);
 
     if (!meetId) {
-      // Sheet name doesn't match any meet — only flag if it looks like a meet sheet.
       if (SHEET_DATE.test(sheet.sheetName)) {
-        flags.push({
-          kind: "new-event",
-          context: `Sheet "${sheet.sheetName}" looks like a meet but no matching meet in meets.json`,
-          details: { sheetName: sheet.sheetName },
+        warnings.push({
+          kind: "unresolved-sheet",
+          message: `Sheet "${sheet.sheetName}" looks like a meet but no matching entry in meets.json`,
         });
       }
       continue;
@@ -97,10 +122,9 @@ export function extractResults(
       if (RELAY_EVENTS.has(h)) continue; // skip relays per PRD v1
       eventCols.push({ col: c, event: h });
       if (!KNOWN_EVENTS.has(h)) {
-        flags.push({
-          kind: "new-event",
-          context: `Unknown event header in "${sheet.sheetName}"`,
-          details: { event: h, sheet: sheet.sheetName },
+        warnings.push({
+          kind: "unknown-event",
+          message: `Unknown event header "${h}" in "${sheet.sheetName}" — extracted anyway`,
         });
       }
     }
@@ -109,7 +133,7 @@ export function extractResults(
       const rawName = row[nameCol];
       if (!rawName || rawName.trim() === "") continue;
       const athleteId = athletesByRawName.get(rawName);
-      if (!athleteId) continue; // unresolved name → skip, athlete-extraction flags will surface it
+      if (!athleteId) continue; // shouldn't happen — extractAthletes covers everything
 
       for (const { col, event } of eventCols) {
         const cell = row[col];
@@ -119,10 +143,9 @@ export function extractResults(
 
         const parsed = parseCell(trimmed);
         if (parsed.placeOnly) {
-          flags.push({
+          warnings.push({
             kind: "place-only",
-            context: `${sheet.sheetName} / "${rawName}" / ${event} → "${trimmed}" has no parseable mark`,
-            details: { sheet: sheet.sheetName, rawName, event, value: trimmed },
+            message: `${sheet.sheetName} / "${rawName}" / ${event} → "${trimmed}" has no parseable mark — skipped`,
           });
           continue;
         }
@@ -150,7 +173,7 @@ export function extractResults(
     }
   }
 
-  return { results, fixes, flags, errors, meetSheets };
+  return { results, fixes, warnings, errors, meetSheets };
 }
 
 function resolveMeetId(sheetName: string, meets: Meet[]): string | null {
@@ -178,7 +201,6 @@ function parseCell(raw: string): {
   let note: string | undefined;
   let place: number | undefined;
 
-  // Standalone place-only cell, e.g. "3RD PLACE", "2nd Place".
   const placeOnlyMatch = PLACE_ONLY.exec(value);
   if (placeOnlyMatch) {
     return { mark: "", place: parseInt(placeOnlyMatch[1], 10), placeOnly: true };

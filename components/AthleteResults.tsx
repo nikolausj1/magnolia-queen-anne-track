@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EventPill } from "@/components/EventPill";
 import type { AthleteGroup } from "@/components/ResultsTypes";
 
@@ -12,8 +13,13 @@ export function AthleteResults({ groups }: Props) {
           className="border border-divider rounded-md overflow-hidden"
         >
           <header className="bg-surface px-5 py-3 flex items-baseline justify-between gap-3">
-            <h3 className="text-ink text-xl md:text-2xl font-bold uppercase tracking-tight">
-              {group.display}
+            <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight">
+              <Link
+                href={`/athletes/${group.athleteId}`}
+                className="text-ink hover:text-magnolia-navy hover:underline underline-offset-2 decoration-1"
+              >
+                {group.display}
+              </Link>
             </h3>
             <span className="text-sm text-muted">
               {group.rows.length}{" "}

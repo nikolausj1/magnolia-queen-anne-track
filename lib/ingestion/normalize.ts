@@ -1,4 +1,4 @@
-import type { Tier1Fix } from "./flags";
+import type { Tier1Fix } from "./extract-athletes";
 
 export type NormalizedName = {
   firstName: string;
@@ -7,7 +7,9 @@ export type NormalizedName = {
   fixes: Tier1Fix[];
 };
 
-const LAST_INITIAL_RE = /^(.+?)\s+([A-Z])\.?$/;
+// Accept the trailing punctuation as period, comma (typo), or absent.
+// We always emit "<initial>." in the canonical form.
+const LAST_INITIAL_RE = /^(.+?)\s+([A-Z])[.,]?$/;
 
 export function titleCase(input: string): string {
   return input

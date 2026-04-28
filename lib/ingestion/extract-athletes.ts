@@ -1,191 +1,172 @@
-import type { Athlete } from "@/lib/data";
-import type { Tier1Fix, Tier2Flag, AthleteDecision } from "./flags";
-import { type NormalizedName, levenshtein, normalizeName, slug } from "./normalize";
-import type { RosterEntry } from "./parsers/pdf-roster";
+// Athlete extraction. The xlsx is the single source of truth.
+//
+// Matching strategy (two passes):
+//
+// Pass 1 — names that include a last initial.
+//   If a registry entry exists with the same firstName + lastInitial,
+//   reuse it. Otherwise, if a registry entry exists with the same
+//   firstName but no lastInitial, *promote* it: add the lastInitial
+//   to the existing record and reuse its id (so prior results don't
+//   orphan). Otherwise create a new athlete.
+//
+// Pass 2 — names that lack a last initial.
+//   If exactly one registry entry shares the firstName (with or
+//   without lastInitial), match to it. If multiple registry entries
+//   share the firstName (e.g. "Sam L." and "Sam R."), the bare name
+//   is ambiguous: skip the row and emit a warning for the runner to
+//   show Justin.
+//
+// The promote pass exists because of legacy data: earlier sheets in
+// the xlsx sometimes wrote just "MIMI" while newer sheets write
+// "MIMI A.". Going forward the coach is consistent, so promotes
+// should drop to ~zero after the first rebuild.
 
-export type RosterMatch = {
-  raw: string;
-  normalized: NormalizedName;
-  // Index into the QA roster, or -1
-  qaMatch: number | null;
-  // Indices of multiple QA matches when ambiguous
-  qaMatches?: number[];
-  // Suggested fuzzy matches (already-known athletes by firstName)
-  fuzzyCandidates?: string[];
-  fixes: Tier1Fix[];
+import type { Athlete } from "@/lib/data";
+import { type NormalizedName, normalizeName, slug } from "./normalize";
+
+export type Tier1Fix = {
+  kind:
+    | "trim-whitespace"
+    | "title-case"
+    | "last-initial-period"
+    | "collapse-internal-spaces";
+  before: string;
+  after: string;
+  context: string;
+};
+
+export type Promotion = {
+  id: string;
+  firstName: string;
+  addedLastInitial: string;
+};
+
+export type AmbiguousName = {
+  rawName: string;
+  firstName: string;
+  candidates: string[]; // existing athleteIds
 };
 
 export type ExtractedAthletes = {
   athletes: Athlete[];
   byRawName: Map<string, string>; // raw xlsx name → athleteId
   fixes: Tier1Fix[];
-  flags: Tier2Flag[];
+  newAthleteIds: string[];
+  promotions: Promotion[];
+  ambiguous: AmbiguousName[];
+  dropped: string[]; // ids of legacy athletes that the current xlsx no longer references
 };
 
-const FUZZY_THRESHOLD = 2;
-
 export function extractAthletes(
-  qaRoster: RosterEntry[],
+  existingAthletes: Athlete[],
   xlsxRawNames: string[],
-  decisions: Record<string, AthleteDecision> = {},
 ): ExtractedAthletes {
-  const athletes: Athlete[] = [];
+  const athletes: Athlete[] = existingAthletes.map((a) => ({ ...a }));
   const byRawName = new Map<string, string>();
-  const allFixes: Tier1Fix[] = [];
-  const flags: Tier2Flag[] = [];
+  const fixes: Tier1Fix[] = [];
+  const newAthleteIds: string[] = [];
+  const promotions: Promotion[] = [];
+  const ambiguous: AmbiguousName[] = [];
 
-  // Step 1: every QA roster entry → an athlete (queen-anne).
-  // We build them lazily — only commit to the registry once we've seen
-  // a match (in the xlsx) or we know we want them anyway. For v1 we
-  // include all roster entries so the registry covers the whole team.
+  // Normalize once.
+  const normed = xlsxRawNames.map((raw) => ({ raw, norm: normalizeName(raw) }));
+  for (const { norm } of normed) fixes.push(...norm.fixes);
 
-  type RosterAthlete = {
-    athlete: Athlete;
-    rosterIndex: number;
-  };
-  const rosterAthletes: RosterAthlete[] = qaRoster.map((entry, idx) => {
-    const lastInitial = `${entry.lastName.charAt(0).toUpperCase()}.`;
-    const id = slug(entry.firstName, lastInitial);
-    return {
-      athlete: {
-        id,
-        firstName: entry.firstName,
-        lastInitial,
-        team: "queen-anne",
-      },
-      rosterIndex: idx,
-    };
-  });
+  // Pass 1: names with a last initial.
+  for (const { raw, norm } of normed) {
+    if (!norm.lastInitial) continue;
 
-  // Disambiguate roster IDs (two athletes might share firstName + lastInitial).
-  // Append a numeric suffix when needed.
-  const idCounts = new Map<string, number>();
-  for (const ra of rosterAthletes) {
-    const seen = idCounts.get(ra.athlete.id) ?? 0;
-    if (seen > 0) {
-      ra.athlete.id = `${ra.athlete.id}-${seen + 1}`;
+    const fullKey = athleteKey(norm.firstName, norm.lastInitial);
+    const exact = athletes.find(
+      (a) => athleteKey(a.firstName, a.lastInitial) === fullKey,
+    );
+    if (exact) {
+      byRawName.set(raw, exact.id);
+      continue;
     }
-    idCounts.set(ra.athlete.id, (idCounts.get(ra.athlete.id) ?? 0) + 1);
+
+    // Promote a matching bare-firstname registry entry, if any.
+    const promotable = athletes.find(
+      (a) =>
+        a.firstName.toLowerCase() === norm.firstName.toLowerCase() &&
+        !a.lastInitial,
+    );
+    if (promotable) {
+      promotable.lastInitial = norm.lastInitial;
+      byRawName.set(raw, promotable.id);
+      promotions.push({
+        id: promotable.id,
+        firstName: promotable.firstName,
+        addedLastInitial: norm.lastInitial,
+      });
+      continue;
+    }
+
+    // Otherwise, mint a new athlete.
+    const id = ensureUniqueId(slug(norm.firstName, norm.lastInitial), athletes);
+    const fresh: Athlete = {
+      id,
+      firstName: norm.firstName,
+      lastInitial: norm.lastInitial,
+    };
+    athletes.push(fresh);
+    byRawName.set(raw, id);
+    newAthleteIds.push(id);
   }
 
-  for (const ra of rosterAthletes) athletes.push(ra.athlete);
+  // Pass 2: names without a last initial.
+  for (const { raw, norm } of normed) {
+    if (norm.lastInitial) continue;
 
-  // Step 2: walk xlsx names and match.
-  for (const raw of xlsxRawNames) {
-    const norm = normalizeName(raw);
-    allFixes.push(...norm.fixes);
+    const candidates = athletes.filter(
+      (a) => a.firstName.toLowerCase() === norm.firstName.toLowerCase(),
+    );
 
-    if (decisions[raw]) {
-      const d = decisions[raw];
-      switch (d.kind) {
-        case "skip":
-          continue;
-        case "use-existing":
-          byRawName.set(raw, d.athleteId);
-          continue;
-        case "create-magnolia": {
-          const id = ensureUniqueId(
-            slug(d.firstName, d.lastInitial),
-            athletes,
-          );
-          athletes.push({
-            id,
-            firstName: d.firstName,
-            lastInitial: d.lastInitial,
-            team: "magnolia",
-          });
-          byRawName.set(raw, id);
-          continue;
-        }
-        case "create-queen-anne": {
-          const id = ensureUniqueId(
-            slug(d.firstName, d.lastInitial),
-            athletes,
-          );
-          athletes.push({
-            id,
-            firstName: d.firstName,
-            lastInitial: d.lastInitial,
-            team: "queen-anne",
-          });
-          byRawName.set(raw, id);
-          continue;
-        }
-        case "create-unknown": {
-          const id = ensureUniqueId(
-            slug(d.firstName, d.lastInitial),
-            athletes,
-          );
-          athletes.push({
-            id,
-            firstName: d.firstName,
-            lastInitial: d.lastInitial,
-          });
-          byRawName.set(raw, id);
-          continue;
-        }
-      }
-    }
-
-    const exactQA = matchAgainstRoster(norm, qaRoster);
-
-    if (exactQA.length === 1) {
-      const idx = exactQA[0];
-      const ra = rosterAthletes[idx];
-      byRawName.set(raw, ra.athlete.id);
-      // If the xlsx name has no last initial but the roster does,
-      // we use the roster one for disambiguation.
+    if (candidates.length === 1) {
+      byRawName.set(raw, candidates[0].id);
       continue;
     }
 
-    if (exactQA.length > 1) {
-      flags.push({
-        kind: "ambiguous-collision",
-        context: `xlsx "${raw}" → ${exactQA.length} QA roster matches`,
-        details: {
-          rawName: raw,
-          normalized: norm,
-          candidates: exactQA.map((i) => ({
-            athleteId: rosterAthletes[i].athlete.id,
-            firstName: qaRoster[i].firstName,
-            lastName: qaRoster[i].lastName,
-          })),
-        },
-      });
+    if (candidates.length === 0) {
+      const id = ensureUniqueId(slug(norm.firstName), athletes);
+      athletes.push({ id, firstName: norm.firstName });
+      byRawName.set(raw, id);
+      newAthleteIds.push(id);
       continue;
     }
 
-    // No QA exact match. Look for fuzzy matches across QA roster.
-    const fuzzy = findFuzzyMatches(norm.firstName, qaRoster);
-    if (fuzzy.length > 0) {
-      flags.push({
-        kind: "fuzzy-name-match",
-        context: `xlsx "${raw}" (normalized: ${displayName(norm)}) — possible nickname/typo`,
-        details: {
-          rawName: raw,
-          normalized: norm,
-          candidates: fuzzy.map((i) => ({
-            athleteId: rosterAthletes[i].athlete.id,
-            firstName: qaRoster[i].firstName,
-            lastName: qaRoster[i].lastName,
-          })),
-        },
-      });
-      continue;
-    }
-
-    // No QA match and no fuzzy candidates → potential Magnolia athlete.
-    flags.push({
-      kind: "new-athlete",
-      context: `xlsx "${raw}" — not in QA roster; likely Magnolia`,
-      details: {
-        rawName: raw,
-        normalized: norm,
-      },
+    // Multiple candidates — bare name is ambiguous. Skip with a warning.
+    ambiguous.push({
+      rawName: raw,
+      firstName: norm.firstName,
+      candidates: candidates.map((a) => a.id),
     });
   }
 
-  return { athletes, byRawName, fixes: allFixes, flags };
+  // Ghost-filter: drop any athlete that the current xlsx never resolved
+  // to. Per project policy ("the xlsx is the only data source for
+  // athletes"), legacy entries that no current xlsx row references are
+  // garbage and should not survive.
+  const referenced = new Set(byRawName.values());
+  const filtered = athletes.filter((a) => referenced.has(a.id));
+  const dropped = athletes
+    .filter((a) => !referenced.has(a.id))
+    .map((a) => a.id);
+
+  return {
+    athletes: filtered,
+    byRawName,
+    fixes,
+    newAthleteIds,
+    promotions,
+    ambiguous,
+    dropped,
+  };
+}
+
+function athleteKey(firstName: string, lastInitial?: string): string {
+  const li = lastInitial ? lastInitial.replace(/\./g, "").toLowerCase() : "";
+  return `${firstName.toLowerCase()}|${li}`;
 }
 
 function ensureUniqueId(base: string, existing: Athlete[]): string {
@@ -196,52 +177,8 @@ function ensureUniqueId(base: string, existing: Athlete[]): string {
   return `${base}-${i}`;
 }
 
-function matchAgainstRoster(
-  norm: NormalizedName,
-  roster: RosterEntry[],
-): number[] {
-  const matches: number[] = [];
-  const targetFirst = norm.firstName.toLowerCase();
-  for (let i = 0; i < roster.length; i++) {
-    const entry = roster[i];
-    if (entry.firstName.toLowerCase() !== targetFirst) continue;
-    if (norm.lastInitial) {
-      const li = norm.lastInitial.replace(/\./g, "").toLowerCase();
-      const rosterLi = entry.lastName.charAt(0).toLowerCase();
-      if (li !== rosterLi) continue;
-    }
-    matches.push(i);
-  }
-  return matches;
-}
-
-function findFuzzyMatches(
-  firstName: string,
-  roster: RosterEntry[],
-): number[] {
-  const target = firstName.toLowerCase();
-  const matches: number[] = [];
-  for (let i = 0; i < roster.length; i++) {
-    const entry = roster[i];
-    const candidate = entry.firstName.toLowerCase();
-    const dist = levenshtein(target, candidate);
-    if (dist === 0) continue; // exact would have matched earlier
-    if (dist <= FUZZY_THRESHOLD) {
-      matches.push(i);
-      continue;
-    }
-    // Substring/prefix: nicknames like "MIMI" → "Miriam", "CORA" → "Coraline"
-    if (
-      candidate.startsWith(target) ||
-      target.startsWith(candidate) ||
-      candidate.includes(target)
-    ) {
-      matches.push(i);
-    }
-  }
-  return matches;
-}
-
-function displayName(norm: NormalizedName): string {
-  return norm.lastInitial ? `${norm.firstName} ${norm.lastInitial}` : norm.firstName;
+export function displayName(norm: NormalizedName): string {
+  return norm.lastInitial
+    ? `${norm.firstName} ${norm.lastInitial}`
+    : norm.firstName;
 }

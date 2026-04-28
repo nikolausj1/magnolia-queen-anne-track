@@ -2,14 +2,10 @@ import athletesData from "@/data/athletes.json";
 import meetsData from "@/data/meets.json";
 import resultsData from "@/data/results.json";
 
-export type Team = "magnolia" | "queen-anne";
-
 export type Athlete = {
   id: string;
   firstName: string;
   lastInitial?: string;
-  team?: Team;
-  division?: string;
 };
 
 export type Weather = {
