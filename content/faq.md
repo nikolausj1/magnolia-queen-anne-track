@@ -1,7 +1,7 @@
 ---
 title: "FAQ answers for the Magnolia / Queen Anne track and field site"
 created: 2026-04-24
-modified: 2026-04-24
+modified: 2026-04-27
 version: 1.0
 author: Claude Opus 4.7 (claude-opus-4-7)
 tags:
@@ -54,7 +54,9 @@ No. Meets run rain or shine. Like practice, the only reason Parks and Rec cancel
 
 ## 8. Are cleats or spikes required?
 
-No. Cleats and spikes are entirely optional, and many athletes compete in regular athletic shoes.
+No. Track spikes are entirely optional, and many athletes compete in regular athletic shoes.
+
+One thing to know: **soccer cleats are not appropriate for track.** Soccer studs damage the track surface and aren't safe for sprinting or jumping. Please don't wear soccer cleats to practice or meets. If your athlete wants extra traction, look for track spikes — small pin-style spikes designed for the track — not soccer or football cleats.
 
 ## 9. What should my athlete bring to practices and meets?
 
