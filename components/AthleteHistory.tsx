@@ -23,54 +23,69 @@ export function AthleteHistory({ events, history }: Props) {
     return null;
   }
   return (
-    <div className="overflow-x-auto -mx-6 md:mx-0">
-      <table className="min-w-full text-sm border-collapse">
-        <thead>
-          <tr className="text-[11px] uppercase tracking-wide text-muted border-b border-divider">
-            <th scope="col" className="text-left font-medium py-2 pl-6 md:pl-4 pr-3 whitespace-nowrap">
-              Date
-            </th>
-            {events.map((e) => (
+    <section className="border border-divider rounded-md overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="text-[12px] uppercase tracking-wide text-muted bg-surface">
               <th
-                key={e.event}
                 scope="col"
-                className={`text-right font-semibold py-2 px-3 whitespace-nowrap ${HEADER_TINT[e.category]}`}
+                className="py-2 pl-5 pr-3 font-medium whitespace-nowrap"
               >
-                {e.event}
+                Date
               </th>
-            ))}
-            <th scope="col" className="text-left font-medium py-2 pl-3 pr-6 md:pr-4 whitespace-nowrap">
-              Meet
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-divider">
-          {history.map((row) => {
-            const dt = new Date(`${row.meetDate}T00:00:00`);
-            const dateStr = FORMAT_DATE.format(dt);
-            return (
-              <tr key={row.meetId}>
-                <td className="py-3 pl-6 md:pl-4 pr-3 text-ink whitespace-nowrap tabular-nums">
-                  {dateStr}
-                </td>
-                {events.map((e) => (
-                  <td
-                    key={e.event}
-                    className="py-3 px-3 text-right tabular-nums text-ink whitespace-nowrap"
-                  >
-                    {row.marksByEvent[e.event] ?? (
-                      <span className="text-muted">—</span>
-                    )}
+              {events.map((e) => (
+                <th
+                  key={e.event}
+                  scope="col"
+                  className={`py-2 px-3 font-semibold whitespace-nowrap text-right ${HEADER_TINT[e.category]}`}
+                >
+                  {e.event}
+                </th>
+              ))}
+              <th
+                scope="col"
+                className="py-2 pl-3 pr-5 font-medium whitespace-nowrap"
+              >
+                Meet
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-divider">
+            {history.map((row) => {
+              const dt = new Date(`${row.meetDate}T00:00:00`);
+              const dateStr = FORMAT_DATE.format(dt);
+              return (
+                <tr key={row.meetId}>
+                  <td className="py-3 pl-5 pr-3 align-middle text-ink whitespace-nowrap tabular-nums font-medium">
+                    {dateStr}
                   </td>
-                ))}
-                <td className="py-3 pl-3 pr-6 md:pr-4 text-muted whitespace-nowrap">
-                  {row.meetLocation}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                  {events.map((e) => {
+                    const value = row.marksByEvent[e.event];
+                    return (
+                      <td
+                        key={e.event}
+                        className="py-3 px-3 align-middle text-right tabular-nums whitespace-nowrap"
+                      >
+                        {value ? (
+                          <span className="text-base font-medium text-ink">
+                            {value}
+                          </span>
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
+                    );
+                  })}
+                  <td className="py-3 pl-3 pr-5 align-middle text-muted whitespace-nowrap">
+                    {row.meetLocation}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }

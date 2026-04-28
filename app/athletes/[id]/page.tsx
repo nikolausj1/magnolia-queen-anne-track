@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AthleteAvatar } from "@/components/AthleteAvatar";
 import { AthleteHistory } from "@/components/AthleteHistory";
 import { AthletePersonalBests } from "@/components/AthletePersonalBests";
+import { BackToMeetsLink } from "@/components/BackToMeetsLink";
 import { getAllAthleteIds, getAthleteDetail } from "@/lib/athletes";
 
 type Props = {
@@ -34,12 +34,7 @@ export default async function AthletePage({ params }: Props) {
   return (
     <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
       <div className="mb-6">
-        <Link
-          href="/meets#results"
-          className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-magnolia-navy"
-        >
-          <span aria-hidden="true">←</span> Back to Meets
-        </Link>
+        <BackToMeetsLink />
       </div>
 
       <header className="flex flex-col sm:flex-row sm:items-center gap-5 mb-10">

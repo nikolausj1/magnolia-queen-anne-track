@@ -373,6 +373,18 @@
   },
   {
     "meetId": "2026-04-08-queen-anne-bowl",
+    "athleteId": "henry-b",
+    "event": "50m",
+    "mark": ":12"
+  },
+  {
+    "meetId": "2026-04-08-queen-anne-bowl",
+    "athleteId": "henry-b",
+    "event": "100m",
+    "mark": ":26"
+  },
+  {
+    "meetId": "2026-04-08-queen-anne-bowl",
     "athleteId": "jameson-w",
     "event": "200m",
     "mark": ":39"
@@ -658,6 +670,24 @@
     "athleteId": "sam",
     "event": "100m",
     "mark": ":36"
+  },
+  {
+    "meetId": "2026-04-08-queen-anne-bowl",
+    "athleteId": "samantha-f",
+    "event": "100m",
+    "mark": ":17"
+  },
+  {
+    "meetId": "2026-04-08-queen-anne-bowl",
+    "athleteId": "samantha-f",
+    "event": "200m",
+    "mark": ":37"
+  },
+  {
+    "meetId": "2026-04-08-queen-anne-bowl",
+    "athleteId": "samantha-f",
+    "event": "400m",
+    "mark": "1:26"
   },
   {
     "meetId": "2026-04-08-queen-anne-bowl",
@@ -1298,6 +1328,12 @@
     "athleteId": "chase",
     "event": "3000m",
     "mark": "15:13"
+  },
+  {
+    "meetId": "2026-04-25-west-seattle",
+    "athleteId": "chase",
+    "event": "Javelin",
+    "mark": "43'3\""
   },
   {
     "meetId": "2026-04-25-west-seattle",

@@ -12,7 +12,7 @@ export function AthleteResults({ groups }: Props) {
           key={group.athleteId}
           className="border border-divider rounded-md overflow-hidden"
         >
-          <header className="bg-surface px-5 py-3 flex items-baseline justify-between gap-3">
+          <header className="bg-surface px-5 py-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight">
               <Link
                 href={`/athletes/${group.athleteId}`}
@@ -21,10 +21,13 @@ export function AthleteResults({ groups }: Props) {
                 {group.display}
               </Link>
             </h3>
-            <span className="text-sm text-muted">
-              {group.rows.length}{" "}
-              {group.rows.length === 1 ? "event" : "events"}
-            </span>
+            <Link
+              href={`/athletes/${group.athleteId}`}
+              className="inline-flex items-center gap-1 text-sm font-semibold uppercase tracking-wide text-magnolia-navy hover:underline underline-offset-2 decoration-1"
+            >
+              View Season Stats
+              <span aria-hidden="true">→</span>
+            </Link>
           </header>
 
           <div className="overflow-x-auto">
