@@ -71,7 +71,17 @@ export function Footer() {
           <p>
             © {year} Magnolia &amp; Queen Anne Track &amp; Field
           </p>
-          <p>Building kids. Building community. Building champions.</p>
+          <p>
+            Created with love by{" "}
+            <a
+              href="https://practicalaiservices.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-4 hover:underline hover:text-white"
+            >
+              Practical AI Services
+            </a>
+          </p>
         </div>
       </div>
     </footer>
