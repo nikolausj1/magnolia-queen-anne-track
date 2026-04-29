@@ -11,9 +11,15 @@ const CATEGORY_BG: Record<EventCategory, string> = {
   throwing: "bg-pill-throwBg text-pill-throwText",
 };
 
-// One icon per category. PNG files in /public/icons are black-on-transparent
-// so we use them as a CSS mask and let `currentColor` (the category text
-// color) tint the visible pixels.
+// PNG files in /public/icons are black-on-transparent so we use them as a CSS
+// mask and let `currentColor` (the category text color) tint the visible
+// pixels. Specific events override the category default — e.g. Shot Put
+// shouldn't show the javelin-thrower silhouette.
+const EVENT_ICON: Record<string, string> = {
+  "Shot Put": "/icons/event-shot-put.png",
+  Javelin: "/icons/event-javelin.png",
+  "Long Jump": "/icons/event-long-jump.png",
+};
 const CATEGORY_ICON: Record<EventCategory, string> = {
   running: "/icons/event-running.png",
   jumping: "/icons/event-long-jump.png",
@@ -36,7 +42,7 @@ export function AthletePersonalBests({ bests }: Props) {
           <span className="text-sm md:text-base font-bold uppercase tracking-wide">
             {pb.event}
           </span>
-          <CategoryIcon category={pb.category} />
+          <EventIcon event={pb.event} category={pb.category} />
           <span className="text-xl md:text-2xl font-bold tabular-nums leading-none">
             {pb.mark}
           </span>
@@ -46,8 +52,8 @@ export function AthletePersonalBests({ bests }: Props) {
   );
 }
 
-function CategoryIcon({ category }: { category: EventCategory }) {
-  const url = CATEGORY_ICON[category];
+function EventIcon({ event, category }: { event: string; category: EventCategory }) {
+  const url = EVENT_ICON[event] ?? CATEGORY_ICON[category];
   return (
     <span
       aria-hidden="true"
