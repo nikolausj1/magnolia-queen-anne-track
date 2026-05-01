@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
+  appleWebApp: {
+    title: "Track & Field",
+  },
   openGraph: {
     type: "website",
     siteName: "Magnolia & Queen Anne Youth Track and Field",
