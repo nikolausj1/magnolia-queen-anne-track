@@ -1,5 +1,6 @@
 import type { PersonalBest } from "@/lib/athletes";
 import type { EventCategory } from "@/lib/events";
+import { formatMark } from "@/lib/marks";
 
 type Props = {
   bests: PersonalBest[];
@@ -44,7 +45,7 @@ export function AthletePersonalBests({ bests }: Props) {
           </span>
           <EventIcon event={pb.event} category={pb.category} />
           <span className="text-xl md:text-2xl font-bold tabular-nums leading-none">
-            {pb.mark}
+            {formatMark(pb.mark, pb.event)}
           </span>
         </li>
       ))}

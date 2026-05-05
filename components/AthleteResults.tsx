@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EventPill } from "@/components/EventPill";
+import { formatMark } from "@/lib/marks";
 import type { AthleteGroup } from "@/components/ResultsTypes";
 
 type Props = { groups: AthleteGroup[] };
@@ -58,7 +59,7 @@ export function AthleteResults({ groups }: Props) {
                     </th>
                     <td className="py-3 pl-3 pr-5 text-right align-top">
                       <span className="text-[22px] font-medium tabular-nums text-ink">
-                        {row.mark}
+                        {formatMark(row.mark, row.event)}
                       </span>
                       {row.note ? (
                         <span className="ml-1 text-sm text-muted">

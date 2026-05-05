@@ -1,5 +1,6 @@
 import type { EventCategory } from "@/lib/events";
 import type { HistoryRow } from "@/lib/athletes";
+import { formatMark } from "@/lib/marks";
 
 type Props = {
   events: { event: string; category: EventCategory }[];
@@ -63,7 +64,7 @@ export function AthleteHistory({ events, history }: Props) {
                       >
                         {value ? (
                           <span className="text-[22px] font-medium text-ink">
-                            {value}
+                            {formatMark(value, e.event)}
                           </span>
                         ) : (
                           <span className="text-muted text-lg">—</span>

@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { parseTime, parseDistance, compareMarks } from "@/lib/marks";
+import {
+  parseTime,
+  parseDistance,
+  compareMarks,
+  formatTime,
+  formatDistance,
+  formatMark,
+} from "@/lib/marks";
 
 describe("parseTime", () => {
   it("parses leading-colon seconds", () => {
@@ -73,5 +80,55 @@ describe("compareMarks", () => {
       compareMarks(a, b, "Shot put"),
     );
     expect(sorted).toEqual(["40'2\"", "33'8\"", "28'6\""]);
+  });
+});
+
+describe("formatTime", () => {
+  it("pads sub-minute times with leading colon and 2-digit hundredths", () => {
+    expect(formatTime(":17")).toBe(":17.00");
+    expect(formatTime(":17.81")).toBe(":17.81");
+    expect(formatTime(":08.77")).toBe(":08.77");
+    expect(formatTime(":08")).toBe(":08.00");
+  });
+
+  it("formats minute+ times as M:SS.HH with 2-digit seconds", () => {
+    expect(formatTime("1:46")).toBe("1:46.00");
+    expect(formatTime("8:01.00")).toBe("8:01.00");
+    expect(formatTime("2:55.65")).toBe("2:55.65");
+    expect(formatTime("1:5")).toBe("1:05.00");
+  });
+
+  it("rounds half-up to hundredths", () => {
+    expect(formatTime(":17.815")).toBe(":17.82");
+  });
+
+  it("returns input unchanged when unparseable", () => {
+    expect(formatTime("nope")).toBe("nope");
+  });
+});
+
+describe("formatDistance", () => {
+  it("always includes inches with a space separator", () => {
+    expect(formatDistance("6'")).toBe("6' 0\"");
+    expect(formatDistance("47'7\"")).toBe("47' 7\"");
+    expect(formatDistance("8'11\"")).toBe("8' 11\"");
+    expect(formatDistance("13'00\"")).toBe("13' 0\"");
+  });
+
+  it("rounds fractional inches to integers", () => {
+    expect(formatDistance("30'2.5\"")).toBe("30' 3\"");
+  });
+
+  it("returns input unchanged when unparseable", () => {
+    expect(formatDistance("nope")).toBe("nope");
+  });
+});
+
+describe("formatMark", () => {
+  it("dispatches to the right formatter by event category", () => {
+    expect(formatMark(":17.81", "100m")).toBe(":17.81");
+    expect(formatMark("1:46", "800m")).toBe("1:46.00");
+    expect(formatMark("6'", "Long Jump")).toBe("6' 0\"");
+    expect(formatMark("47'7\"", "Javelin")).toBe("47' 7\"");
   });
 });

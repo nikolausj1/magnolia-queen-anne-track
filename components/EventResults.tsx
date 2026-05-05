@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { EventCategory } from "@/lib/events";
+import { formatMark } from "@/lib/marks";
 import type { EventGroup } from "@/components/ResultsTypes";
 
 type Props = { groups: EventGroup[] };
@@ -84,7 +85,7 @@ export function EventResults({ groups }: Props) {
                       </th>
                       <td className="py-3 pl-3 pr-5 text-right align-top">
                         <span className="text-[22px] font-medium tabular-nums text-ink">
-                          {row.mark}
+                          {formatMark(row.mark, group.event)}
                         </span>
                         {row.note ? (
                           <span className="ml-1 text-sm text-muted">
