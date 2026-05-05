@@ -58,7 +58,7 @@ export function MeetCard({
         className={`group relative block w-full min-h-44 md:min-h-56 text-left overflow-hidden ${
           pending
             ? "cursor-default"
-            : "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
+            : "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus-visible:ring-offset-2"
         }`}
       >
         <Image
