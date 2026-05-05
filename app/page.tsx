@@ -13,7 +13,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const TODAY = "2026-04-25";
+// Server component renders fresh per request on Vercel — using real time
+// keeps the "Most recent meet" teaser current automatically as new meets
+// pass and their results land in data/results.json.
+function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
 
 // TODO(prd-open-items): registration URLs — see PRD.md Open Questions.
 const MAGNOLIA_REGISTER_URL =
@@ -28,10 +33,12 @@ const COACHES: Coach[] = [];
 
 export default function HomePage() {
   const meets = getMeets();
-  // Only point at meets that actually have results published — otherwise the
-  // teaser links to a date that produces nothing on /results.
+  // Newest-first; pick the most recent past meet that actually has results
+  // published (skip ones the coach hasn't entered yet, and skip future
+  // meets even if a result somehow landed early).
+  const today = todayIso();
   const latestPastMeet = meets.find(
-    (m) => m.date <= TODAY && getResultsByMeet(m.id).length > 0,
+    (m) => m.date <= today && getResultsByMeet(m.id).length > 0,
   );
 
   return (
