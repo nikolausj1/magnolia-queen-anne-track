@@ -75,8 +75,9 @@ The xlsx is trusted upstream — the coach maintains consistent name spellings w
 3. **Strict matching pass 2** (names without last initial): match if exactly one existing athlete shares that firstName. Multiple candidates → skip the row + emit warning.
 4. **Ghost filter** — at the end, drop any athlete in `data/athletes.json` who is not referenced by the current xlsx. Per the "xlsx is the only source" rule, legacy entries with no current xlsx row are stale.
 5. **Tier 3 blockers** — broken xlsx structure, missing NAME column → exit 2.
+6. **Manual results overlay** — `data/manual-results.json` carries entries that should persist on the site even when the coach doesn't put them in the xlsx (e.g. a result the coach removed mid-season but Justin verified should stay). Each entry is `{ meetId, athleteId, event, mark, place?, note?, reason }`. Applied after extraction, only when the same `(meetId, athleteId, event)` tuple isn't already in the extracted results — so the xlsx still wins if it has its own value (the run logs that as "shadowed"). The `reason` field is operator-only; it doesn't render. Use sparingly; the xlsx is still the primary source.
 
-Default is dry-run; `--apply` writes data files. Every run prints a one-screen summary (matched / new / promoted / dropped / warnings) — Justin scans it in 30 seconds; if a "new" count is unexpectedly high or a row is dropped because the bare name is ambiguous, that's the signal to either fix the xlsx upstream or do a one-line manual fix in `data/athletes.json`.
+Default is dry-run; `--apply` writes data files. Every run prints a one-screen summary (matched / new / promoted / dropped / manual-additions / warnings) — Justin scans it in 30 seconds; if a "new" count is unexpectedly high or a row is dropped because the bare name is ambiguous, that's the signal to either fix the xlsx upstream or do a one-line manual fix in `data/athletes.json`.
 
 ### Weather enrichment
 

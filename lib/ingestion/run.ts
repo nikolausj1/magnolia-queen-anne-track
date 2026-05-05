@@ -19,6 +19,28 @@ const XLSX_PATH = "inbox/2026 TRACK TIMES & DISTANCES.xlsx";
 const MEETS_JSON = "data/meets.json";
 const ATHLETES_JSON = "data/athletes.json";
 const RESULTS_JSON = "data/results.json";
+const MANUAL_RESULTS_JSON = "data/manual-results.json";
+
+type ManualResult = {
+  meetId: string;
+  athleteId: string;
+  event: string;
+  mark: string;
+  place?: number;
+  note?: string;
+  /** Why this entry exists outside the xlsx — for the operator (Justin), not rendered. */
+  reason: string;
+};
+
+async function loadManualResults(): Promise<ManualResult[]> {
+  try {
+    const raw = await readFile(MANUAL_RESULTS_JSON, "utf8");
+    return JSON.parse(raw) as ManualResult[];
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw err;
+  }
+}
 
 async function main() {
   const args = new Set(process.argv.slice(2));
@@ -54,6 +76,34 @@ async function main() {
     meets,
     athleteResult.byRawName,
   );
+
+  // Manual overrides — entries the coach may not maintain in the xlsx but
+  // that should persist on the site every week. Only applied when the same
+  // (meetId, athleteId, event) tuple isn't already in the extracted results,
+  // so the xlsx still wins if it has its own value.
+  const manualResults = await loadManualResults();
+  const seenKey = new Set(
+    resultsResult.results.map((r) => `${r.meetId}|${r.athleteId}|${r.event}`),
+  );
+  const applied: ManualResult[] = [];
+  const shadowed: ManualResult[] = [];
+  for (const m of manualResults) {
+    const key = `${m.meetId}|${m.athleteId}|${m.event}`;
+    if (seenKey.has(key)) {
+      shadowed.push(m);
+      continue;
+    }
+    const r: { meetId: string; athleteId: string; event: string; mark: string; place?: number; note?: string } = {
+      meetId: m.meetId,
+      athleteId: m.athleteId,
+      event: m.event,
+      mark: m.mark,
+    };
+    if (m.place !== undefined) r.place = m.place;
+    if (m.note !== undefined) r.note = m.note;
+    resultsResult.results.push(r);
+    applied.push(m);
+  }
 
   // Find which meets gained/lost results vs. the current data on disk.
   const currentResults = JSON.parse(
@@ -128,6 +178,25 @@ async function main() {
     console.error(
       `    … and ${athleteResult.fixes.length + resultsResult.fixes.length - 10} more`,
     );
+  }
+  if (applied.length > 0) {
+    console.error(`  Manual additions applied: ${applied.length}`);
+    for (const m of applied) {
+      console.error(
+        `    + ${m.athleteId} / ${m.event} @ ${m.meetId} = ${m.mark}`,
+      );
+      console.error(`        reason: ${m.reason}`);
+    }
+  }
+  if (shadowed.length > 0) {
+    console.error(
+      `  Manual additions shadowed by xlsx (xlsx now has its own value): ${shadowed.length}`,
+    );
+    for (const m of shadowed) {
+      console.error(
+        `    ~ ${m.athleteId} / ${m.event} @ ${m.meetId} (manual mark "${m.mark}" — xlsx wins)`,
+      );
+    }
   }
   if (resultsResult.warnings.length > 0) {
     console.error(`  Warnings: ${resultsResult.warnings.length}`);

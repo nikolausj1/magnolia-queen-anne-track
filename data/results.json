@@ -2324,5 +2324,11 @@
     "athleteId": "waverly-h",
     "event": "100m",
     "mark": ":27.85"
+  },
+  {
+    "meetId": "2026-04-25-west-seattle",
+    "athleteId": "chase",
+    "event": "Javelin",
+    "mark": "43'3\""
   }
 ]
