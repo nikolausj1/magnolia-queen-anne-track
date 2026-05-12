@@ -10,11 +10,17 @@
 // Tier 3 errors (broken xlsx structure, no NAME column, etc.) exit 2.
 
 import { readFile, writeFile } from "node:fs/promises";
-import type { Athlete, Meet } from "@/lib/data";
+import type { Athlete, Meet, Result } from "@/lib/data";
 import { parseMeetsXlsx } from "./parsers/xlsx-meets";
 import { extractAthletes } from "./extract-athletes";
 import { extractResults } from "./extract-results";
+import {
+  parseSupplementFiles,
+  resolveSupplementAthlete,
+  resolveSupplementDate,
+} from "./parse-supplements";
 
+const INBOX_DIR = "inbox";
 const XLSX_PATH = "inbox/2026 TRACK TIMES & DISTANCES.xlsx";
 const MEETS_JSON = "data/meets.json";
 const ATHLETES_JSON = "data/athletes.json";
@@ -103,6 +109,110 @@ async function main() {
     if (m.note !== undefined) r.note = m.note;
     resultsResult.results.push(r);
     applied.push(m);
+  }
+
+  // Per-athlete supplement files in inbox/ (e.g. "chase n - places.txt").
+  // For each parsed entry: augment the matching xlsx-extracted row with
+  // place/mark; if no row exists and a mark is supplied, add a new row.
+  const supplements = await parseSupplementFiles(INBOX_DIR);
+  const supplementsByKey = new Map<string, Result>();
+  for (const r of resultsResult.results) {
+    supplementsByKey.set(`${r.meetId}|${r.athleteId}|${r.event}`, r);
+  }
+  type SupplementOutcome = {
+    file: string;
+    line: number;
+    detail: string;
+  };
+  const augmented: SupplementOutcome[] = [];
+  const added: SupplementOutcome[] = [];
+  const supplementSkipped: SupplementOutcome[] = [];
+  const supplementErrors: SupplementOutcome[] = supplements.errors.map((e) => ({
+    file: e.source,
+    line: e.lineNumber,
+    detail: `${e.message}  (raw: "${e.raw}")`,
+  }));
+
+  for (const s of supplements.entries) {
+    const meetId = resolveSupplementDate(s.rawDate, meets);
+    if (!meetId) {
+      supplementErrors.push({
+        file: s.source,
+        line: s.lineNumber,
+        detail: `no meet matches date "${s.rawDate}"`,
+      });
+      continue;
+    }
+    const resolved = resolveSupplementAthlete(s.athleteName, athleteResult.athletes);
+    if (!resolved) {
+      supplementErrors.push({
+        file: s.source,
+        line: s.lineNumber,
+        detail: `no athlete matches "${s.athleteName}" — check filename`,
+      });
+      continue;
+    }
+    if (resolved.ambiguous) {
+      supplementErrors.push({
+        file: s.source,
+        line: s.lineNumber,
+        detail: `ambiguous athlete "${s.athleteName}" — multiple matches`,
+      });
+      continue;
+    }
+    const key = `${meetId}|${resolved.id}|${s.event}`;
+    const existing = supplementsByKey.get(key);
+    if (existing) {
+      // Augment: fill missing fields. Xlsx wins on mark conflicts.
+      const detailParts: string[] = [];
+      if (s.place !== undefined && existing.place === undefined) {
+        existing.place = s.place;
+        detailParts.push(`place=${s.place}`);
+      } else if (s.place !== undefined && existing.place !== s.place) {
+        detailParts.push(`place skipped (xlsx has ${existing.place})`);
+      }
+      if (s.mark !== undefined && existing.mark !== s.mark) {
+        detailParts.push(`mark skipped (xlsx has "${existing.mark}")`);
+      }
+      if (detailParts.length > 0) {
+        const label = `${resolved.id} / ${s.event} @ ${meetId}: ${detailParts.join(", ")}`;
+        if (detailParts.some((p) => p.startsWith("place="))) {
+          augmented.push({ file: s.source, line: s.lineNumber, detail: label });
+        } else {
+          supplementSkipped.push({
+            file: s.source,
+            line: s.lineNumber,
+            detail: label,
+          });
+        }
+      } else {
+        supplementSkipped.push({
+          file: s.source,
+          line: s.lineNumber,
+          detail: `${resolved.id} / ${s.event} @ ${meetId}: nothing to add`,
+        });
+      }
+    } else {
+      if (s.mark === undefined) {
+        supplementErrors.push({
+          file: s.source,
+          line: s.lineNumber,
+          detail: `${resolved.id} / ${s.event} @ ${meetId}: no xlsx row to augment and no mark supplied`,
+        });
+        continue;
+      }
+      const fresh: Result = {
+        meetId,
+        athleteId: resolved.id,
+        event: s.event,
+        mark: s.mark,
+      };
+      if (s.place !== undefined) fresh.place = s.place;
+      resultsResult.results.push(fresh);
+      supplementsByKey.set(key, fresh);
+      const label = `${resolved.id} / ${s.event} @ ${meetId} = ${s.mark}${s.place !== undefined ? ` (place=${s.place})` : ""}`;
+      added.push({ file: s.source, line: s.lineNumber, detail: label });
+    }
   }
 
   // Find which meets gained/lost results vs. the current data on disk.
@@ -196,6 +306,30 @@ async function main() {
       console.error(
         `    ~ ${m.athleteId} / ${m.event} @ ${m.meetId} (manual mark "${m.mark}" — xlsx wins)`,
       );
+    }
+  }
+  if (augmented.length > 0) {
+    console.error(`  Supplement augments: ${augmented.length}`);
+    for (const a of augmented) {
+      console.error(`    ↳ ${a.detail}  (${a.file}:${a.line})`);
+    }
+  }
+  if (added.length > 0) {
+    console.error(`  Supplement adds: ${added.length}`);
+    for (const a of added) {
+      console.error(`    + ${a.detail}  (${a.file}:${a.line})`);
+    }
+  }
+  if (supplementSkipped.length > 0) {
+    console.error(`  Supplement skipped: ${supplementSkipped.length}`);
+    for (const s of supplementSkipped) {
+      console.error(`    · ${s.detail}  (${s.file}:${s.line})`);
+    }
+  }
+  if (supplementErrors.length > 0) {
+    console.error(`  Supplement errors: ${supplementErrors.length}`);
+    for (const e of supplementErrors) {
+      console.error(`    ! ${e.detail}  (${e.file}:${e.line})`);
     }
   }
   if (resultsResult.warnings.length > 0) {

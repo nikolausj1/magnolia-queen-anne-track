@@ -49,6 +49,7 @@ The project ingests results, athletes, and meet data from files in `inbox/`. Sch
 - `inbox/Track Roster As of 4-9-26.pdf` — Queen Anne athlete roster.
 - `inbox/2026 TRACK TIMES & DISTANCES.xlsx` — **single source of truth** for athletes and results.
 - `inbox/2026 T&F order of events.docx` — event/division reference used for FAQ answers.
+- `inbox/<athlete name> - places.{txt,rtf}` — optional per-athlete supplement file (places + missing marks the coach doesn't enter). See "Per-athlete supplement files" below.
 
 The QA roster PDF that lived in `inbox/` is no longer used; it's archived in `inbox/z_archived/` for reference. Team data (Magnolia vs. Queen Anne) is no longer tracked per athlete — the names "Magnolia" and "Queen Anne" only appear at the program level (header wordmark, footer registration links, FAQ Q1).
 
@@ -58,7 +59,7 @@ The QA roster PDF that lived in `inbox/` is no longer used; it's archived in `in
 - Extract from meet sheets: `BENCHMARK APRIL 8`, `1ST MEET APRIL 18`, `2ND MEET APRIL 25`, and subsequent meet sheets. Sheet titles encode the meet date.
 - Pivot each row from wide format (one row per athlete, one column per event) to long format (one row per result). Skip blank cells.
 - Cell may contain a mark only (`:18.78`), a mark plus a place annotation (`:08 1st`), or a mark plus a parenthetical note (`:22 (fell)`). Split into `mark`, `place`, `note` fields.
-- Omit relay columns (4X100, 4X400) for v1.
+- Relay columns (4X100, 4X400) are extracted. Each cell becomes one `Result` per athlete with `relay: true`; teammates share the same `(meetId, event, mark, place)`. A post-pass per sheet+event emits an `incomplete-relay` warning when a team has fewer than 4 names attached.
 - Normalize names: uppercase → title case, trim whitespace, standardize last-initial punctuation (`SAM L` → `Sam L.`).
 
 ### Mark parsers
@@ -76,6 +77,7 @@ The xlsx is trusted upstream — the coach maintains consistent name spellings w
 4. **Ghost filter** — at the end, drop any athlete in `data/athletes.json` who is not referenced by the current xlsx. Per the "xlsx is the only source" rule, legacy entries with no current xlsx row are stale.
 5. **Tier 3 blockers** — broken xlsx structure, missing NAME column → exit 2.
 6. **Manual results overlay** — `data/manual-results.json` carries entries that should persist on the site even when the coach doesn't put them in the xlsx (e.g. a result the coach removed mid-season but Justin verified should stay). Each entry is `{ meetId, athleteId, event, mark, place?, note?, reason }`. Applied after extraction, only when the same `(meetId, athleteId, event)` tuple isn't already in the extracted results — so the xlsx still wins if it has its own value (the run logs that as "shadowed"). The `reason` field is operator-only; it doesn't render. Use sparingly; the xlsx is still the primary source.
+7. **Per-athlete supplement files** — `inbox/<athlete name> - places.{txt,rtf}` (e.g. `inbox/chase n - places.txt`). Lines are `<date>, <event>, <value> [, <value>]` where each value is a place (`1st`, `5th place`) or a mark (`:18.85`, `59'5"`, `1:36.16`). Comments start with `#`. The athlete is inferred from the filename. Applied AFTER the manual-results overlay: if `(meetId, athleteId, event)` matches an existing row, the supplement augments missing fields (place or mark). If no row exists and a mark is supplied, a new row is added. The xlsx wins on mark conflicts. Use this when the coach doesn't tag places in the xlsx for an athlete (e.g. Chase — coach only tags relays). Both Justin and Claude can edit these files.
 
 Default is dry-run; `--apply` writes data files. Every run prints a one-screen summary (matched / new / promoted / dropped / manual-additions / warnings) — Justin scans it in 30 seconds; if a "new" count is unexpectedly high or a row is dropped because the bare name is ambiguous, that's the signal to either fix the xlsx upstream or do a one-line manual fix in `data/athletes.json`.
 
