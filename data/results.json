@@ -935,19 +935,22 @@
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "chase",
     "event": "100m",
-    "mark": ":18.85"
+    "mark": ":18.85",
+    "place": 3
   },
   {
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "chase",
     "event": "Javelin",
-    "mark": "45'7\""
+    "mark": "45'7\"",
+    "place": 4
   },
   {
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "chase",
     "event": "Long Jump",
-    "mark": "7'4\""
+    "mark": "7'4\"",
+    "place": 4
   },
   {
     "meetId": "2026-04-18-west-seattle",
@@ -1333,13 +1336,15 @@
     "meetId": "2026-04-25-west-seattle",
     "athleteId": "chase",
     "event": "50m",
-    "mark": ":08.77"
+    "mark": ":08.77",
+    "place": 4
   },
   {
     "meetId": "2026-04-25-west-seattle",
     "athleteId": "chase",
     "event": "3000m",
-    "mark": "15:13"
+    "mark": "15:13",
+    "place": 1
   },
   {
     "meetId": "2026-04-25-west-seattle",
@@ -1923,19 +1928,22 @@
     "meetId": "2026-05-02-west-seattle",
     "athleteId": "chase",
     "event": "400m",
-    "mark": "1:36.16"
+    "mark": "1:36.16",
+    "place": 3
   },
   {
     "meetId": "2026-05-02-west-seattle",
     "athleteId": "chase",
     "event": "800m",
-    "mark": "3:32.09"
+    "mark": "3:32.09",
+    "place": 2
   },
   {
     "meetId": "2026-05-02-west-seattle",
     "athleteId": "chase",
     "event": "Javelin",
-    "mark": "40'7\""
+    "mark": "40'7\"",
+    "place": 3
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2589,19 +2597,22 @@
     "meetId": "2026-05-09-west-seattle",
     "athleteId": "chase",
     "event": "1500m",
-    "mark": "7:02.17"
+    "mark": "7:02.17",
+    "place": 1
   },
   {
     "meetId": "2026-05-09-west-seattle",
     "athleteId": "chase",
     "event": "Javelin",
-    "mark": "59'5\""
+    "mark": "59'5\"",
+    "place": 1
   },
   {
     "meetId": "2026-05-09-west-seattle",
     "athleteId": "chase",
     "event": "Shot Put",
-    "mark": "15'8\""
+    "mark": "15'8\"",
+    "place": 5
   },
   {
     "meetId": "2026-05-09-west-seattle",
@@ -3145,6 +3156,7 @@
     "meetId": "2026-04-25-west-seattle",
     "athleteId": "chase",
     "event": "Javelin",
-    "mark": "43'3\""
+    "mark": "43'3\"",
+    "place": 3
   }
 ]

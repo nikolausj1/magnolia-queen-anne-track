@@ -4,6 +4,7 @@
     "athleteId": "chase",
     "event": "Javelin",
     "mark": "43'3\"",
-    "reason": "Coach removed from xlsx between weeks (2026-05-04). Justin confirmed the throw was real and should persist on the site."
+    "place": 3,
+    "reason": "Coach removed from xlsx between weeks (2026-05-04). Justin confirmed the throw was real and should persist on the site. Place added per Chase's places list (2026-05-11)."
   }
 ]
