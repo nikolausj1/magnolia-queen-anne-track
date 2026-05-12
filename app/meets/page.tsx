@@ -163,6 +163,7 @@ function buildEventGroups(
       mark: r.mark,
       place: r.place,
       note: r.note,
+      ...(r.relay ? { relay: true as const } : {}),
     };
     const list = byEvent.get(r.event);
     if (list) list.push(row);
@@ -172,7 +173,12 @@ function buildEventGroups(
   const groups: EventGroup[] = [];
   for (const [event, rows] of byEvent) {
     const category = categorizeEvent(event);
-    rows.sort((a, b) => compareMarks(a.mark, b.mark, event));
+    rows.sort((a, b) => {
+      const cmp = compareMarks(a.mark, b.mark, event);
+      if (cmp !== 0) return cmp;
+      // Stable, deterministic ordering when marks tie (e.g. relay teammates).
+      return a.display.localeCompare(b.display);
+    });
     groups.push({ event, category, rows });
   }
 
@@ -202,6 +208,7 @@ function buildAthleteGroups(
       mark: r.mark,
       place: r.place,
       note: r.note,
+      ...(r.relay ? { relay: true as const } : {}),
     };
     const list = byAthlete.get(r.athleteId);
     if (list) list.push(row);

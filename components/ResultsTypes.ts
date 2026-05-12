@@ -9,6 +9,7 @@ export type EventRow = RowLabel & {
   place?: number;
   mark: string;
   note?: string;
+  relay?: true;
 };
 
 export type EventGroup = {
@@ -23,6 +24,7 @@ export type AthleteEventRow = {
   place?: number;
   mark: string;
   note?: string;
+  relay?: true;
 };
 
 export type AthleteGroup = RowLabel & {

@@ -36,7 +36,7 @@ export function MeetCard({
   isMostRecent = false,
   pending = false,
 }: Props) {
-  const [view, setView] = useState<View>("event");
+  const [view, setView] = useState<View>("athlete");
   const [expanded, setExpanded] = useState<boolean>(initiallyExpanded);
   const tablistId = useId();
   const eventPanelId = `${tablistId}-event`;
@@ -157,21 +157,6 @@ export function MeetCard({
             <button
               type="button"
               role="tab"
-              id={eventTabId}
-              aria-selected={view === "event"}
-              aria-controls={eventPanelId}
-              onClick={() => setView("event")}
-              className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                view === "event"
-                  ? "bg-white text-magnolia-navy shadow-sm font-medium"
-                  : "text-muted hover:text-ink"
-              }`}
-            >
-              By event
-            </button>
-            <button
-              type="button"
-              role="tab"
               id={athleteTabId}
               aria-selected={view === "athlete"}
               aria-controls={athletePanelId}
@@ -183,6 +168,21 @@ export function MeetCard({
               }`}
             >
               By athlete
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id={eventTabId}
+              aria-selected={view === "event"}
+              aria-controls={eventPanelId}
+              onClick={() => setView("event")}
+              className={`px-3 py-1.5 text-sm rounded transition-colors ${
+                view === "event"
+                  ? "bg-white text-magnolia-navy shadow-sm font-medium"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              By event
             </button>
           </div>
 

@@ -20,6 +20,13 @@ export type PersonalBest = {
   meetDate: string;
 };
 
+export type HistoryMark = {
+  mark: string;
+  place?: number;
+  relay?: true;
+  note?: string;
+};
+
 export type HistoryRow = {
   meetId: string;
   meetDate: string;
@@ -27,7 +34,7 @@ export type HistoryRow = {
   meetLocation: string;
   // Marks indexed by event name (only events the athlete has competed in
   // across the whole season).
-  marksByEvent: Record<string, string>;
+  marksByEvent: Record<string, HistoryMark>;
 };
 
 export type AthleteDetail = {
@@ -79,8 +86,10 @@ export function getAthleteDetail(id: string): AthleteDetail | null {
     .sort((a, b) => b.date.localeCompare(a.date));
 
   // Personal bests — best mark per event across all meets the athlete competed in.
+  // Relay legs are excluded — the time is the team total, not an individual mark.
   const bestByEvent = new Map<string, PersonalBest>();
   for (const r of results) {
+    if (r.relay) continue;
     const meet = meetsById[r.meetId];
     if (!meet) continue;
     const cat = categorizeEvent(r.event);
@@ -111,20 +120,31 @@ export function getAthleteDetail(id: string): AthleteDetail | null {
     (pb) => pb.event,
   );
 
-  // History event columns — the union of events from the personal-bests
-  // set, in the same canonical order.
-  const historyEvents = personalBests.map((pb) => ({
-    event: pb.event,
-    category: pb.category,
-  }));
+  // History event columns — union of every event the athlete has done,
+  // including relays (which aren't in personalBests). Sorted with the same
+  // canonical category + event ordering as PBs.
+  const allEventsSeen = new Map<string, EventCategory>();
+  for (const r of results) {
+    if (!allEventsSeen.has(r.event)) {
+      allEventsSeen.set(r.event, categorizeEvent(r.event));
+    }
+  }
+  const historyEvents = sortByCategoryAndEvent(
+    [...allEventsSeen.entries()].map(([event, category]) => ({ event, category })),
+    (e) => e.category,
+    (e) => e.event,
+  );
 
   // History rows — one per attended meet, with marks per event.
   const history: HistoryRow[] = meetsAttended.map((meet) => {
     const rs = byMeet.get(meet.id) ?? [];
-    const marks: Record<string, string> = {};
+    const marks: Record<string, HistoryMark> = {};
     for (const r of rs) {
-      const noteSuffix = r.note ? ` (${r.note})` : "";
-      marks[r.event] = `${r.mark}${noteSuffix}`;
+      const m: HistoryMark = { mark: r.mark };
+      if (r.place !== undefined) m.place = r.place;
+      if (r.relay) m.relay = true;
+      if (r.note) m.note = r.note;
+      marks[r.event] = m;
     }
     return {
       meetId: meet.id,

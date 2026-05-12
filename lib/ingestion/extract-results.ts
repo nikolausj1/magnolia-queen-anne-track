@@ -65,7 +65,7 @@ export type Tier3Error = {
 };
 
 export type Warning = {
-  kind: "unknown-event" | "place-only" | "unresolved-sheet";
+  kind: "unknown-event" | "place-only" | "unresolved-sheet" | "incomplete-relay";
   message: string;
 };
 
@@ -114,14 +114,14 @@ export function extractResults(
       continue;
     }
 
-    const eventCols: { col: number; event: string }[] = [];
+    const eventCols: { col: number; event: string; isRelay: boolean }[] = [];
     for (let c = 0; c < headers.length; c++) {
       if (c === nameCol) continue;
       const h = headers[c];
       if (!h) continue;
-      if (RELAY_EVENTS.has(h)) continue; // skip relays per PRD v1
-      eventCols.push({ col: c, event: h });
-      if (!KNOWN_EVENTS.has(h)) {
+      const isRelay = RELAY_EVENTS.has(h);
+      eventCols.push({ col: c, event: h, isRelay });
+      if (!isRelay && !KNOWN_EVENTS.has(h)) {
         warnings.push({
           kind: "unknown-event",
           message: `Unknown event header "${h}" in "${sheet.sheetName}" — extracted anyway`,
@@ -129,13 +129,17 @@ export function extractResults(
       }
     }
 
+    // Track relay results emitted from this sheet so we can post-pass
+    // and warn on teams that don't have exactly 4 athletes attached.
+    const relayResultsBySheet: Result[] = [];
+
     for (const row of sheet.rows) {
       const rawName = row[nameCol];
       if (!rawName || rawName.trim() === "") continue;
       const athleteId = athletesByRawName.get(rawName);
       if (!athleteId) continue; // shouldn't happen — extractAthletes covers everything
 
-      for (const { col, event } of eventCols) {
+      for (const { col, event, isRelay } of eventCols) {
         const cell = row[col];
         if (cell === undefined || cell === null) continue;
         const trimmed = cell.trim();
@@ -168,8 +172,28 @@ export function extractResults(
         };
         if (parsed.place !== undefined) result.place = parsed.place;
         if (parsed.note !== undefined) result.note = parsed.note;
+        if (isRelay) result.relay = true;
         results.push(result);
+        if (isRelay) relayResultsBySheet.push(result);
       }
+    }
+
+    // Incomplete-relay warning. Within a sheet+event, a team is identified
+    // by its mark (two teams clocking identical hundredths in the same
+    // event is vanishingly rare; if it ever happens the count is harmlessly
+    // doubled and the warning still surfaces).
+    const teamsByKey = new Map<string, number>();
+    for (const r of relayResultsBySheet) {
+      const key = `${r.event}|${r.mark}`;
+      teamsByKey.set(key, (teamsByKey.get(key) ?? 0) + 1);
+    }
+    for (const [key, size] of teamsByKey) {
+      if (size === 4) continue;
+      const [event, mark] = key.split("|");
+      warnings.push({
+        kind: "incomplete-relay",
+        message: `${sheet.sheetName} / ${event}: team with mark ${mark} has ${size} runner${size === 1 ? "" : "s"} (expected 4)`,
+      });
     }
   }
 
@@ -232,6 +256,9 @@ function parseCell(raw: string): {
 
 function toTitleEvent(eventUpper: string): string {
   if (/^\d+M$/.test(eventUpper)) return eventUpper.toLowerCase();
+  if (/^\dX\d+M?$/i.test(eventUpper)) {
+    return eventUpper.toLowerCase().replace(/m$/, "");
+  }
   return eventUpper
     .toLowerCase()
     .split(" ")

@@ -36,6 +36,7 @@ export type Result = {
   mark: string;
   place?: number;
   note?: string;
+  relay?: true;
 };
 
 const athletes = athletesData as unknown as Athlete[];

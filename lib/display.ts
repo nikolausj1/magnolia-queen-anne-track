@@ -8,6 +8,8 @@ export const EVENT_ORDER = [
   "3000m",
   "Mile",
   "Hurdles",
+  "4x100",
+  "4x400",
   "Long Jump",
   "High Jump",
   "Triple Jump",

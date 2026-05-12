@@ -1,5 +1,6 @@
 import type { EventCategory } from "@/lib/events";
 import type { HistoryRow } from "@/lib/athletes";
+import { PlaceChip } from "@/components/PlaceChip";
 import { formatMark } from "@/lib/marks";
 
 type Props = {
@@ -63,8 +64,18 @@ export function AthleteHistory({ events, history }: Props) {
                         className={`py-4 px-3 align-middle text-right tabular-nums whitespace-nowrap ${idx === events.length - 1 ? "pr-5" : ""}`}
                       >
                         {value ? (
-                          <span className="text-[22px] font-medium text-ink">
-                            {formatMark(value, e.event)}
+                          <span className="inline-flex items-center gap-2">
+                            {value.place ? (
+                              <PlaceChip place={value.place} size="xs" />
+                            ) : null}
+                            <span className="text-[22px] font-medium text-ink">
+                              {formatMark(value.mark, e.event)}
+                              {value.note ? (
+                                <span className="ml-1 text-sm text-muted">
+                                  ({value.note})
+                                </span>
+                              ) : null}
+                            </span>
                           </span>
                         ) : (
                           <span className="text-muted text-lg">—</span>

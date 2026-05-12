@@ -1835,6 +1835,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "bo-m",
+    "event": "4x100",
+    "mark": "1:07.35",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "brendan-b",
     "event": "400m",
     "mark": "1:14.81"
@@ -1844,6 +1852,14 @@
     "athleteId": "brendan-b",
     "event": "800m",
     "mark": "2:55.65"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "brendan-b",
+    "event": "4x100",
+    "mark": "1:07.35",
+    "place": 1,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -1871,6 +1887,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "charlie-g",
+    "event": "4x100",
+    "mark": "1:09.87",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "charlie-h",
     "event": "100m",
     "mark": ":15.78"
@@ -1889,6 +1913,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "charlie-h",
+    "event": "4x100",
+    "mark": "1:09.87",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "chase",
     "event": "400m",
     "mark": "1:36.16"
@@ -1904,6 +1936,14 @@
     "athleteId": "chase",
     "event": "Javelin",
     "mark": "40'7\""
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "chase",
+    "event": "4x100",
+    "mark": "1:09.87",
+    "place": 3,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -1937,6 +1977,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "elin-p",
+    "event": "4x100",
+    "mark": "1:07.08",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "eloise-k",
     "event": "100m",
     "mark": ":17.80"
@@ -1952,6 +2000,14 @@
     "athleteId": "eloise-k",
     "event": "Shot Put",
     "mark": "22'"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "eloise-k",
+    "event": "4x100",
+    "mark": "1:11.21",
+    "place": 4,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -1976,6 +2032,14 @@
     "athleteId": "frances-k",
     "event": "100m",
     "mark": ":17.40"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "frances-k",
+    "event": "4x100",
+    "mark": "1:11.21",
+    "place": 4,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2009,6 +2073,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "genevieve",
+    "event": "4x100",
+    "mark": "1:07.08",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "griffin-w",
     "event": "200m",
     "mark": ":36.03"
@@ -2024,6 +2096,14 @@
     "athleteId": "griffin-w",
     "event": "Long Jump",
     "mark": "8'5\""
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "griffin-w",
+    "event": "4x100",
+    "mark": "1:11.21",
+    "place": 4,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2063,6 +2143,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "gwen-h",
+    "event": "4x100",
+    "mark": "1:09.81",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "henry-b",
     "event": "100m",
     "mark": ":15.64"
@@ -2075,9 +2163,25 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "henry-b",
+    "event": "4x100",
+    "mark": "1:07.35",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "jack-r",
     "event": "Long Jump",
     "mark": "9'1\""
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "jack-r",
+    "event": "4x100",
+    "mark": "1:07.35",
+    "place": 1,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2136,14 +2240,36 @@
   {
     "meetId": "2026-05-02-west-seattle",
     "athleteId": "liesel-c",
+    "event": "Long Jump",
+    "mark": "8'6\""
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "liesel-c",
     "event": "Shot Put",
     "mark": "14'10\""
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "liesel-c",
+    "event": "4x100",
+    "mark": "1:09.81",
+    "place": 1,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
     "athleteId": "madeline-w",
     "event": "1500m",
     "mark": "6:26.13"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "madeline-w",
+    "event": "4x100",
+    "mark": "1:07.08",
+    "place": 3,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2195,6 +2321,14 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "nori-b",
+    "event": "4x100",
+    "mark": "1:07.08",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "oliver-h",
     "event": "100m",
     "mark": ":17.81"
@@ -2210,6 +2344,14 @@
     "athleteId": "rhys-s",
     "event": "400m",
     "mark": "1:23.75"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "rhys-s",
+    "event": "4x100",
+    "mark": "1:09.87",
+    "place": 3,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2249,9 +2391,25 @@
   },
   {
     "meetId": "2026-05-02-west-seattle",
+    "athleteId": "samantha-f",
+    "event": "4x100",
+    "mark": "1:09.81",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
     "athleteId": "sarina-s",
     "event": "100m",
     "mark": ":16.40"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "sarina-s",
+    "event": "4x100",
+    "mark": "1:09.81",
+    "place": 1,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2264,6 +2422,14 @@
     "athleteId": "sophia-s",
     "event": "Shot Put",
     "mark": "20'"
+  },
+  {
+    "meetId": "2026-05-02-west-seattle",
+    "athleteId": "sophia-s",
+    "event": "4x100",
+    "mark": "1:11.21",
+    "place": 4,
+    "relay": true
   },
   {
     "meetId": "2026-05-02-west-seattle",
@@ -2324,6 +2490,656 @@
     "athleteId": "waverly-h",
     "event": "100m",
     "mark": ":27.85"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "anika-u",
+    "event": "100m",
+    "mark": ":16.75"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "anika-u",
+    "event": "200m",
+    "mark": ":37.19"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "anika-u",
+    "event": "4x400",
+    "mark": "6:00.40",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "billie-a",
+    "event": "50m",
+    "mark": ":13.65"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "billie-a",
+    "event": "100m",
+    "mark": ":22.93"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "bo-m",
+    "event": "200m",
+    "mark": ":38.72"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "bo-m",
+    "event": "Javelin",
+    "mark": "50'10\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brendan-b",
+    "event": "400m",
+    "mark": "1:16.02"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brendan-b",
+    "event": "800m",
+    "mark": "2:50.55"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brendan-b",
+    "event": "Javelin",
+    "mark": "63'2\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brendan-b",
+    "event": "4x400",
+    "mark": "5:17.04",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brijai",
+    "event": "100m",
+    "mark": ":19.22"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "brijai",
+    "event": "Shot Put",
+    "mark": "17'3\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "charlie-g",
+    "event": "50m",
+    "mark": ":08.72"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "charlie-g",
+    "event": "100m",
+    "mark": ":16.94"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "chase",
+    "event": "1500m",
+    "mark": "7:02.17"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "chase",
+    "event": "Javelin",
+    "mark": "59'5\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "chase",
+    "event": "Shot Put",
+    "mark": "15'8\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "eleanor-p",
+    "event": "200m",
+    "mark": ":35.10"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "eleanor-p",
+    "event": "Long Jump",
+    "mark": "9'6\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "eleanor-p",
+    "event": "4x400",
+    "mark": "5:51.47",
+    "place": 2,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "elon-o",
+    "event": "50m",
+    "mark": ":11.07"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "elon-o",
+    "event": "100m",
+    "mark": ":21.15"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "emerson-h",
+    "event": "200m",
+    "mark": ":34.56"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "emerson-h",
+    "event": "400m",
+    "mark": "1:15.22"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "emmet-c",
+    "event": "100m",
+    "mark": ":21.01"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "emmet-c",
+    "event": "Javelin",
+    "mark": "22'11\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "everett-c",
+    "event": "400m",
+    "mark": "1:16.31"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "everett-c",
+    "event": "Long Jump",
+    "mark": "11'1\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "everett-c",
+    "event": "4x400",
+    "mark": "5:51.47",
+    "place": 2,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "garrett-c",
+    "event": "400m",
+    "mark": "1:17.01"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "garrett-c",
+    "event": "Long Jump",
+    "mark": "12'0\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "garrett-c",
+    "event": "4x400",
+    "mark": "5:17.04",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "genevieve",
+    "event": "100m",
+    "mark": ":14.91"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "genevieve",
+    "event": "200m",
+    "mark": ":33.30"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "genevieve",
+    "event": "Shot Put",
+    "mark": "19'9\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "georgia-k",
+    "event": "100m",
+    "mark": ":17.33"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "georgia-k",
+    "event": "200m",
+    "mark": ":36.16"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "georgia-k",
+    "event": "Long Jump",
+    "mark": "9'6\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "georgia-k",
+    "event": "4x400",
+    "mark": "5:51.47",
+    "place": 2,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "griffin-w",
+    "event": "200m",
+    "mark": ":36.47"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "griffin-w",
+    "event": "400m",
+    "mark": "1:21.31"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "griffin-w",
+    "event": "Javelin",
+    "mark": "33'3\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "griffin-w",
+    "event": "4x400",
+    "mark": "5:51.47",
+    "place": 2,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "gwen-h",
+    "event": "100m",
+    "mark": ":16.34"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "gwen-h",
+    "event": "400m",
+    "mark": "1:23.31"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "gwen-h",
+    "event": "Long Jump",
+    "mark": "10'1\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "gwen-h",
+    "event": "4x400",
+    "mark": "6:00.40",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jerome-b",
+    "event": "400m",
+    "mark": "1:27.84"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jerome-b",
+    "event": "800m",
+    "mark": "3:34.68"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jerome-b",
+    "event": "Long Jump",
+    "mark": "8'7\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jerome-b",
+    "event": "4x400",
+    "mark": "6:12.10",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jeronimo-d",
+    "event": "100m",
+    "mark": ":18.75"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jeronimo-d",
+    "event": "200m",
+    "mark": ":41.31"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jeronimo-d",
+    "event": "4x400",
+    "mark": "6:12.10",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jiraya-b",
+    "event": "50m",
+    "mark": ":08.34"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "jiraya-b",
+    "event": "100m",
+    "mark": ":16.72"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "kolin-c",
+    "event": "400m",
+    "mark": "1:25.34"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leo",
+    "event": "200m",
+    "mark": ":37.84"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leo",
+    "event": "400m",
+    "mark": "1:45.28"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leo",
+    "event": "Long Jump",
+    "mark": "6'7\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leo",
+    "event": "4x400",
+    "mark": "6:00.40",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leona-e",
+    "event": "100m",
+    "mark": ":19.10"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "leona-e",
+    "event": "3000m",
+    "mark": "21:07"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "liam-e",
+    "event": "200m",
+    "mark": ":43.06"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "liam-e",
+    "event": "Long Jump",
+    "mark": "4'10\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "liesel-c",
+    "event": "100m",
+    "mark": ":17.47"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "liesel-c",
+    "event": "Shot Put",
+    "mark": "12'11\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "madeline-w",
+    "event": "100m",
+    "mark": ":18.00"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "madeline-w",
+    "event": "1500m",
+    "mark": "6:22.50"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "mimi",
+    "event": "200m",
+    "mark": ":45.41"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "mimi",
+    "event": "400m",
+    "mark": "1:43.84"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "mimi",
+    "event": "Long Jump",
+    "mark": "6'3\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "mimi",
+    "event": "4x400",
+    "mark": "6:12.10",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "molly",
+    "event": "100m",
+    "mark": ":18.38"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "molly",
+    "event": "Long Jump",
+    "mark": "6'5\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "molly",
+    "event": "Shot Put",
+    "mark": "10'7\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "murphy-c",
+    "event": "Long Jump",
+    "mark": "10'2\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "murphy-c",
+    "event": "Shot Put",
+    "mark": "22'8\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "murphy-c",
+    "event": "4x400",
+    "mark": "5:17.04",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nico-c",
+    "event": "50m",
+    "mark": ":10.28"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nico-c",
+    "event": "100m",
+    "mark": ":19.41"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nico-c",
+    "event": "Javelin",
+    "mark": "21'6\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "niya-c",
+    "event": "50m",
+    "mark": ":11.38"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "niya-c",
+    "event": "100m",
+    "mark": ":22.97"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "noelle-p",
+    "event": "100m",
+    "mark": ":17.87"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "noelle-p",
+    "event": "200m",
+    "mark": ":41.06"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nori-b",
+    "event": "400m",
+    "mark": "1:17.50"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nori-b",
+    "event": "Shot Put",
+    "mark": "18'8\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "nori-b",
+    "event": "4x400",
+    "mark": "5:17.04",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "oliver-h",
+    "event": "100m",
+    "mark": ":17.41"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "oliver-h",
+    "event": "400m",
+    "mark": "1:26.40"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "rhys-s",
+    "event": "800m",
+    "mark": "3:07.46"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "rhys-s",
+    "event": "Shot Put",
+    "mark": "12'3\""
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "rhys-s",
+    "event": "4x400",
+    "mark": "6:00.40",
+    "place": 1,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "samantha-f",
+    "event": "100m",
+    "mark": ":16.75"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "samantha-f",
+    "event": "200m",
+    "mark": ":34.82"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "sarina-s",
+    "event": "100m",
+    "mark": ":16.76"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "sarina-s",
+    "event": "200m",
+    "mark": ":36.50"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "valerie-e",
+    "event": "50m",
+    "mark": ":09.53"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "valerie-e",
+    "event": "200m",
+    "mark": ":42.03"
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "valerie-e",
+    "event": "4x400",
+    "mark": "6:12.10",
+    "place": 3,
+    "relay": true
+  },
+  {
+    "meetId": "2026-05-09-west-seattle",
+    "athleteId": "waverly-h",
+    "event": "50m",
+    "mark": ":13.15"
   },
   {
     "meetId": "2026-04-25-west-seattle",

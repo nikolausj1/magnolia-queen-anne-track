@@ -28,6 +28,19 @@
 
   --color-accent-gold: #E2B844;
 
+  /* Youth-meet ribbon palette: 1st blue, 2nd red, 3rd white, 4th pink, 5th yellow. */
+  --color-ribbon-1Bg: #2C5FB3;
+  --color-ribbon-1Text: #FFFFFF;
+  --color-ribbon-2Bg: #C0392B;
+  --color-ribbon-2Text: #FFFFFF;
+  --color-ribbon-3Bg: #FFFFFF;
+  --color-ribbon-3Text: #1A1A1A;
+  --color-ribbon-3Border: #C9C9C9;
+  --color-ribbon-4Bg: #E6739F;
+  --color-ribbon-4Text: #FFFFFF;
+  --color-ribbon-5Bg: #F1C84A;
+  --color-ribbon-5Text: #4A3A00;
+
   --container-content: 1100px;
 }
 

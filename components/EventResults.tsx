@@ -75,7 +75,7 @@ export function EventResults({ groups }: Props) {
                 <tbody className="divide-y divide-divider">
                   {group.rows.map((row, idx) => (
                     <tr key={`${row.athleteId}-${row.mark}-${idx}`}>
-                      <th scope="row" className="py-3 pl-5 pr-3 align-top">
+                      <th scope="row" className="py-3 pl-5 pr-3 align-middle">
                         <Link
                           href={`/athletes/${row.athleteId}`}
                           className="font-semibold text-ink hover:text-magnolia-navy hover:underline underline-offset-2 decoration-1"
@@ -83,7 +83,7 @@ export function EventResults({ groups }: Props) {
                           {row.display}
                         </Link>
                       </th>
-                      <td className="py-3 pl-3 pr-5 text-right align-top">
+                      <td className="py-3 pl-3 pr-5 text-right align-middle">
                         <span className="text-[22px] font-medium tabular-nums text-ink">
                           {formatMark(row.mark, group.event)}
                         </span>

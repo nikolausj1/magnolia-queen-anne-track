@@ -56,7 +56,13 @@
     "date": "2026-05-09",
     "startTime": "1:30 pm",
     "location": "West Seattle Stadium",
-    "type": "Invitational"
+    "type": "Invitational",
+    "weather": {
+      "tempF": 66,
+      "conditions": "Overcast",
+      "summary": "66°F · Overcast · 6 mph wind",
+      "windMph": 6
+    }
   },
   {
     "id": "2026-05-16-west-seattle",
