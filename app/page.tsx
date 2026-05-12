@@ -47,7 +47,11 @@ export default function HomePage() {
       <SharedStrongerTogether />
       {COACHES.length > 0 ? <Coaches coaches={COACHES} /> : null}
       {latestPastMeet ? (
-        <LatestResultsTeaser meetDate={latestPastMeet.date} />
+        <LatestResultsTeaser
+          meetDate={latestPastMeet.date}
+          photo={latestPastMeet.photo}
+          location={latestPastMeet.location}
+        />
       ) : null}
       <ReadyToJoin />
       <SecondaryCTA />
@@ -227,11 +231,25 @@ function Coaches({ coaches }: { coaches: Coach[] }) {
   );
 }
 
-function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
+function LatestResultsTeaser({
+  meetDate,
+  photo,
+  location,
+}: {
+  meetDate: string;
+  photo?: string;
+  location?: string;
+}) {
   const formatted = new Date(`${meetDate}T00:00:00`).toLocaleDateString(
     "en-US",
     { weekday: "long", month: "long", day: "numeric", year: "numeric" },
   );
+  const photoSrc = photo
+    ? `/photos/${photo}`
+    : "/photos/west-seattle-stadium.webp";
+  const photoAlt = photo
+    ? `${location ?? "Venue"} photo`
+    : "West Seattle Stadium track at sunset";
 
   return (
     <section className="mx-auto max-w-[1200px] px-6 py-10 md:py-12 flex flex-col gap-8">
@@ -250,8 +268,8 @@ function LatestResultsTeaser({ meetDate }: { meetDate: string }) {
         className="group block relative h-44 md:h-56 rounded-lg overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magnolia-navy"
       >
         <Image
-          src="/photos/west-seattle-stadium.webp"
-          alt=""
+          src={photoSrc}
+          alt={photoAlt}
           fill
           sizes="(min-width: 1200px) 1200px, 100vw"
           className="object-cover"
