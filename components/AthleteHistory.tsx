@@ -1,5 +1,6 @@
 import type { EventCategory } from "@/lib/events";
 import type { HistoryRow } from "@/lib/athletes";
+import { HorizontalScrollHinter } from "@/components/HorizontalScrollHinter";
 import { PlaceChip } from "@/components/PlaceChip";
 import { formatMark } from "@/lib/marks";
 
@@ -26,7 +27,7 @@ export function AthleteHistory({ events, history }: Props) {
   }
   return (
     <section className="-mx-6 sm:mx-0 border-y border-divider sm:border-x sm:rounded-md sm:overflow-hidden">
-      <div className="overflow-x-auto">
+      <HorizontalScrollHinter>
         <table className="w-full text-left">
           <thead>
             <tr className="text-[12px] uppercase tracking-wide text-muted bg-surface">
@@ -88,7 +89,7 @@ export function AthleteHistory({ events, history }: Props) {
             })}
           </tbody>
         </table>
-      </div>
+      </HorizontalScrollHinter>
     </section>
   );
 }
