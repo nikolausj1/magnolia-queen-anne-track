@@ -84,7 +84,9 @@ export function MeetCard({
                   ? "Most recent meet"
                   : meet.type === "Invitational"
                     ? "Meet"
-                    : meet.type}
+                    : meet.type === "Championships"
+                      ? "Championship Meet"
+                      : meet.type}
               </p>
               <h2
                 id={headerLabelId}

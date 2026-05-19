@@ -15,7 +15,7 @@ export function UpcomingList({ meets }: Props) {
   if (meets.length === 0) {
     return (
       <div className="rounded-lg border border-divider bg-white p-6 text-sm text-muted">
-        No more meets scheduled.
+        No more 2026 meets scheduled.
       </div>
     );
   }

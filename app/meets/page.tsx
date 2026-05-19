@@ -72,12 +72,16 @@ export default async function MeetsPage() {
 
   return (
     <div className="mx-auto max-w-[1100px] px-6 py-12 md:py-16">
-      {enrichedUpcoming.length > 0 ? (
-        <section className="mb-12 md:mb-16">
-          <h2 className={`${SECTION_HEADING_CLASS} mb-6`}>Upcoming</h2>
+      <section className="mb-12 md:mb-16">
+        <h2 className={`${SECTION_HEADING_CLASS} mb-6`}>Upcoming</h2>
+        {enrichedUpcoming.length > 0 ? (
           <UpcomingSection nextMeet={nextMeet} restMeets={restUpcoming} />
-        </section>
-      ) : null}
+        ) : (
+          <p className="text-base text-muted leading-relaxed">
+            No more 2026 meets scheduled.
+          </p>
+        )}
+      </section>
 
       <section id="results">
         <h2 className={`${SECTION_HEADING_CLASS} mb-2`}>Results</h2>
