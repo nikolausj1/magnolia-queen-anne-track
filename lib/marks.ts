@@ -20,8 +20,22 @@ export function parseTime(mark: string): number {
 
 const DISTANCE_RE = /^(?:(\d+)')?\s*(?:(\d+(?:\.\d+)?)")?$/;
 
+// Coach sometimes writes mixed fractions like "10' 1 1/2"" or "1/2"".
+// Pre-pass converts those to decimals before the strict regex runs.
+// formatDistance rounds inches at display time, so "10' 1 1/2"" still
+// renders as "10' 2"".
+function normalizeFractionalInches(input: string): string {
+  return input
+    .replace(/(\d+)\s+(\d+)\/(\d+)/g, (_, whole, num, den) =>
+      String(Number(whole) + Number(num) / Number(den)),
+    )
+    .replace(/(\d+)\/(\d+)/g, (_, num, den) =>
+      String(Number(num) / Number(den)),
+    );
+}
+
 export function parseDistance(mark: string): number {
-  const trimmed = mark.trim();
+  const trimmed = normalizeFractionalInches(mark.trim());
   const match = trimmed.match(DISTANCE_RE);
   if (!match || (match[1] === undefined && match[2] === undefined)) {
     throw new Error(`Unparseable distance: ${mark}`);
