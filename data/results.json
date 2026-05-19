@@ -968,12 +968,6 @@
   {
     "meetId": "2026-04-18-west-seattle",
     "athleteId": "cora",
-    "event": "100m",
-    "mark": "3RD"
-  },
-  {
-    "meetId": "2026-04-18-west-seattle",
-    "athleteId": "cora",
     "event": "Long Jump",
     "mark": "1'10\"",
     "place": 8
@@ -3048,7 +3042,8 @@
     "meetId": "2026-05-09-west-seattle",
     "athleteId": "liesel-c",
     "event": "Long Jump",
-    "mark": "6'10\"3RD"
+    "mark": "6'10\"",
+    "place": 3
   },
   {
     "meetId": "2026-05-09-west-seattle",

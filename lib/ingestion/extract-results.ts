@@ -34,7 +34,9 @@ const KNOWN_EVENTS = new Set([
   "SHOT PUT",
 ]);
 
-const PLACE_SUFFIX = /\s+(\d+)(?:st|nd|rd|th)\b/i;
+// Leading whitespace optional so we tolerate the coach gluing a place
+// onto the mark with no separator (e.g. "6'10\"3RD" → mark "6'10\"", place 3).
+const PLACE_SUFFIX = /\s*(\d+)(?:st|nd|rd|th)\b/i;
 const PLACE_ONLY = /^(\d+)(?:st|nd|rd|th)\s*place\s*$/i;
 const NOTE_PARENS = /\s*\(([^)]+)\)\s*$/;
 const SHEET_DATE = /(?:MEET|BENCHMARK)\s+([A-Z]+)\s+(\d+)/i;
