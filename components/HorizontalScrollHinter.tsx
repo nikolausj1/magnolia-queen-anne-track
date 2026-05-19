@@ -1,11 +1,17 @@
 "use client";
 
 // Wraps a horizontally-scrolling region and feathers its edges with a
-// gradient AND a centered chevron icon when there's content out of
-// view. The chevron is the load-bearing cue ("more this way"); the
-// fade just reinforces it. Both disappear when scrolled to the
-// corresponding edge — and stay hidden if the content fits without
-// scrolling at all.
+// gradient + a centered chevron button when there's content out of
+// view. The chevron is clickable and scrolls the table about one
+// viewport-width in that direction (smooth). Manual horizontal
+// scrolling still works exactly as before — the chevron is an
+// additional affordance, not a replacement.
+//
+// The fade overlay sits on top of the scroll area with
+// pointer-events: none so swipes/drags fall through to the table;
+// only the chevron button itself opts back in with pointer-events:
+// auto. Both fade + chevron hide when there's nothing to scroll to
+// in that direction.
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -53,6 +59,18 @@ export function HorizontalScrollHinter({
     };
   }, []);
 
+  function nudge(direction: "left" | "right") {
+    const el = scrollRef.current;
+    if (!el) return;
+    // ~80% of the visible width — moves to roughly the next page of
+    // columns while keeping a small overlap for orientation.
+    const delta = Math.round(el.clientWidth * 0.8);
+    el.scrollBy({
+      left: direction === "right" ? delta : -delta,
+      behavior: "smooth",
+    });
+  }
+
   const fadeBase = {
     pointerEvents: "none" as const,
     width: fadeWidth,
@@ -65,7 +83,7 @@ export function HorizontalScrollHinter({
         {children}
       </div>
       <div
-        aria-hidden="true"
+        aria-hidden={!canScrollLeft}
         className="absolute top-0 left-0 bottom-0 flex items-center justify-start pl-2"
         style={{
           ...fadeBase,
@@ -73,10 +91,14 @@ export function HorizontalScrollHinter({
           background: `linear-gradient(to right, ${fadeColor} 40%, transparent)`,
         }}
       >
-        <ChevronGlyph direction="left" />
+        <ChevronButton
+          direction="left"
+          onClick={() => nudge("left")}
+          visible={canScrollLeft}
+        />
       </div>
       <div
-        aria-hidden="true"
+        aria-hidden={!canScrollRight}
         className="absolute top-0 right-0 bottom-0 flex items-center justify-end pr-2"
         style={{
           ...fadeBase,
@@ -84,19 +106,39 @@ export function HorizontalScrollHinter({
           background: `linear-gradient(to left, ${fadeColor} 40%, transparent)`,
         }}
       >
-        <ChevronGlyph direction="right" />
+        <ChevronButton
+          direction="right"
+          onClick={() => nudge("right")}
+          visible={canScrollRight}
+        />
       </div>
     </div>
   );
 }
 
-function ChevronGlyph({ direction }: { direction: "left" | "right" }) {
-  // 28px chevron, magnolia-navy stroke. Sits inside the opaque part of
-  // the fade so it reads as a solid arrow, not a ghost.
+function ChevronButton({
+  direction,
+  onClick,
+  visible,
+}: {
+  direction: "left" | "right";
+  onClick: () => void;
+  visible: boolean;
+}) {
+  // The fade overlay above us is pointer-events:none, but the button
+  // opts back in so clicks land here instead of falling through to
+  // the table.
   const path =
     direction === "right" ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6";
   return (
-    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-divider">
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === "right" ? "Scroll right" : "Scroll left"}
+      tabIndex={visible ? 0 : -1}
+      disabled={!visible}
+      className="pointer-events-auto inline-flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-divider text-magnolia-navy transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-magnolia-navy disabled:cursor-default"
+    >
       <svg
         viewBox="0 0 24 24"
         width="18"
@@ -106,10 +148,10 @@ function ChevronGlyph({ direction }: { direction: "left" | "right" }) {
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-magnolia-navy"
+        aria-hidden="true"
       >
         <path d={path} />
       </svg>
-    </span>
+    </button>
   );
 }
